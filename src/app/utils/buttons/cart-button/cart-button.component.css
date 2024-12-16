@@ -1,0 +1,17 @@
+.cart-button object{
+  vertical-align: middle;
+}
+
+.cart-info {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  margin-left: 20px;
+  margin-top: -15px;
+}

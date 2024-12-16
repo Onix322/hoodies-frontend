@@ -1,0 +1,28 @@
+.hamburger-menu{
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+  width: 100%;
+  height: calc(100% - var(--nav-heigth) + 2px);
+  background: black;
+  opacity: 0;
+  margin-top: -2px;
+  transition: 0.2s opacity ease-in;
+}
+
+.nav-buttons{
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  list-style: none;
+  grid-gap: 20px;
+}
+
+.nav-buttons li{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

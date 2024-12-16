@@ -1,0 +1,10 @@
+.nav-buttons{
+  display: var(--nav-buttons-display);
+  align-items: var(--nav-buttons-flex-align-items);
+  gap: var(--nav-buttons-gap);
+  list-style: none;
+  font-size: var(--nav-buttons-font-size);
+  padding: var(--nav-buttons-padding);
+  margin: var(--nav-buttons-padding);
+  transition: 0.2s;
+}

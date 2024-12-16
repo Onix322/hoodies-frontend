@@ -1,0 +1,8 @@
+<a class="cart-button" href="/cart">
+    <object data="/cart.svg" type="image/svg+xml">
+    </object>
+
+    @if(cartLength > 0){
+      <p class="cart-info">{{cartLength}}</p>
+    }
+</a>

@@ -1,0 +1,16 @@
+<div id="hamburger-menu" class="hamburger-menu" *ngIf="innerWidth <= 800">
+  <ul class="nav-buttons">
+    <li>
+      <a href="/products">
+        All products
+      </a>
+    </li>
+    <li>
+      <app-cart-button></app-cart-button>
+      Cart
+    </li>
+    <li>
+      <app-profile-button></app-profile-button>
+    </li>
+  </ul>
+</div>

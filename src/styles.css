@@ -1,1 +1,129 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Questrial&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+:root{
+  --auto-margin: 0 auto;
+  --no-margin: 0;
+  --no-padding: 0;
+  --full-width: 100vw;
+  --full-heigth: 100vh;
+  --default-full-heigth: 1080px;
+  --general-padding: 20px;
+  --general-font-size: 16px;
+  --general-max-width: 1920px;
+  --general-container-max-width: 1552px;
+
+  /* COLOR SCHEMA */
+  --full-black: black;
+  --bg-color: #222222;
+  --full-white: white;
+  --color_1: rgba(158, 158, 158, 0.24);
+  --header-bg-color: var(--bg-color);
+  --header-charachers-color: var(--full-white);
+  --see-products-button-background-color: red;
+  --see-products-button-color: var(--full-white);
+  --left-side-header-background-color: var(--color_1);
+  --body-bg-color: var(--bg-color);
+
+  /* POSITION AND DIMENSIONS VARIABLE*/
+
+  /* header */
+  --header-margin: var(--auto-margin);
+  --header-padding: var(--no-padding);
+  --header-width: var(--full-width);
+  --header-heigth: var(--default-full-heigth);
+  --header-display: block;
+  --header-space-without-nav: calc(var(--default-full-heigth) - var(--nav-heigth) - 1px);
+
+  /* nav */
+  --nav-margin: var(--auto-margin);
+  --nav-width: var(--full-width);
+  --nav-heigth: 65px;
+  --nav-padding: 0 var(--general-padding) 0 var(--general-padding);
+  --nav-align-items: center;
+
+  /*nav-container*/
+  --nav-container-height: 100%;
+  --nav-container-display: flex;
+  --nav-container-flex-direction: row;
+  --nav-container-align-items: center;
+  --nav-container-justify-content: space-between;
+
+  /* nav-buttons  */
+  --nav-buttons-display: flex;
+  --nav-buttons-flex-align-items: center;
+  --nav-buttons-gap: 20px;
+  --nav-buttons-font-size: 16px;
+  --nav-buttons-padding: var(--no-padding);
+  --nav-buttons-margin: var(--no-margin);
+
+  /* see-products-button */
+  --font-weight: bold;
+  --see-products-button-width: 252px;
+  --see-products-button-height: 90px;
+  --see-products-button-border: 1px var(--full-white) solid;
+  --see-products-button-font-size: var(--general-font-size);
+
+  /* intro-header */
+  --intro-header-display: flex;
+  --intro-header-justify-content: space-between;
+  --intro-header-height: 100%;
+  --intro-header-max-height: var(--header-space-without-nav);
+
+  /* left-side-header  */
+  --left-side-header-padding-nedeed: 194px;
+  --left-side-header-width-nedeed: 733px;
+  --left-side-header-height: var(--header-space-without-nav);
+  --left-side-header-display: flex;
+  --left-side-header-flex-direction: column;
+  --left-side-header-justify-content: center;
+  --left-side-header-position: absolute;
+  --left-side-header-z-index: 1;
+
+  /*  slider */
+  --img-width: 1454px;
+
+/*  content*/
+
+  --margin-top-title: 0px;
+}
+
+
+/* general classes */
+* {
+  font-family: "Rubik", sans-serif;
+}
+
+body{
+  margin: 0 auto;
+  padding: 0;
+  height: fit-content;
+  width: var(--full-width);
+  display: block;
+  background-color: var(--body-bg-color);
+  /*background-color: #222222;*/
+  color: var(--full-white);
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.general-container{
+  margin: var(--auto-margin);
+  max-width: var(--general-container-max-width);
+}
+
+.general-container-full{
+  margin: var(--auto-margin);
+  max-width: var(--general-max-width);
+}
+
+/*RESET*/
+a{
+  text-decoration: none;
+  color: var(--full-white);
+  cursor: pointer;
+}
+
+button{
+  border: none;
+  cursor: pointer;
+  outline: none;
+}

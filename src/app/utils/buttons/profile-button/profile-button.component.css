@@ -1,0 +1,5 @@
+.profile-button{
+  display: flex;
+  gap: var(--nav-buttons-gap);
+  align-items: center;
+}

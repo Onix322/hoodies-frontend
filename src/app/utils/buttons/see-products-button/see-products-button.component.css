@@ -1,0 +1,8 @@
+.see-products-button{
+  font-weight: var(--font-weight);
+  width: var(--see-products-button-width);
+  height: var(--see-products-button-height);
+  background-color: var(--see-products-button-background-color);
+  color: var(--see-products-button-color);
+  font-size: var(--see-products-button-font-size);
+}

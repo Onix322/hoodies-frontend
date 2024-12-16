@@ -1,0 +1,33 @@
+.hamburger-button{
+  display: grid;
+  grid-template-rows: repeat(3, 10px);
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  background: transparent;
+  outline: none;
+}
+
+.hamburger-button > div {
+  background: white;
+  height: 3px;
+  width: 30px;
+  border-radius: 20px;
+  transition: 0.2s;
+}
+
+.hamburger-button-hide{
+  opacity: 0;
+  background: black;
+}
+
+.hamburger-button-clockwise{
+  rotate: 45deg;
+  position: absolute;
+  align-self: center;
+}
+.hamburger-button-anti-clockwise{
+  rotate: -45deg;
+  position: absolute;
+  align-self: center;
+}
