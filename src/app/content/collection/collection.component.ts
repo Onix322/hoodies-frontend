@@ -1,34 +1,50 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {SeeProductsButtonComponent} from '../../utils/buttons/see-products-button/see-products-button.component';
-import {pendingUntilEvent} from '@angular/core/rxjs-interop';
 
 @Component({
-    selector: 'app-collection',
+  selector: 'app-collection',
   imports: [
-    SeeProductsButtonComponent
+    SeeProductsButtonComponent,
   ],
-    templateUrl: './collection.component.html',
-    standalone: true,
-    styleUrl: './collection.component.css'
+  templateUrl: './collection.component.html',
+  standalone: true,
+  styleUrl: './collection.component.css'
 })
-export class CollectionComponent {
-  static title:string = ""
+export class CollectionComponent implements AfterViewInit {
 
-  public getOneWordFromTitle(index: number){
+  @Input() title: string = "";
+  @Input() textStyle: string = "";
+  @Input() containerStyle: string = "";
+  @Input() imageBg: string = "";
+  @Input() imageBgStyle: string = "";
+  @Input() articlesStyle: string = "";
+  words: Array<String> = [];
+
+
+  ngAfterViewInit(): void {
+    this.words = this.transformStringToArrayOfWords();
+  }
+
+  public transformStringToArrayOfWords() {
+
+    // (& -> is a character for adding a space on the same line
+
     const arrayWords: Array<String> = [];
-    let word:string = "";
+    let word: String = "";
 
-    for (let i = 0; i < CollectionComponent.title.length; i++) {
-      if(CollectionComponent.title.charAt(i) != " "){
-        word += CollectionComponent.title.charAt(i);
-      } else {
-        arrayWords.push(word)
+    for (let i = 0, j = 0; i < this.title.length; i++) {
+
+      if (this.title.charAt(i) === " " || i === this.title.length - 1) {
+        arrayWords[j] = word;
+        j++;
         word = "";
+        arrayWords.push(word);
+        continue
       }
+
+      word += this.title.charAt(i);
     }
 
-    console.log(arrayWords, word, CollectionComponent.title)
-
-    return arrayWords[index];
+    return arrayWords.map(w => w.replaceAll("(&", " "));
   }
 }

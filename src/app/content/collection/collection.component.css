@@ -28,9 +28,11 @@
     3px -3px 0 #ffffff;;
   color: var(--bg-color);
   transition: .2s;
+  width: 100%;
+  text-align: center;
   animation-timeline: scroll();
-  animation-range-start: 220px;
-  animation-range-end:  160vh;
+  /*animation-range-start: 220px;*/
+  /*animation-range-end:  160vh;*/
 }
 
 .content-txt-title:nth-child(1){
