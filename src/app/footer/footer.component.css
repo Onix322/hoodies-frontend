@@ -1,0 +1,17 @@
+footer{
+  align-self: end;
+  background: transparent;
+  width: var(--full-width);
+}
+
+.footer-box{
+  width: 100%;
+  max-width: var(--general-container-max-width);
+  margin: 100px auto auto auto;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  /*border: 1px solid red;*/
+}

@@ -1,0 +1,21 @@
+.nav{
+  width: 100%;
+  max-width: var(--nav-width);
+  height: var(--nav-heigth);
+  margin: var(--nav-margin);
+  background-color: var(--full-black);
+  align-items: var(--nav-align-items);
+  z-index: 99;
+  position: fixed;
+}
+.nav > * {
+  transition: 1s;
+}
+.nav-container{
+  padding: var(--nav-padding);
+  display: var(--nav-container-display);
+  flex-direction: var(--nav-container-flex-direction);
+  align-items: var(--nav-container-align-items);
+  justify-content: var(--nav-container-justify-content);
+  height: var(--nav-container-height);
+}

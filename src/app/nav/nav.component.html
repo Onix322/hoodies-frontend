@@ -1,0 +1,8 @@
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav-container general-container">
+    <app-logo></app-logo>
+    <app-nav-buttons *ngIf="windowSize >= 801"></app-nav-buttons>
+    <app-hamburger-button *ngIf="windowSize <= 800"></app-hamburger-button>
+  </div>
+</nav>
+<app-hamburger-nav></app-hamburger-nav>
