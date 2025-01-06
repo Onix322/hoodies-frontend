@@ -1,30 +1,19 @@
 import {AfterViewInit, Component} from '@angular/core';
-import {LogoComponent} from '../utils/logo/logo.component';
-import {NavButtonsComponent} from './nav-buttons/nav-buttons.component';
 import {SeeProductsButtonComponent} from '../utils/buttons/see-products-button/see-products-button.component';
-import {NgIf} from '@angular/common';
-import {HamburgerNavComponent} from '../hamburger-nav/hamburger-nav.component';
-import {HamburgerButtonComponent} from './nav-buttons/hamburger-button/hamburger-button.component';
+import {NavComponent} from '../nav/nav.component';
 
 @Component({
   selector: 'app-header',
-  imports: [LogoComponent, NavButtonsComponent, SeeProductsButtonComponent, NgIf, HamburgerNavComponent, HamburgerButtonComponent],
+  imports: [SeeProductsButtonComponent, NavComponent],
   templateUrl: './header.component.html',
   standalone: true,
   styleUrl: './header.component.css'
 })
 export class HeaderComponent implements AfterViewInit {
 
-  public windowSize: number = 801;
-
   ngAfterViewInit() {
     this.leftSideElementResponsive()
     slider()
-
-    this.windowSize = window.innerWidth
-    this.refreshOnResize(() => {
-      this.windowSize = window.innerWidth
-    })
   }
 
   private leftSideElementResponsive(): void {

@@ -2,7 +2,7 @@
   /*border: 1px solid red;*/
   margin: var(--auto-margin);
   width: 100%;
-  height: var(--default-full-heigth);
+  height: fit-content;
   /*height: fit-content;*/
   /*margin-top: 400px;*/
 }

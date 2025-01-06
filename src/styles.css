@@ -122,8 +122,27 @@ a{
   cursor: pointer;
 }
 
-button{
+input{
+  color: var(--full-white);
+  padding-left: 5px;
+  align-content: center;
+}
+
+input[type="button"]{
+  padding-left: 0;
+}
+
+button, input[type="button"]{
   border: none;
   cursor: pointer;
   outline: none;
+}
+
+.action-button{
+  font-weight: var(--font-weight);
+  width: var(--see-products-button-width);
+  height: var(--see-products-button-height);
+  background-color: var(--see-products-button-background-color);
+  color: var(--see-products-button-color);
+  font-size: var(--see-products-button-font-size);
 }

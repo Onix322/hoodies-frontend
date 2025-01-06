@@ -15,8 +15,6 @@ export class CollectionComponent implements AfterViewInit {
   @Input() title: string = "";
   @Input() textStyle: string = "";
   @Input() containerStyle: string = "";
-  @Input() imageBg: string = "";
-  @Input() imageBgStyle: string = "";
   @Input() articlesStyle: string = "";
   words: Array<String> = [];
 

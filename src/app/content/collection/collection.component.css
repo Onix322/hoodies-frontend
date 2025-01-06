@@ -31,8 +31,6 @@
   width: 100%;
   text-align: center;
   animation-timeline: scroll();
-  /*animation-range-start: 220px;*/
-  /*animation-range-end:  160vh;*/
 }
 
 .content-txt-title:nth-child(1){
@@ -114,7 +112,9 @@
 @media screen and (max-width: 1575px){
   .content-section{
     background: linear-gradient(rgba(0, 0, 0, 0)  29%,#282828 22%);
+    margin-top: 100px !important;
   }
+
   .content-txt-title{
     font-size: 200px;
     padding: 20px;
@@ -197,7 +197,6 @@
 
 @media screen and (max-width: 585px){
   .content-section{
-    background: linear-gradient(rgba(0, 0, 0, 0)  8%,#282828 0%);
   }
 
   .content-txt-title{
