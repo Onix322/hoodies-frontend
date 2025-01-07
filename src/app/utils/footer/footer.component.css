@@ -2,6 +2,7 @@ footer{
   align-self: end;
   background: transparent;
   width: var(--full-width);
+  margin: 0 auto;
 }
 
 .footer-box{
@@ -11,7 +12,7 @@ footer{
   height: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: start;
+  justify-content: end;
+  align-items: center;
   /*border: 1px solid red;*/
 }

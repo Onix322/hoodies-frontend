@@ -1,6 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
-import {SeeProductsButtonComponent} from '../utils/buttons/see-products-button/see-products-button.component';
-import {NavComponent} from '../nav/nav.component';
+import {SeeProductsButtonComponent} from '../../utils/buttons/see-products-button/see-products-button.component';
+import {NavComponent} from '../../nav/nav.component';
 
 @Component({
   selector: 'app-header',

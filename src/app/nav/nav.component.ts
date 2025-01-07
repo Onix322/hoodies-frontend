@@ -1,8 +1,8 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {LogoComponent} from '../utils/logo/logo.component';
-import {NavButtonsComponent} from '../header/nav-buttons/nav-buttons.component';
-import {HamburgerButtonComponent} from '../header/nav-buttons/hamburger-button/hamburger-button.component';
-import {HamburgerNavComponent} from '../hamburger-nav/hamburger-nav.component';
+import {NavButtonsComponent} from './nav-buttons/nav-buttons.component';
+import {HamburgerButtonComponent} from './nav-buttons/hamburger-button/hamburger-button.component';
+import {HamburgerNavComponent} from './hamburger-nav/hamburger-nav.component';
 import {NgIf} from '@angular/common';
 
 @Component({

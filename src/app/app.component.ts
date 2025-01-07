@@ -1,10 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {HeaderComponent} from './header/header.component';
-import {CollectionComponent} from './content/collection/collection.component';
-import {ContentComponent} from './content/content.component';
-import {FooterComponent} from './footer/footer.component';
-import {HomeComponent} from './home/home.component';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
