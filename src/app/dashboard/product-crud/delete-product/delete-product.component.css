@@ -1,0 +1,45 @@
+.form-box{
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  width: 900px;
+}
+
+.form-box form{
+  display: grid;
+  grid-template-columns: 300px;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+}
+
+input{
+  background-color: transparent;
+  border: solid 1px white;
+  padding: 10px;
+  color: white;
+}
+
+.form-box div{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-box form div:last-child{
+  grid-row-start: 2;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+.form-box form div:last-child input{
+  border: none;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+  width: 100px;
+  background-color: red;
+  cursor: pointer;
+}
+
