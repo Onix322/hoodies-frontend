@@ -1,0 +1,80 @@
+<section class="form-box">
+
+  <div class="get-delete-box">
+    <h2>Get or delete a product:</h2>
+    <label for="product-id">Enter product id:</label>
+    <input id="product-id" type="number" name="title" [(ngModel)]="productIdEntered">
+    <div class="get-delete-box-buttons">
+      <button class="action-button" (click)="getProduct()">Get</button>
+      <button class="action-button" (click)="deleteProduct()">Delete</button>
+    </div>
+  </div>
+
+  <div class="create-box">
+    <h2>Create new product or edit an existent one:</h2>
+    <form method="POST">
+      <div>
+        <label for="title">Title:</label>
+        <input id="title" type="text" name="title" [(ngModel)]="title">
+      </div>
+      <div>
+        <label for="size">Size:</label>
+        <select id="size" [(ngModel)]="size" name="size">
+          <option value="XXS">S</option>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+      </div>
+      <div>
+        <label for="rating">Rating:</label>
+        <input id="rating" type="number" min="0" max="5" name="rating" [(ngModel)]="rating">
+      </div>
+      <div>
+        <label for="description">Description:</label>
+    <!--      <input id="description" type="text">-->
+        <textarea id="description" [(ngModel)]="description" name="description"></textarea>
+      </div>
+      <div>
+        <label for="productColor">Product color:</label>
+        <select id="productColor" [(ngModel)]="productColor" name="productColor">
+          <option value="Red">Red</option>
+          <option value="Blue">Blue</option>
+          <option value="Yellow">Yellow</option>
+          <option value="White">White</option>
+          <option value="Pink">Pink</option>
+          <option value="Green">Green</option>
+          <option value="Purple">Purple</option>
+          <option value="Lightblue">Lightblue</option>
+        </select></div>
+      <div>
+        <label for="price">Price:</label>
+        <input id="price" type="number" min="0.1" [(ngModel)]="price" name="price">
+      </div>
+      <div>
+        <label for="productImageField">Product image:</label>
+        <div class="filed-horizontal">
+          <input id="productImageField" type="text" multiple [(ngModel)]="image" name="productImages">
+          <button class="action-button bg-green" (click)="addToArray(productImages, {image: image})">Add</button>
+        </div>
+        <div class="product-images">
+          @for (imageF of productImages; track imageF){
+            <div>
+              <img width="120px" src="{{ imageF }}" />
+              <button class="action-button" (click)="deleteFromArray(productImages, $index)">Delete</button>
+            </div>
+          }
+        </div>
+
+      </div>
+      <div class="form-buttons">
+        <button class="action-button bg-green" (click)="createProduct()">Save</button>
+        <button class="action-button" (click)="clear()">Clean</button>
+      </div>
+    </form>
+
+  </div>
+</section>
