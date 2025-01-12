@@ -4,11 +4,14 @@
     <p> !!!! Filters in construction !!!!</p>
   </div>
   <div class="products-container">
-    <app-product-box></app-product-box>
-    <app-product-box></app-product-box>
-    <app-product-box></app-product-box>
-    <app-product-box></app-product-box>
-
+    @for (product of products; track product){
+      <app-product-box title="{{product.title}}"
+                       id="{{product.id}}"
+                       rating="{{product.rating}}"
+                       size="{{product.size}}"
+                       productImage="{{product.productImage.image}}"
+      ></app-product-box>
+    }
   </div>
 </main>
 <app-footer></app-footer>

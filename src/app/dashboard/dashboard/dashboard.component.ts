@@ -2,6 +2,9 @@ import {Component, ComponentRef, createComponent, ElementRef, ViewChild, ViewCon
 import {ProfileButtonComponent} from '../../utils/buttons/profile-button/profile-button.component';
 import {ProductCrudComponent} from '../product-crud/product-crud.component';
 import {NgIf} from '@angular/common';
+import {ProductService} from '../../services/product/product.service';
+import {UserCrudComponent} from '../user-crud/user-crud.component';
+import {SeeAllProductsComponent} from '../product-crud/see-all-products/see-all-products.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +16,7 @@ import {NgIf} from '@angular/common';
 export class DashboardComponent {
 
   @ViewChild("content", {read: ViewContainerRef}) content: ViewContainerRef | undefined;
-  protected readonly CreateProductComponent = ProductCrudComponent;
+  protected readonly ProductCrudComponent = ProductCrudComponent;
 
   public activeView: boolean = false;
 
@@ -24,5 +27,6 @@ export class DashboardComponent {
     this.content.createComponent(component)
   }
 
-  protected readonly ProductCrudComponent = ProductCrudComponent;
+  protected readonly UserCrudComponent = UserCrudComponent;
+  protected readonly SeeAllProductsComponent = SeeAllProductsComponent;
 }

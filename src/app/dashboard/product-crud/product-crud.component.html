@@ -63,7 +63,7 @@
         <div class="product-images">
           @for (imageF of productImages; track imageF){
             <div>
-              <img width="120px" src="{{ imageF }}" />
+              <img width="120px" src="{{ imageF.image }}" />
               <button class="action-button" (click)="deleteFromArray(productImages, $index)">Delete</button>
             </div>
           }

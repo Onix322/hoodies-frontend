@@ -1,0 +1,16 @@
+main{
+  width: 100%;
+  max-width: var(--general-container-max-width);
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  border: 1px solid red
+}
+
+section{
+  padding: 30px;
+  margin-top: 200px;
+  display: grid;
+  grid-template-columns: 500px 200px;
+  border: 1px solid red;
+}

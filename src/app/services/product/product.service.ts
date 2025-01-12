@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {firstValueFrom, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ResponseWrapper} from '../../utils/response/response-wrapper';
 
 @Injectable({
@@ -12,7 +12,6 @@ export class ProductService {
   private url: string = "http://localhost:8080/products/"
 
   constructor(private http: HttpClient) {
-
   }
 
   public post(body: any) {
@@ -23,8 +22,13 @@ export class ProductService {
     this.http.delete(this.url + "delete/" + id).subscribe()
   }
 
-  public async get(id: Number): Promise<ResponseWrapper>{
-    return await firstValueFrom(this.http.get<ResponseWrapper>(this.url + "get/" + id))
+  public get(id: Number): Observable<ResponseWrapper> {
+
+    return this.http.get<ResponseWrapper>(this.url + "get/" + id)
+  }
+
+  public getAll() {
+    return this.http.get(this.url + "get")
   }
 
   public edit(body: any) {

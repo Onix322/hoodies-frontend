@@ -1,0 +1,22 @@
+<app-nav></app-nav>
+
+<main>
+  <section>
+    <div class="big-image">
+      <img src="{{productImages.at(0)}}" alt="{{title}}">
+    </div>
+    <h1>{{title}}</h1>
+    <p>{{size}}</p>
+    <p>{{productColor}}</p>
+    <p>{{description}}</p>
+    <p>{{price}}</p>
+    <p>{{rating}}</p>
+    <p>{{image}}</p>
+    <div class="product-page-images">
+      @for(image of productImages; track image){
+        <img src="{{image.image}}" alt="{{title}}">
+      }
+    </div>
+
+  </section>
+</main>
