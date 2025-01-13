@@ -13,5 +13,5 @@ export class ProductBoxComponent {
   @Input() size: String = "";
   @Input() price: String = "";
   @Input() rating: String = "";
-  @Input() productImage: String = "";
+  @Input() productImage: any | undefined;
 }

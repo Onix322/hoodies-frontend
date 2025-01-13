@@ -23,8 +23,12 @@ export class ProductService {
   }
 
   public get(id: Number): Observable<ResponseWrapper> {
-
     return this.http.get<ResponseWrapper>(this.url + "get/" + id)
+  }
+
+  public getAmount(amount: number, startFrom: number): Observable<ResponseWrapper> {
+
+    return this.http.get<ResponseWrapper>(this.url + `get/amount/${amount}/${startFrom}`)
   }
 
   public getAll() {

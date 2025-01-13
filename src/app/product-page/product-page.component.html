@@ -2,21 +2,27 @@
 
 <main>
   <section>
+
     <div class="big-image">
-      <img src="{{productImages.at(0)}}" alt="{{title}}">
-    </div>
-    <h1>{{title}}</h1>
-    <p>{{size}}</p>
-    <p>{{productColor}}</p>
-    <p>{{description}}</p>
-    <p>{{price}}</p>
-    <p>{{rating}}</p>
-    <p>{{image}}</p>
-    <div class="product-page-images">
-      @for(image of productImages; track image){
-        <img src="{{image.image}}" alt="{{title}}">
-      }
+      <img src="{{mainImage}}" alt="{{title}}">
     </div>
 
+    <div class="details-box">
+      <h1>{{title}}</h1>
+      <p><strong>Size:</strong> {{size}}</p>
+      <p class="detail">
+        <strong>Color: </strong>
+        <span class="color-circle" style="background: {{productColor.toLowerCase()}}"></span>
+      </p>
+      <p><strong>Price:</strong> {{price}} Euro</p>
+      <p><strong>Rating:</strong> {{rating}}</p>
+      <div class="product-page-images">
+        @for(image of productImages; track image){
+          <img src="{{image.image}}" alt="{{title}}">
+        }
+      </div>
+      <button class="action-button">Add to cart</button>
+      <p><strong>Description:</strong>  <br/><br/> {{description}}</p>
+    </div>
   </section>
 </main>

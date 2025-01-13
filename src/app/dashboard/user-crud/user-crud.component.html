@@ -1,0 +1,49 @@
+<section class="form-box">
+
+  <div class="get-delete-box">
+    <h2>Get or delete a user:</h2>
+    <label for="product-id">Enter user id:</label>
+    <input id="product-id" type="number" name="title" [(ngModel)]="id">
+    <div class="get-delete-box-buttons">
+      <button class="action-button" (click)="getUser()">Get</button>
+      <button class="action-button" (click)="deleteUser()">Delete</button>
+    </div>
+  </div>
+
+  <div class="create-box">
+    <h2>Create new user or edit an existent one:</h2>
+    <form method="POST">
+      <div>
+        <label for="username">Name:</label>
+        <input id="username" type="text" name="title" [(ngModel)]="name">
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" type="email" name="email" [(ngModel)]="email">
+      </div>
+      <div>
+        <label for="phone">Phone:</label>
+        <input id="phone" type="tel" name="phone" [(ngModel)]="phone">
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" type="password" name="password" [(ngModel)]="password">
+      </div>
+      <div>
+        <label for="confirm-password">Confirm password:</label>
+        <input id="confirm-password" type="password" name="confirm-password" [(ngModel)]="confirmPassword">
+      </div>
+      <div>
+        <label for="role">Role:</label>
+        <select id="role"  name="role" [(ngModel)]="role">
+          <option value="CUSTOMER">Customer</option>
+          <option value="ADMIN">Admin</option>
+        </select>
+      </div>
+      <div class="form-buttons">
+        <button class="action-button bg-green" (click)="createUpdateUser()">Save</button>
+        <button class="action-button" >Clean</button>
+      </div>
+    </form>
+  </div>
+</section>

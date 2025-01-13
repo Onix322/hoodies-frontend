@@ -1,24 +1,17 @@
 <div class="container">
-  <header>
-    <img src="logo.svg" />
-    <nav>
-      <a href="">Home</a>
-      <a href="">All products</a>
-      <app-profile-button></app-profile-button>
-    </nav>
-  </header>
-
+  <app-nav></app-nav>
   <aside>
+    <h1>Dashboard</h1>
     <article>
       <h2>Product CRUD:</h2>
-      <button (click)="renderCrudContent(ProductCrudComponent)">Crud product</button>
+      <button (click)="renderCrudContent(ProductCrudComponent)">CRUD product</button>
       <button (click)="renderCrudContent(SeeAllProductsComponent)">See all products</button>
     </article>
 
     <article>
       <h2>User CRUD:</h2>
 <!--      <button (click)="renderCrudContent(CreateUserComponent)">Create user</button>-->
-
+      <button (click)="renderCrudContent(UserCrudComponent)">CRUD user</button>
     </article>
   </aside>
 

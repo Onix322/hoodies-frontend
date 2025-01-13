@@ -1,13 +1,19 @@
 <main class="content">
   <app-collection class="app-collection" title="Hoodies Collection."
                   textStyle="animation-range-start: 250px;
-                            animation-range-end: 160vh">
+                            animation-range-end: 160vh"
+                  [amount]=4
+                  [startFrom]=1
+  >
   </app-collection>
 
   <app-collection class="app-collection" title="Art(&meets Customers."
                   textStyle="animation-range-start: 650px;
                              animation-range-end: 250vh"
-                  containerStyle="margin-top: 100px">
+                  containerStyle="margin-top: 100px"
+                  [amount]=4
+                  [startFrom]=5
+  >
   </app-collection>
 
   <app-send-from>

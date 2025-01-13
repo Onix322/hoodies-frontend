@@ -19,6 +19,9 @@ export class CollectionComponent implements AfterViewInit, OnInit {
   @Input() textStyle: string = "";
   @Input() containerStyle: string = "";
   @Input() articlesStyle: string = "";
+  @Input() amount: number = 4;
+  @Input() startFrom: number = 1;
+
   words: Array<String> = [];
   protected products: Array<any> = new Array<any>();
 
@@ -26,12 +29,9 @@ export class CollectionComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllProducts().then(e =>{
-      console.log("Products found!")
-    })
-      .catch(err =>{
-        console.log(err.error.message)
-      })
+    if(!(this.amount && this.startFrom)) return
+    this.getAmount(this.amount, this.startFrom)
+
   }
 
   ngAfterViewInit(): void {
@@ -61,12 +61,12 @@ export class CollectionComponent implements AfterViewInit, OnInit {
     return arrayWords.map(w => w.replaceAll("(&", " "));
   }
 
-  public async getAllProducts() {
-    this.productService.getAll().subscribe({
+  public async getAmount(amount: number, startFrom: number) {
+    this.productService.getAmount(amount, startFrom).subscribe({
       next: (value: any) => {
-        if(this.products.length >= 4) return
-        this.products = Array.from(value.result)
-        console.log(this.products)
+        console.log(value.result)
+        this.products = value.result
+        console.log(this.products.length)
       },
       error: (err) => {
         console.log(err)

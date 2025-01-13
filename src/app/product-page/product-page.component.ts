@@ -21,7 +21,7 @@ export class ProductPageComponent implements OnInit {
   @Output() description: String = "";
   @Output() price: Number = 0.0;
   @Output() rating: Number = 0;
-  @Output() image: String = "";
+  @Output() mainImage: String = "";
   @Output() productImages: Array<any> = [];
 
   constructor(private route: ActivatedRoute, private productService: ProductService) {
@@ -34,14 +34,15 @@ export class ProductPageComponent implements OnInit {
     this.productService.get(Number.parseInt(productId)).subscribe({
       next: (value) => {
         console.log(value)
-         this.id = value.result.id,
-         this.title = value.result.title,
-         this.size = value.result.size.toLocaleUpperCase(),
-         this.productColor = value.result.productColor.toLocaleUpperCase(),
-         this.description = value.result.description,
-         this.price = value.result.price,
-         this.rating = value.result.rating,
-         this.productImages = value.result.productImages
+        this.id = value.result.id;
+        this.title = value.result.title;
+        this.size = value.result.size.toLocaleUpperCase();
+        this.productColor = value.result.productColor.toLocaleUpperCase();
+        this.description = value.result.description;
+        this.price = value.result.price;
+        this.rating = value.result.rating;
+        this.productImages = value.result.productImages;
+        this.mainImage = value.result.productImages[0].image
       },
       error: (err) =>{
         console.log(err)
