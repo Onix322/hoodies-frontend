@@ -1,0 +1,15 @@
+<main class="login-box">
+  <img src="/logo.svg" alt="Hoodie">
+  <form method="GET">
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" type="email" name="email" [(ngModel)]="email">
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input id="password" type="password" name="password" [(ngModel)]="password">
+    </div>
+    <p>You dont have an account? <br /><a href="/register">Register now!</a></p>
+    <button class="action-button" (click)="login()">Get in.</button>
+  </form>
+</main>

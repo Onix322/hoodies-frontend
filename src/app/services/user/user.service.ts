@@ -25,6 +25,11 @@ export class UserService {
     return this.http.get<ResponseWrapper>(this.url + "get/" + id)
   }
 
+  public loginUser(body: any) {
+    console.log(body)
+    return this.http.post<ResponseWrapper>(this.url + "login", body)
+  }
+
   public delete(id: number) {
     this.http.get(this.url + "delete/" + id)
   }

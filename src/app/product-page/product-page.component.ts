@@ -33,7 +33,7 @@ export class ProductPageComponent implements OnInit {
     if(!productId) return
     this.productService.get(Number.parseInt(productId)).subscribe({
       next: (value) => {
-        console.log(value)
+
         this.id = value.result.id;
         this.title = value.result.title;
         this.size = value.result.size.toLocaleUpperCase();

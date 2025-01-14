@@ -3,3 +3,8 @@
   gap: var(--nav-buttons-gap);
   align-items: center;
 }
+
+.profile-button svg{
+  background: green;
+  width: 100%;
+}

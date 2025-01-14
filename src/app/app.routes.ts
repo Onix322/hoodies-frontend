@@ -3,22 +3,32 @@ import {AllProductsPageComponent} from './all-products-page/all-products-page.co
 import {HomeComponent} from './home/home.component';
 import {DashboardComponent} from './dashboard/dashboard/dashboard.component';
 import {ProductPageComponent} from './product-page/product-page.component';
+import {LoginComponent} from './login/login.component';
 
 export const routes: Routes = [
   {
     path: 'products',
-    component: AllProductsPageComponent
+    component: AllProductsPageComponent,
+    pathMatch: "full"
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    pathMatch: "full"
   },
   {
     path: 'product/:id',
-    component: ProductPageComponent
+    component: ProductPageComponent,
+    pathMatch: "full"
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    pathMatch: "full"
   },
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    pathMatch: "full"
   }
 ];

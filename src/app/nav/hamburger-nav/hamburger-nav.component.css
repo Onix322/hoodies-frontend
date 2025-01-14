@@ -16,13 +16,9 @@
 
 .nav-buttons{
   display: grid;
+  align-items: center;
   grid-template-rows: repeat(3, 1fr);
   list-style: none;
   grid-gap: 20px;
 }
 
-.nav-buttons li{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}

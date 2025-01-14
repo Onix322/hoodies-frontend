@@ -1,4 +1,10 @@
-.cart-button object{
+.cart-button {
+  display: flex;
+  gap: var(--nav-buttons-gap);
+  align-items: center;
+}
+
+.cart-button img{
   vertical-align: middle;
 }
 

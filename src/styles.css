@@ -50,7 +50,7 @@
   /* nav-buttons  */
   --nav-buttons-display: flex;
   --nav-buttons-flex-align-items: center;
-  --nav-buttons-gap: 20px;
+  --nav-buttons-gap: 10px;
   --nav-buttons-font-size: 16px;
   --nav-buttons-padding: var(--no-padding);
   --nav-buttons-margin: var(--no-margin);
@@ -126,6 +126,7 @@ input{
   color: var(--full-white);
   padding-left: 5px;
   align-content: center;
+  outline: none;
 }
 
 input[type="button"]{
