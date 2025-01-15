@@ -38,7 +38,7 @@ export class UserCrudComponent {
     if (this.id < 1 || this.id == null) {
       //id is set null in backend
       //if id == null return object created in db
-      this.userService.createUser(user)
+      this.userService.createUser(user).subscribe()
     } else {
       this.userService.updateUser(user)
     }

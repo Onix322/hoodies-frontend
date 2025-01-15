@@ -1,0 +1,29 @@
+<section class="form-box">
+  <div class="create-box">
+    <img src="/logo.svg">
+    <form method="POST">
+      <div>
+        <label for="username">Name:</label>
+        <input id="username" type="text" name="title" [(ngModel)]="name">
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" type="email" name="email" [(ngModel)]="email">
+      </div>
+      <div>
+        <label for="phone">Phone:</label>
+        <input id="phone" type="tel" name="phone" [(ngModel)]="phone">
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" type="password" name="password" [(ngModel)]="password">
+      </div>
+      <div>
+        <label for="confirm-password">Confirm password:</label>
+        <input id="confirm-password" type="password" name="confirm-password" [(ngModel)]="confirmPassword">
+      </div>
+      <p>You have an account already? <br /> <a href="/login">Get in!</a> </p>
+      <button class="action-button" (click)="createUser()">Role in.</button>
+    </form>
+  </div>
+</section>

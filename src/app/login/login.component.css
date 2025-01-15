@@ -40,3 +40,8 @@
   max-height: 70px;
   border-radius: 10px;
 }
+
+form p a{
+  color: #68a6bb;
+  text-decoration: underline;
+}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from './header/header.component';
 import {ContentComponent} from './content/content.component';
 import {FooterComponent} from '../utils/footer/footer.component';
@@ -14,6 +14,10 @@ import {FooterComponent} from '../utils/footer/footer.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+
+  ngOnInit() {
+    console.log(sessionStorage)
+  }
 
 }

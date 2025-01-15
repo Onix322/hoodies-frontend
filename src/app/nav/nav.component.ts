@@ -4,6 +4,8 @@ import {NavButtonsComponent} from './nav-buttons/nav-buttons.component';
 import {HamburgerButtonComponent} from './nav-buttons/hamburger-button/hamburger-button.component';
 import {HamburgerNavComponent} from './hamburger-nav/hamburger-nav.component';
 import {NgIf} from '@angular/common';
+import {UserService} from '../services/user/user.service';
+import {AuthService} from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -21,6 +23,9 @@ import {NgIf} from '@angular/common';
 export class NavComponent implements AfterViewInit {
 
   public windowSize: number = 801;
+
+  constructor() {
+  }
 
   ngAfterViewInit() {
 

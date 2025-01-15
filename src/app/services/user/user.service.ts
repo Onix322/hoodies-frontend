@@ -14,7 +14,7 @@ export class UserService {
 
   public createUser(body: any) {
     console.log(body)
-    this.http.post(this.url + "post", body).subscribe()
+    return this.http.post(this.url + "post", body)
   }
 
   public updateUser(body: any) {

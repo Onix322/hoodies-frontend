@@ -1,41 +1,44 @@
 import {Injectable} from '@angular/core';
 import {UserService} from '../user/user.service';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService
+{
 
-  private _user: any;
-  private isAuth: boolean = false;
-
-  constructor(private userService: UserService) { }
-
-  get user(): any {
-    return this._user;
+  constructor(private userService: UserService, private router: Router) {
   }
 
-  set user(value: any) {
-    this._user = value;
-  }
-
-  public login(email: String, password: String){
+  public login(email: String, password: String) {
 
     let loginBody: any = {
       email: email,
       password: password
     }
 
-    this.userService.loginUser(loginBody).subscribe({
-      next: (value) =>{
-        this.user = value.result
+    this.userService.loginUser(loginBody).pipe().subscribe({
+      next: (value) => {
 
-        console.log(this.user != null)
-        this.isAuth = this.user != null
+        sessionStorage.setItem("userId", value.result.id)
+
+        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+          this.router.navigate(['/']);
+        });
       },
-      error: (err) => {
-        console.log(err)
-      }
     })
+  }
+
+  public isAuth(): boolean{
+    return !!sessionStorage.getItem("userId")
+  }
+
+  public getUserFromSession(): number{
+
+    let user = sessionStorage.getItem("userId");
+
+    if(!user) return 0;
+    return Number.parseInt(user)
   }
 }

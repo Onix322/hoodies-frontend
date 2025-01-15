@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../services/auth/auth.service';
-import {firstValueFrom} from 'rxjs';
+import {Redirect} from '../utils/redirect/redirect';
 
 @Component({
   selector: 'app-login',
@@ -16,9 +16,11 @@ export class LoginComponent {
   @Input() email: String = "";
   @Input() password: String = "";
 
-  constructor(private authService: AuthService){}
+  constructor(private authService: AuthService, private redirect: Redirect) {
+    this.redirect.toIfAuth("/")
+  }
 
-  public async login(){
+  public login() {
     this.authService.login(this.email, this.password)
   }
 }
