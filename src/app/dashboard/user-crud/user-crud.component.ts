@@ -46,12 +46,18 @@ export class UserCrudComponent {
     this.clear()
   }
 
-  public getUser() {
-    if (this.id < 0) return
+  public getUser(id: number) {
+    if (id < 0) return
     this.clear()
-    this.userService.getUser(this.id).subscribe({
+    this.userService.getUser(id).subscribe({
       next: (value: any) => {
-        console.log(value)
+          this.id = value.result.id,
+          this.name = value.result.name,
+          this.email = value.result.email,
+          this.phone = value.result.phone,
+          this.password = value.result.password,
+          this.confirmPassword = value.result.confirmPassword,
+          this.role = value.result.role
       },
       error: (err) =>{
         console.log(err)
@@ -59,8 +65,8 @@ export class UserCrudComponent {
     })
   }
 
-  public deleteUser() {
-    if (this.id < 1) return
+  public deleteUser(id: number) {
+    if (id < 1) return
 
     this.userService.delete(this.id)
     this.clear()

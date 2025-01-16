@@ -34,11 +34,15 @@ export class AuthService
     return !!sessionStorage.getItem("userId")
   }
 
-  public getUserFromSession(): number{
+  public getCurrentLoggedUser(): number{
 
     let user = sessionStorage.getItem("userId");
 
     if(!user) return 0;
     return Number.parseInt(user)
+  }
+
+  public logout(){
+    sessionStorage.removeItem("userId")
   }
 }

@@ -5,8 +5,8 @@
     <label for="product-id">Enter user id:</label>
     <input id="product-id" type="number" name="title" [(ngModel)]="id">
     <div class="get-delete-box-buttons">
-      <button class="action-button" (click)="getUser()">Get</button>
-      <button class="action-button" (click)="deleteUser()">Delete</button>
+      <button class="action-button" (click)="getUser(id)">Get</button>
+      <button class="action-button" (click)="deleteUser(id)">Delete</button>
     </div>
   </div>
 

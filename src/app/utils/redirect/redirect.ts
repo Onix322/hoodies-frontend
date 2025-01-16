@@ -31,7 +31,7 @@ export class Redirect {
 
   public roleTo(url: string, role: string){
 
-    this.userService.getUser(this.authService.getUserFromSession()).subscribe({
+    this.userService.getUser(this.authService.getCurrentLoggedUser()).subscribe({
       next: value => {
         if(value.result.role == role){
           this.to(url)
