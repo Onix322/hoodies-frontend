@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
   @Output() email: string = "";
   @Output() phone: string = "";
   @Output() role: string = "";
+  @Output() userImage: string = "";
 
   constructor(private authService: AuthService, private userService: UserService, private redirect: Redirect) {
     this.redirect.toIfNotAuth("/login")
@@ -34,6 +35,7 @@ export class ProfileComponent implements OnInit {
         this.email = value.result.email
         this.phone = value.result.phone
         this.role = value.result.role
+        this.userImage = value.result.userImage
       },
       error: err => {
         console.log(err)
