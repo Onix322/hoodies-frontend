@@ -138,6 +138,7 @@ button, input[type="button"]{
 }
 
 .action-button{
+  border-radius: 10px;
   font-weight: var(--font-weight);
   width: var(--see-products-button-width);
   height: var(--see-products-button-height);

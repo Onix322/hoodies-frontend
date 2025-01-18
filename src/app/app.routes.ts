@@ -6,6 +6,7 @@ import {ProductPageComponent} from './product-page/product-page.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {ProfileComponent} from './profile/profile.component';
+import {CartComponent} from './cart/cart.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +37,11 @@ export const routes: Routes = [
   {
     path: 'profile/:id',
     component: ProfileComponent,
+    pathMatch: "full"
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
     pathMatch: "full"
   },
   {

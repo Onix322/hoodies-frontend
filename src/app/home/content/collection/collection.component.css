@@ -7,9 +7,11 @@
   background: linear-gradient(rgba(0, 0, 0, 0) 22%,#282828 22%);
   transition: 0.2s;
   display: flex;
+  gap: 10px;
   flex-direction: column;
   overflow: hidden;
   padding: 20px;
+  border-radius: 10px;
 }
 
 .collection-title{
@@ -75,7 +77,7 @@
   place-items: center;
   grid-column-gap: 20px;
   transition: 0.2s;
-  gap: 20px;
+  gap: 40px;
   padding: 20px;
   height: fit-content;
   margin-top: 430px;
