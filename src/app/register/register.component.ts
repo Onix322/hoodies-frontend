@@ -21,6 +21,7 @@ export class RegisterComponent {
   @Input() password: string = "";
   @Input() confirmPassword: string = "";
   @Input() role: string = "";
+  @Input() userImage: string = "";
 
   constructor(private userService: UserService, private redirect: Redirect) {
       this.redirect.toIfAuth("/")
@@ -34,7 +35,12 @@ export class RegisterComponent {
       phone: this.phone,
       password: this.password,
       confirmPassword: this.confirmPassword,
-      role: "CUSTOMER"
+      role: "CUSTOMER",
+      userImage: this.userImage
+    }
+
+    if(user.userImage == "") {
+      user.userImage = "https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
     }
 
     this.userService.createUser(user).subscribe({

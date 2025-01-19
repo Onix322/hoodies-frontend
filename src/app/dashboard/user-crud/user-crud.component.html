@@ -40,6 +40,10 @@
           <option value="ADMIN">Admin</option>
         </select>
       </div>
+      <div>
+        <label for="user-image">Add an image link:</label>
+        <input id="user-image" type="url" name="user-image" [(ngModel)]="userImage">
+      </div>
       <div class="form-buttons">
         <button class="action-button bg-green" (click)="createUpdateUser()">Save</button>
         <button class="action-button" >Clean</button>

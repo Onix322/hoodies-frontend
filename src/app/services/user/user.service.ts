@@ -13,7 +13,6 @@ export class UserService {
   }
 
   public createUser(body: any) {
-    console.log(body)
     return this.http.post(this.url + "post", body)
   }
 
@@ -26,7 +25,6 @@ export class UserService {
   }
 
   public loginUser(body: any) {
-    console.log(body)
     return this.http.post<ResponseWrapper>(this.url + "login", body)
   }
 

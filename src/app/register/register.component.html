@@ -22,6 +22,10 @@
         <label for="confirm-password">Confirm password:</label>
         <input id="confirm-password" type="password" name="confirm-password" [(ngModel)]="confirmPassword">
       </div>
+      <div>
+        <label for="user-image">Add an image link:</label>
+        <input id="user-image" type="url" name="user-image" [(ngModel)]="userImage">
+      </div>
       <p>You have an account already? <br /> <a href="/login">Get in!</a> </p>
       <button class="action-button" (click)="createUser()">Role in.</button>
     </form>

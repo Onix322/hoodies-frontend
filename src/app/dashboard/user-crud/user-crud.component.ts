@@ -20,6 +20,7 @@ export class UserCrudComponent {
   @Input() password: string = "";
   @Input() confirmPassword: string = "";
   @Input() role: string = "";
+  @Input() userImage: string = "";
 
   constructor(private userService: UserService) {
   }
@@ -32,7 +33,12 @@ export class UserCrudComponent {
       phone: this.phone,
       password: this.password,
       confirmPassword: this.confirmPassword,
-      role: this.role
+      role: this.role,
+      userImage: this.userImage
+    }
+
+    if(user.userImage == "") {
+      user.userImage = "https://thumbs.dreamstime.com/b/default-profile-picture-avatar-photo-placeholder-vector-illustration-default-profile-picture-avatar-photo-placeholder-vector-189495158.jpg"
     }
 
     if (this.id < 1 || this.id == null) {
