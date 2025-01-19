@@ -18,11 +18,11 @@ export class ProductService {
     this.http.post(this.url + "post", body).subscribe()
   }
 
-  public delete(id: Number) {
+  public delete(id: number) {
     this.http.delete(this.url + "delete/" + id).subscribe()
   }
 
-  public get(id: Number): Observable<ResponseWrapper> {
+  public get(id: number): Observable<ResponseWrapper> {
     return this.http.get<ResponseWrapper>(this.url + "get/" + id)
   }
 

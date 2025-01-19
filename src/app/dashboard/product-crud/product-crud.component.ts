@@ -22,7 +22,7 @@ export class ProductCrudComponent {
   @Input() rating: Number = 0;
   @Input() image: String = "";
   @Input() productImages: Array<any> = [];
-  @Input() productIdEntered: Number = 0;
+  @Input() productIdEntered: number = 0;
 
   constructor(private productService: ProductService) {
   }

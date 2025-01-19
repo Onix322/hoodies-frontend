@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
+import {Redirect} from '../../utils/redirect/redirect';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class CartService {
 
   private url: string = "http://localhost:8080/cart"
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient, private authService: AuthService, private redirect: Redirect) {
   }
 
   public getUserCart(id: number) {
@@ -28,6 +29,7 @@ export class CartService {
   }
 
   public addToCart(body: any) {
+    this.redirect.toIfNotAuth("/login")
     return this.http.put(this.url + "/add-to-cart", body).subscribe(() => {
       this.getUserCart(this.authService.getCurrentLoggedUser()).subscribe({
         next: (value: any) => {

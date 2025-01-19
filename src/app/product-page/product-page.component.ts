@@ -2,6 +2,9 @@ import {Component, Input, OnInit, Output} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NavComponent} from '../nav/nav.component';
 import {ProductService} from '../services/product/product.service';
+import {CartService} from '../services/cart/cart.service';
+import {Redirect} from '../utils/redirect/redirect';
+import {AuthService} from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-product-page',
@@ -24,7 +27,7 @@ export class ProductPageComponent implements OnInit {
   @Output() mainImage: String = "";
   @Output() productImages: Array<any> = [];
 
-  constructor(private route: ActivatedRoute, private productService: ProductService) {
+  constructor(private authService: AuthService, private redirect: Redirect, private route: ActivatedRoute, private productService: ProductService, private cartService: CartService) {
   }
 
   ngOnInit(): void {
@@ -48,6 +51,12 @@ export class ProductPageComponent implements OnInit {
         console.log(err)
       }
     })
+
+  }
+
+  public addToCart(){
+
+    this.cartService.addToCart({userId: this.authService.getCurrentLoggedUser(), productId: this.id})
 
   }
 }
