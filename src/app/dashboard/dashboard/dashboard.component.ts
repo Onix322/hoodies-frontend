@@ -23,6 +23,7 @@ export class DashboardComponent {
   public activeView: boolean = false;
 
   constructor(private redirect: Redirect) {
+    this.redirect.toIfNotAuth("/login")
     this.redirect.roleTo("/", "CUSTOMER")
   }
 

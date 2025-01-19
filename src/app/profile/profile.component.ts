@@ -45,6 +45,6 @@ export class ProfileComponent implements OnInit {
 
   public logOut() {
     this.authService.logout()
-    this.redirect.to("/")
+    window.location.replace("/")
   }
 }

@@ -12,24 +12,30 @@ export class Redirect {
   }
 
   public to(url: string){
-    this.router.navigateByUrl(url, {skipLocationChange: true}).then(r => {
+    this.router.navigateByUrl(url, {skipLocationChange: false, replaceUrl: true}).then(r => {
       return r
     })
   }
 
   public toIfAuth(url: string){
-    if(this.authService.isAuth()){
-      this.to(url)
-    }
+    this.authService.isAuth().subscribe({
+      next: (value) => {
+        if(value) this.to(url)
+      }
+    })
   }
 
   public toIfNotAuth(url: string){
-    if(!this.authService.isAuth()){
-      this.to(url)
-    }
+    this.authService.isAuth().subscribe({
+      next: (value) => {
+        if(!value) this.to(url)
+      }
+    })
   }
 
   public roleTo(url: string, role: string){
+
+
 
     this.userService.getUser(this.authService.getCurrentLoggedUser()).subscribe({
       next: value => {

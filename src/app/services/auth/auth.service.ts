@@ -1,14 +1,18 @@
 import {Injectable} from '@angular/core';
 import {UserService} from '../user/user.service';
 import {Router} from '@angular/router';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Redirect} from '../../utils/redirect/redirect';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService
-{
+export class AuthService {
 
-  constructor(private userService: UserService, private router: Router) {
+  private isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  constructor(private userService: UserService) {
+
   }
 
   public login(email: String, password: String) {
@@ -23,15 +27,14 @@ export class AuthService
 
         sessionStorage.setItem("userId", value.result.id)
 
-        this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-          this.router.navigate(['/']);
-        });
+        window.location.reload()
       },
     })
   }
 
-  public isAuth(): boolean{
-    return !!sessionStorage.getItem("userId")
+  public isAuth(): Observable<boolean>{
+    this.isAuthenticated.next(!!sessionStorage.getItem("userId"))
+    return this.isAuthenticated.asObservable();
   }
 
   public getCurrentLoggedUser(): number{

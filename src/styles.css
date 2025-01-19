@@ -145,4 +145,9 @@ button, input[type="button"]{
   background-color: var(--see-products-button-background-color);
   color: var(--see-products-button-color);
   font-size: var(--see-products-button-font-size);
+  transition: 0.2s
+}
+
+.action-button:hover {
+  background-color: #c40000;
 }

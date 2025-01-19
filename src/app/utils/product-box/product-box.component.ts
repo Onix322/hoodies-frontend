@@ -23,6 +23,6 @@ export class ProductBoxComponent {
   public addToCart(){
     let userId = this.authService.getCurrentLoggedUser()
 
-    this.cartService.addProductToCart({userId: userId, productId: this.id})
+    this.cartService.addToCart({userId: userId, productId: this.id})
   }
 }
