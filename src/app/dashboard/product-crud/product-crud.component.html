@@ -3,7 +3,7 @@
   <div class="get-delete-box">
     <h2>Get or delete a product:</h2>
     <label for="product-id">Enter product id:</label>
-    <input id="product-id" type="number" name="title" [(ngModel)]="productIdEntered">
+    <input id="product-id" type="number" name="productIdEntered" [(ngModel)]="productIdEntered">
     <div class="get-delete-box-buttons">
       <button class="action-button" (click)="getProduct()">Get</button>
       <button class="action-button" (click)="deleteProduct()">Delete</button>
@@ -12,14 +12,14 @@
 
   <div class="create-box">
     <h2>Create new product or edit an existent one:</h2>
-    <form method="POST">
+    <form method="POST" name="register-product">
       <div>
         <label for="title">Title:</label>
-        <input id="title" type="text" name="title" [(ngModel)]="title">
+        <input id="title" type="text" name="title" [(ngModel)]="title" data-invalid-message="Title invalid" required minlength="2">
       </div>
       <div>
         <label for="size">Size:</label>
-        <select id="size" [(ngModel)]="size" name="size">
+        <select id="size" [(ngModel)]="size" name="size" data-invalid-message="Size is mandatory" required>
           <option value="XXS">S</option>
           <option value="XS">XS</option>
           <option value="S">S</option>
@@ -31,16 +31,16 @@
       </div>
       <div>
         <label for="rating">Rating:</label>
-        <input id="rating" type="number" min="0" max="5" name="rating" [(ngModel)]="rating">
+        <input id="rating" type="number" min="1" max="5" name="rating" data-invalid-message="Rating between 1- 5" [(ngModel)]="rating">
       </div>
       <div>
         <label for="description">Description:</label>
     <!--      <input id="description" type="text">-->
-        <textarea id="description" [(ngModel)]="description" name="description"></textarea>
+        <textarea id="description" [(ngModel)]="description" name="description" data-invalid-message="Description more then 2 letters" required minlength="2"></textarea>
       </div>
       <div>
         <label for="productColor">Product color:</label>
-        <select id="productColor" [(ngModel)]="productColor" name="productColor">
+        <select id="productColor" [(ngModel)]="productColor" name="product-color" data-invalid-message="Product color mandatory" required>
           <option value="Red">Red</option>
           <option value="Blue">Blue</option>
           <option value="Yellow">Yellow</option>
@@ -52,12 +52,12 @@
         </select></div>
       <div>
         <label for="price">Price:</label>
-        <input id="price" type="number" min="0.1" [(ngModel)]="price" name="price">
+        <input id="price" type="number" min="1" [(ngModel)]="price" name="price" data-invalid-message="Price more than 1 $" required>
       </div>
       <div>
         <label for="productImageField">Product image:</label>
         <div class="filed-horizontal">
-          <input id="productImageField" type="text" multiple [(ngModel)]="image" name="productImages">
+          <input id="productImageField" type="text" multiple [(ngModel)]="image" name="product-images" required>
           <button class="action-button bg-green" (click)="addToArray(productImages, {image: image})">Add</button>
         </div>
         <div class="product-images">
