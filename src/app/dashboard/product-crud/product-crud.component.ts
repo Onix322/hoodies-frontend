@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {ProductService} from '../../services/product/product.service';
+import {FormValidator} from '../../utils/form-validator/form-validator';
 
 @Component({
   selector: 'app-create-product',
@@ -24,25 +25,18 @@ export class ProductCrudComponent implements AfterViewInit{
   @Input() productImages: Array<any> = [];
   @Input() productIdEntered: number = 0;
 
-
-
-  private formElements: Array<HTMLFormElement> = new Array<HTMLFormElement>()
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService, private validator: FormValidator) {
 
   }
 
   ngAfterViewInit() {
-
-    ////////////
-    //fa functia sa nu mai aiba nevoie de pre-validator ci sa treaca peste null or unidetified
-    ////////////
-
-    validate("register-product")
+    this.validator.validate("register-product", Array.of("product-images"))
   }
 
   public createProduct() {
 
-    if(!validate('register-products')) return
+    if(!this.validator.validateElementIf("productImageField", () => this.productImages.length > 0)) return;
+    if(!this.validator.validate("register-product", Array.of("product-images"))) return
 
     const product = {
       id: 0,
@@ -96,9 +90,10 @@ export class ProductCrudComponent implements AfterViewInit{
   }
 
   public addToArray(array: Array<any>, object: any) {
+
     array.push(object)
+    if(!this.validator.validateElementIf("productImageField", () => this.productImages.length > 0)) return;
     console.log(array)
-    validate('register-products')
   }
 
   public deleteFromArray(array: Array<any>, index: any) {
@@ -119,56 +114,6 @@ export class ProductCrudComponent implements AfterViewInit{
     this.productImages = [];
     this.productIdEntered = 0;
   }
-}
-
-function validate(nameForm: string){
-
-  const form = document.forms.namedItem(nameForm)
-
-  if(!form) {
-    console.error(nameForm + " form not found")
-    return
-  }
-
-  const inputs = form.getElementsByTagName('input')
-  const selects = form.getElementsByTagName('select')
-  const textAreas = form.getElementsByTagName('textarea')
-
-  let invalidBorderValue = "1px solid red"
-  let validBorderValue = "1px solid green"
-
-  const check = (array:HTMLCollectionOf<any> | undefined) => {
-
-    if(!array) {
-      console.error(array + " is undefined")
-      return
-    }
-
-    for (const element of array) {
-      if (!element) continue
-      const message = document.createElement('p')
-      message.innerHTML = <string>element.dataset['invalidMessage']
-      message.style.color = "red"
-      message.style.margin = "0"
-
-      element.addEventListener('input', () => {
-        if (element.checkValidity()) {
-          message.remove()
-          element.style.border = validBorderValue;
-        } else {
-          element.parentElement?.appendChild(message)
-          element.style.border = invalidBorderValue;
-        }
-      })
-    }
-  }
-
-  check(inputs)
-  check(selects)
-  check(textAreas)
-
-  console.log(form.checkValidity())
-  return form.checkValidity()
 }
 
 
