@@ -1,6 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {UserService} from '../../services/user/user.service';
+import {FormValidator} from '../../utils/form-validator/form-validator';
 
 @Component({
   selector: 'app-user-crud',
@@ -11,7 +12,7 @@ import {UserService} from '../../services/user/user.service';
   templateUrl: './user-crud.component.html',
   styleUrl: './user-crud.component.css'
 })
-export class UserCrudComponent {
+export class UserCrudComponent implements AfterViewInit{
 
   @Input() id: number = 0;
   @Input() name: string = "";
@@ -22,10 +23,17 @@ export class UserCrudComponent {
   @Input() role: string = "";
   @Input() userImage: string = "";
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private validator: FormValidator) {
+  }
+
+  ngAfterViewInit() {
+    this.validator.validate("register-user")
   }
 
   public createUpdateUser() {
+
+    if(!this.validator.validate("register-user")) return
+
     const user = {
       id: this.id,
       name: this.name,

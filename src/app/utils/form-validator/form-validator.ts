@@ -1,5 +1,20 @@
 import {Injectable, Input, Predicate} from '@angular/core';
 
+
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////
+// TO MAKE IT WORK YOU NEED TO:
+//
+//1. Implement in the component (!where the form is located!) AfterViewInit interface
+//2. you need to add attribute validators in your from elements (ex: input has minlength)
+//3. Add required attribute if you want to be mandatory
+//4. add 'data-invalid-message' for custom invalid messages
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
+
+
 @Injectable({
   providedIn: "root"
 })
@@ -28,16 +43,19 @@ export class FormValidator {
     const selects: HTMLCollectionOf<HTMLSelectElement> = form.getElementsByTagName('select')
     const textAreas: HTMLCollectionOf<HTMLTextAreaElement> = form.getElementsByTagName('textarea')
 
-    if(this.checkArray(inputs, exceptNames)){
+    //added *.length == 0 because some of them may not exist so the list is empty
+
+    if(inputs.length == 0 || this.checkArray(inputs, exceptNames)){
       validArrays++
     }
-    if(this.checkArray(selects, exceptNames)){
+    if(selects.length == 0 || this.checkArray(selects, exceptNames)){
       validArrays++
     }
-    if(this.checkArray(textAreas, exceptNames)){
+    if(textAreas.length == 0 || this.checkArray(textAreas, exceptNames)){
       validArrays++
     }
 
+    console.log(validArrays)
     return validArrays == 3;
   }
 
@@ -61,7 +79,6 @@ export class FormValidator {
       }
     }
 
-    console.log('validatorArray', validElementCounter == array.length, validElementCounter)
     return validElementCounter == array.length;
   }
 
@@ -89,12 +106,13 @@ export class FormValidator {
     let message: HTMLParagraphElement = this.getMessageFromElement(element)
 
     if (callback(true)) {
-      this.deleteAllInvalidMessages()
+      this.deleteAllInvalidMessages(element)
       element.style.border = this.validBorderValue;
       return true
     } else {
-      this.deleteAllInvalidMessages()
-      element.parentElement?.appendChild(message)
+      if(!this.invalidMessageExist(element)){
+        element.parentElement?.appendChild(message)
+      }
       element.style.border = this.invalidBorderValue;
       return false
     }
@@ -115,18 +133,32 @@ export class FormValidator {
     let message: HTMLParagraphElement = this.getMessageFromElement(element)
 
     if (element.checkValidity()) {
-      this.deleteAllInvalidMessages()
+      this.deleteAllInvalidMessages(element)
       element.style.border = this.validBorderValue;
     } else {
-      this.deleteAllInvalidMessages()
-      element.parentElement?.appendChild(message)
+      if(!this.invalidMessageExist(element)){
+        element.parentElement?.appendChild(message)
+      }
       element.style.border = this.invalidBorderValue;
     }
   }
 
-  private deleteAllInvalidMessages(){
-    document.querySelectorAll(".invalid-message").forEach(mess => {
-      mess.remove()
-    })
+  private invalidMessageExist(element: HTMLInputElement | HTMLFormElement | HTMLSelectElement | HTMLTextAreaElement | HTMLElement){
+
+    const children = element.parentElement?.children
+    if(!children) return false
+    return Array.from(children)
+      .some(child => child.classList.contains("invalid-message"))
+  }
+
+  private deleteAllInvalidMessages(element: HTMLInputElement | HTMLFormElement | HTMLSelectElement | HTMLTextAreaElement | HTMLElement){
+    const children = element.parentElement?.children
+    if(!children) return
+    Array.from(children)
+      .some(child => {
+        if(child.classList.contains("invalid-message")){
+          child.remove()
+        }
+      })
   }
 }
