@@ -1,7 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {UserService} from '../services/user/user.service';
 import {Redirect} from '../utils/redirect/redirect';
+import {FormValidator} from '../utils/form-validator/form-validator';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,7 @@ import {Redirect} from '../utils/redirect/redirect';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent implements AfterViewInit{
 
   @Input() id: number = 0;
   @Input() name: string = "";
@@ -23,11 +24,18 @@ export class RegisterComponent {
   @Input() role: string = "";
   @Input() userImage: string = "";
 
-  constructor(private userService: UserService, private redirect: Redirect) {
-      this.redirect.toIfAuth("/")
+  constructor(private userService: UserService, private redirect: Redirect, private validator: FormValidator) {
+    this.redirect.toIfAuth("/")
+  }
+
+  ngAfterViewInit() {
+    this.validator.validate("register-user")
   }
 
   public createUser() {
+
+    if(!this.validator.validate("register-user")) return
+
     const user = {
       id: this.id,
       name: this.name,

@@ -156,3 +156,31 @@ button, input[type="button"]{
   background-color: #c40000;
 }
 
+.notification{
+  background-color: #171717;
+  color: white;
+  padding: 20px;
+  position: fixed;
+  top: -100px;
+  left: 50%;
+  z-index: 100;
+  font-weight: bold;
+  border-radius: 10px;
+  transform: translate(-50%);
+  transition: 0.2s;
+
+}
+
+.notification-valid{
+  color: green;
+}
+
+.notification-invalid{
+  color: red;
+}
+
+.notification-active{
+  top: 100px;
+}
+
+

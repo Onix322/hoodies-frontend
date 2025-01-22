@@ -3,6 +3,7 @@ import {UserService} from '../user/user.service';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Redirect} from '../../utils/redirect/redirect';
+import {Notification} from '../../utils/notifications/notification/notification';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,11 @@ export class AuthService {
         sessionStorage.setItem("userId", value.result.id)
 
         window.location.reload()
+
       },
+      error: () => {
+        Notification.notifyInvalid("This account does not exist!")
+      }
     })
   }
 

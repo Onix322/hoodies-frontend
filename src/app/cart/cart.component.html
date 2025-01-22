@@ -1,26 +1,29 @@
 <app-nav></app-nav>
 
-<main class="cart-content" #cartContent>
+<main class="cart-content">
   <div class="products-container">
 
-    @for (product of products;track product){
-      <div class="product-box">
-        <img src="{{product.productImages[0].image}}">
+    @if(products.length > 0){
+      @for (product of products;track product){
+        <div class="product-box">
+          <img src="{{product.productImages[0].image}}">
 
-        <div class="details">
-          <h3>{{product.title}}</h3>
-          <p>Size: {{product.size}}</p>
-          <p>Rating: {{product.rating}}</p>
-          <p>Price: {{product.price}} $</p>
+          <div class="details">
+            <h3>{{product.title}}</h3>
+            <p>Size: {{product.size}}</p>
+            <p>Rating: {{product.rating}}</p>
+            <p>Price: {{product.price}} $</p>
 
-          <div class="buttons">
-            <a href="/product/{{product.id}}"><button class="action-button">See product</button></a>
-            <button class="action-button" (click)="removeFromCart(product.id)">Remove from basket</button>
+            <div class="buttons">
+              <a href="/product/{{product.id}}"><button class="action-button">See product</button></a>
+              <button class="action-button" (click)="removeFromCart(product.id)">Remove from basket</button>
+            </div>
           </div>
         </div>
-      </div>
+      }
+    } @else {
+     <h2 class="products-placeholder"> You don't have any products yet!</h2>
     }
-
   </div>
 
   <div class="summary">
@@ -30,3 +33,6 @@
     <button class="action-button" (click)="placeOrder()"> Send order</button>
   </div>
 </main>
+
+<app-footer></app-footer>
+

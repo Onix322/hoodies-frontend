@@ -57,7 +57,7 @@
       <div>
         <label for="productImageField">Product image:</label>
         <div class="filed-horizontal">
-          <input id="productImageField" type="text" multiple [(ngModel)]="image" name="product-images" data-invalid-message="You must add at least 1 image link" required>
+          <input id="productImageField" type="url" [(ngModel)]="image" name="product-images" data-invalid-message="You must add at least 1 image link" required>
           <button class="action-button bg-green" (click)="addToArray(productImages, {image: image})">Add</button>
         </div>
         <div class="product-images">

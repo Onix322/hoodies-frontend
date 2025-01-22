@@ -97,25 +97,28 @@ export class FormValidator {
 
   public validateElementIf(elementName: string, callback: Predicate<boolean>): boolean{
 
-    let element: HTMLElement | null = document.getElementById(elementName)
-
+    const element: HTMLElement | null = document.getElementById(elementName)
+    let valid = false;
     if(!element){
       throw Error("Invalid element id")
     }
 
-    let message: HTMLParagraphElement = this.getMessageFromElement(element)
 
-    if (callback(true)) {
-      this.deleteAllInvalidMessages(element)
-      element.style.border = this.validBorderValue;
-      return true
-    } else {
-      if(!this.invalidMessageExist(element)){
-        element.parentElement?.appendChild(message)
+    let message: HTMLParagraphElement = this.getMessageFromElement(element)
+    element.addEventListener("focus", () =>{
+      if (callback(true)) {
+        this.deleteAllInvalidMessages(element)
+        element.style.border = this.validBorderValue;
+        valid = true
+      } else {
+        if(!this.invalidMessageExist(element)){
+          element.parentElement?.appendChild(message)
+        }
+        element.style.border = this.invalidBorderValue;
       }
-      element.style.border = this.invalidBorderValue;
-      return false
-    }
+    })
+
+    return valid
   }
 
   private getMessageFromElement(element: HTMLInputElement | HTMLFormElement | HTMLSelectElement | HTMLTextAreaElement | HTMLElement): HTMLParagraphElement{

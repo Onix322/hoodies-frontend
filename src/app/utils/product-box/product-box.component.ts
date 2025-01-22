@@ -23,6 +23,11 @@ export class ProductBoxComponent {
   public addToCart(){
     let userId = this.authService.getCurrentLoggedUser()
 
-    this.cartService.addToCart({userId: userId, productId: this.id})
+    this.cartService.verifyExistenceOfProduct(userId, Number.parseInt(this.id.toString())).subscribe({
+      next: (value: any) => {
+        if(value.result) return
+        this.cartService.addToCart({userId: userId, productId: this.id})
+      }
+    })
   }
 }

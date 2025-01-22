@@ -31,6 +31,7 @@ export class ProductCrudComponent implements AfterViewInit{
 
   ngAfterViewInit() {
     this.validator.validate("register-product", Array.of("product-images"))
+    this.validator.validateElementIf("productImageField", () => this.productImages.length > 0)
   }
 
   public createProduct() {
@@ -93,7 +94,6 @@ export class ProductCrudComponent implements AfterViewInit{
 
     array.push(object)
     if(!this.validator.validateElementIf("productImageField", () => this.productImages.length > 0)) return;
-    console.log(array)
   }
 
   public deleteFromArray(array: Array<any>, index: any) {

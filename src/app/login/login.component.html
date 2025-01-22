@@ -1,15 +1,17 @@
 <main class="login-box">
   <img src="/logo.svg" alt="Hoodie">
-  <form method="GET">
+  <form method="GET" name="login-user">
     <div>
       <label for="email">Email:</label>
-      <input id="email" type="email" name="email" [(ngModel)]="email">
+      <input id="email" type="email" name="email" [(ngModel)]="email" data-invalid-message="Must contain a valid email. E.g. you@you.com" required>
     </div>
     <div>
       <label for="password">Password:</label>
-      <input id="password" type="password" name="password" [(ngModel)]="password">
+      <input id="password" type="password" name="password" [(ngModel)]="password" data-invalid-message="Enter a password" required>
     </div>
-    <p>You dont have an account? <br /><a href="/register">Register now!</a></p>
-    <button class="action-button" (click)="login()">Get in.</button>
+    <div>
+      <p>You dont have an account? <br /><a href="/register">Register now!</a></p>
+      <button class="action-button" (click)="login()">Get in.</button>
+    </div>
   </form>
 </main>

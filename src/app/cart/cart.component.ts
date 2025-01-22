@@ -4,11 +4,14 @@ import {AuthService} from '../services/auth/auth.service';
 import {CartService} from '../services/cart/cart.service';
 import {Redirect} from '../utils/redirect/redirect';
 import {OrderService} from '../services/order/order.service';
+import {FooterComponent} from '../utils/footer/footer.component';
+import {Notification} from '../utils/notifications/notification/notification';
 
 @Component({
   selector: 'app-cart',
   imports: [
-    NavComponent
+    NavComponent,
+    FooterComponent
   ],
   standalone: true,
   templateUrl: './cart.component.html',
@@ -32,8 +35,15 @@ export class CartComponent implements OnInit {
   public removeFromCart(productId: number) {
     let userId = this.authService.getCurrentLoggedUser()
     this.cartService.removeFromCart({userId: userId, productId: productId})
-      .subscribe(() => {
-        this.refresh()
+      .subscribe({
+        next: () => {
+          Notification.notifyValid("Product removed successfully")
+          this.refresh()
+        },
+        error: () => {
+          Notification.notifyInvalid("Product has not been removed.")
+          this.refresh()
+        }
       })
   }
 
@@ -91,10 +101,10 @@ export class CartComponent implements OnInit {
     this.orderService.createOrder(body).subscribe({
       next: () => {
         this.deleteAllProductFromCart()
-        alert("Order placed successfully!")
+        Notification.notifyValid("Order placed!")
       },
       error: (err) => {
-        alert(err.error.message)
+        Notification.notifyInvalid("Order has not been placed!")
       }
     })
   }
