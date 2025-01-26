@@ -1,0 +1,52 @@
+<section class="form-box">
+  <div class="get-delete-box">
+    <label for="product-id">Enter user id:</label>
+    <input id="product-id" type="number" name="title" [(ngModel)]="id">
+    <div class="get-delete-box-buttons">
+      <button class="action-button" (click)="getUser(id)">Get user details</button>
+      <button class="action-button" (click)="deactivateUser(id)">Deactivate user</button>
+      <button class="action-button" (click)="activateUser(id)">Activate user</button>
+      <button class="action-button" (click)="changePasswordPopup()">Change password</button>
+    </div>
+  </div>
+
+  <div>
+    <h3>User details / update section:</h3>
+    <form method="POST" name="edit-user" class="form-box">
+      <div>
+        <label for="username">Name:</label>
+        <input id="username" type="text" name="title" [(ngModel)]="name" data-invalid-message="Name is mandatory. Minimum length is 4 letters" minlength="4" required>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input id="email" type="email" name="email" [(ngModel)]="email" data-invalid-message="Must contain a valid email. E.g. you@you.com" required>
+      </div>
+      <div>
+        <label for="phone">Phone:</label>
+        <input id="phone" type="tel" name="phone" [(ngModel)]="phone" data-invalid-message="Enter a phone number. Minimum 4 numbers long" minlength="4" required>
+      </div>
+      <div>
+        <label for="role">Role:</label>
+        <select id="role"  name="role" [(ngModel)]="role" data-invalid-message="Role mandatory." required>
+          <option value="CUSTOMER">Customer</option>
+          <option value="ADMIN">Admin</option>
+        </select>
+      </div>
+      <div>
+        <label for="user-image">Add an image link:</label>
+        <input id="user-image" type="url" name="user-image" [(ngModel)]="userImage" data-invalid-message="Optional but if you add it must be an url.">
+      </div>
+      <div>
+        <label for="activationStatus">Activation status:</label>
+        <select id="activationStatus" [(ngModel)]="activationStatus" name="activation-status" data-invalid-message="Activation Status mandatory" required>
+          <option value="ACTIVATED">Activated</option>
+          <option value="DEACTIVATED">Deactivated</option>
+        </select>
+      </div>
+      <div class="form-buttons">
+        <button class="action-button bg-green" (click)="editUser()">Save</button>
+        <button class="action-button" (click)="this.clear()">Clean</button>
+      </div>
+    </form>
+  </div>
+</section>

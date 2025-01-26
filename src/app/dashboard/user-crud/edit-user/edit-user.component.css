@@ -1,0 +1,80 @@
+
+.form-box{
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  max-width: 500px;
+}
+
+.form-box div{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bg-green{
+  background-color: green;
+}
+
+div.product-images{
+  display: flex;
+  flex-direction: row !important;
+  align-items: start;
+}
+
+.filed-horizontal{
+  flex-direction: row !important;
+}
+
+.get-delete-box-buttons{
+  flex-direction: row !important;
+  flex-wrap: wrap;
+}
+
+.form-box form{
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 520px;
+}
+
+input, textarea, select{
+  background-color: transparent;
+  border: solid 1px white;
+  padding: 10px;
+  color: white;
+}
+
+textarea{
+  min-height: 300px;
+}
+
+option{
+  color:black
+}
+
+.action-button{
+  max-width: fit-content;
+  max-height: fit-content;
+  padding: 15px;
+}
+
+.form-buttons{
+  display: flex;
+  flex-direction: row !important;
+  justify-content: end;
+  align-items: end;
+}
+
+.form-box form div:nth-child(4) textarea{
+  height: 100%;
+}
+
+dialog{
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: 0;
+  background-color: white;
+}

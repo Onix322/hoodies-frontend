@@ -5,7 +5,6 @@ import {NavComponent} from '../nav/nav.component';
 @Component({
   selector: 'app-not-found-page',
   imports: [
-    SeeProductsButtonComponent,
     NavComponent
   ],
   standalone: true,

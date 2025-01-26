@@ -7,6 +7,7 @@ import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {ProfileComponent} from './profile/profile.component';
 import {CartComponent} from './cart/cart.component';
+import {NotFoundPageComponent} from './not-found-page/not-found-page.component';
 
 export const routes: Routes = [
   {
@@ -45,7 +46,19 @@ export const routes: Routes = [
     pathMatch: "full"
   },
   {
+    path: 'home',
+    pathMatch: "full",
+    component: HomeComponent
+  },
+  {
     path: '',
-    component: HomeComponent,
-  }
+    pathMatch: "full",
+    component: HomeComponent
+  },
+  {
+    path: '**',
+    pathMatch: "full",
+    component: NotFoundPageComponent
+  },
+  { path: '404', component: NotFoundPageComponent },
 ];

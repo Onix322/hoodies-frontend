@@ -17,7 +17,7 @@ export class UserService {
   }
 
   public updateUser(body: any) {
-    this.http.put(this.url + "put", body)
+    return this.http.put(this.url + "put", body)
   }
 
   public getUser(id: number) {
@@ -28,7 +28,11 @@ export class UserService {
     return this.http.post<ResponseWrapper>(this.url + "login", body)
   }
 
-  public delete(id: number) {
-    this.http.get(this.url + "delete/" + id)
+  public deactivate(id: number) {
+    return this.http.delete(this.url + "deactivate/" + id)
+  }
+
+  public activate(id: number) {
+    return this.http.delete(this.url + "activate/" + id)
   }
 }

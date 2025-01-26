@@ -4,9 +4,8 @@ import {NgIf} from '@angular/common';
 import {UserCrudComponent} from '../user-crud/user-crud.component';
 import {SeeAllProductsComponent} from '../product-crud/see-all-products/see-all-products.component';
 import {NavComponent} from '../../nav/nav.component';
-import {AuthService} from '../../services/auth/auth.service';
-import {UserService} from '../../services/user/user.service';
 import {Redirect} from '../../utils/redirect/redirect';
+import {RenderView} from '../../utils/render-view/render-view';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,23 +16,26 @@ import {Redirect} from '../../utils/redirect/redirect';
 })
 export class DashboardComponent {
 
-  @ViewChild("content", {read: ViewContainerRef}) content: ViewContainerRef | undefined;
+  @ViewChild("content", {read: ViewContainerRef})
+  content: ViewContainerRef | undefined;
+
   protected readonly ProductCrudComponent = ProductCrudComponent;
+  protected readonly UserCrudComponent = UserCrudComponent;
+  protected readonly SeeAllProductsComponent = SeeAllProductsComponent;
 
-  public activeView: boolean = false;
-
-  constructor(private redirect: Redirect) {
+  constructor(private redirect: Redirect, private render: RenderView) {
     this.redirect.toIfNotAuth("/login")
     this.redirect.roleTo("/", "CUSTOMER")
   }
 
   public renderCrudContent(component: any) {
-    if (!this.content) return;
-    this.activeView = true;
-    this.content.clear()
-    this.content.createComponent(component)
+
+    this.render.setContentElement = this.content
+
+    this.render.render(component)
   }
 
-  protected readonly UserCrudComponent = UserCrudComponent;
-  protected readonly SeeAllProductsComponent = SeeAllProductsComponent;
+  public getCurrentView(){
+    return this.render.activeView
+  }
 }
