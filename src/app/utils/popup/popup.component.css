@@ -1,0 +1,27 @@
+.popup-container{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.58);
+  z-index: 99;
+  transition: 0.2s;
+}
+.popup{
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  padding: 20px;
+  top: 50%;
+  transform: translate(0, -50%);
+  margin: 0 auto;
+}
+
+.action-button{
+  height: fit-content;
+  width: fit-content;
+  padding: 15px;
+  float: right;
+}
