@@ -3,7 +3,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FormValidator} from '../../../utils/form-validator/form-validator';
 import {Notification} from '../../../utils/notifications/notification/notification';
 import {UserService} from '../../../services/user/user.service';
-import {PopupComponent} from '../../../utils/popup/popup.component';
 import {ChangePasswordComponent} from '../../../utils/popup/change-password/change-password.component';
 
 @Component({
@@ -11,7 +10,6 @@ import {ChangePasswordComponent} from '../../../utils/popup/change-password/chan
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    PopupComponent,
     ChangePasswordComponent
   ],
   standalone: true,
@@ -135,7 +133,7 @@ export class EditUserComponent implements AfterViewInit {
 
   public changePasswordPopup() {
 
-    if(this.id < 1){
+    if (this.id < 1) {
       Notification.notifyInvalid("Add an id or Get user details first!")
       return
     }

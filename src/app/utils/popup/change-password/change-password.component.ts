@@ -2,11 +2,14 @@ import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {PopupComponent} from '../popup.component';
 import {FormValidator} from '../../form-validator/form-validator';
 import {Notification} from '../../notifications/notification/notification';
+import {ChangePasswordService} from '../../../services/user/change-password.service';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-change-password',
   imports: [
-    PopupComponent
+    PopupComponent,
+    FormsModule
   ],
   standalone: true,
   templateUrl: './change-password.component.html',
@@ -18,12 +21,15 @@ export class ChangePasswordComponent implements AfterViewInit{
   private popup: PopupComponent | undefined;
 
   @Input() public userId: number = 0;
+  @Input() public oldPassword: string = "";
+  @Input() public newPassword: string = "";
+  @Input() public confirmNewPassword: string = "";
+
+  constructor(private validator: FormValidator, private changePassword: ChangePasswordService) {
+  }
 
   ngAfterViewInit() {
     this.validator.validate("change-password")
-  }
-
-  constructor(private validator: FormValidator) {
   }
 
   public open() {
@@ -37,6 +43,23 @@ export class ChangePasswordComponent implements AfterViewInit{
       return
     }
 
-    console.log(this.userId)
+    const body = {
+      userId: this.userId,
+      oldPassword: this.oldPassword,
+      newPassword: this.newPassword,
+      confirmNewPassword: this.confirmNewPassword,
+    }
+
+    this.changePassword.change(body).subscribe({
+      next: () => {
+        Notification.notifyValid("Password has been changed successfully")
+        this.popup?.close()
+      },
+      error: (err) => {
+        Notification.notifyValid("Something went wrong!")
+        console.log(err)
+
+      }
+    })
   }
 }
