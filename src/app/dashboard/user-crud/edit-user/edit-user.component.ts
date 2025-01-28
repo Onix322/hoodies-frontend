@@ -1,14 +1,18 @@
-import {AfterViewInit, Component, ContentChild, Input, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FormValidator} from '../../../utils/form-validator/form-validator';
 import {Notification} from '../../../utils/notifications/notification/notification';
 import {UserService} from '../../../services/user/user.service';
+import {PopupComponent} from '../../../utils/popup/popup.component';
+import {ChangePasswordComponent} from '../../../utils/popup/change-password/change-password.component';
 
 @Component({
   selector: 'app-edit-user',
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PopupComponent,
+    ChangePasswordComponent
   ],
   standalone: true,
   templateUrl: './edit-user.component.html',
@@ -23,6 +27,10 @@ export class EditUserComponent implements AfterViewInit {
   @Input() role: string = "";
   @Input() userImage: string = "";
   @Input() activationStatus: string = ""
+
+  @ViewChild(ChangePasswordComponent, {read: ChangePasswordComponent})
+  private popup: ChangePasswordComponent | undefined;
+
   constructor(private userService: UserService, private validator: FormValidator) {
   }
 
@@ -127,5 +135,11 @@ export class EditUserComponent implements AfterViewInit {
 
   public changePasswordPopup() {
 
+    if(this.id < 1){
+      Notification.notifyInvalid("Add an id or Get user details first!")
+      return
+    }
+
+    this.popup?.open()
   }
 }

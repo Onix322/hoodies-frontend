@@ -1,13 +1,15 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {Redirect} from '../utils/redirect/redirect';
 import {AuthService} from '../services/auth/auth.service';
 import {UserService} from '../services/user/user.service';
 import {NavComponent} from '../nav/nav.component';
+import {ChangePasswordComponent} from '../utils/popup/change-password/change-password.component';
 
 @Component({
   selector: 'app-profile',
   imports: [
-    NavComponent
+    NavComponent,
+    ChangePasswordComponent
   ],
   standalone: true,
   templateUrl: './profile.component.html',
@@ -15,6 +17,10 @@ import {NavComponent} from '../nav/nav.component';
 })
 export class ProfileComponent implements OnInit {
 
+  @ViewChild(ChangePasswordComponent, {read: ChangePasswordComponent})
+  private popup: ChangePasswordComponent | undefined;
+
+  @Output() id: number = 0;
   @Output() name: string = "";
   @Output() email: string = "";
   @Output() phone: string = "";
@@ -31,6 +37,7 @@ export class ProfileComponent implements OnInit {
       this.authService.getCurrentLoggedUser()
     ).subscribe({
       next: value => {
+        this.id = value.result.id
         this.name = value.result.name
         this.email = value.result.email
         this.phone = value.result.phone
@@ -46,5 +53,9 @@ export class ProfileComponent implements OnInit {
   public logOut() {
     this.authService.logout()
     window.location.replace("/")
+  }
+
+  public changePassword(){
+    this.popup?.open()
   }
 }

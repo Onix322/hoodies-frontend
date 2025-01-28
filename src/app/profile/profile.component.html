@@ -1,6 +1,7 @@
 <app-nav></app-nav>
 
 <main>
+  <app-change-password [userId]="id"></app-change-password>
   <section>
     <div class="big-image">
       <img src="{{userImage}}" alt="{{name}}'s profile">
@@ -16,7 +17,7 @@
       <p><strong>Role:</strong> {{role}}</p>
       <div class="profile-buttons">
         <button class="action-button" (click)="logOut()">Log out</button>
-        <button class="action-button">Change password</button>
+        <button class="action-button" (click)="changePassword()">Change password</button>
       </div>
     </div>
   </section>

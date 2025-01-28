@@ -15,7 +15,7 @@
   --full-black: black;
   --bg-color: #222222;
   --full-white: white;
-  --color_1: rgba(158, 158, 158, 0.24);
+  --color_1: rgb(158, 158, 158);
   --header-bg-color: var(--bg-color);
   --header-charachers-color: var(--full-white);
   --see-products-button-background-color: red;

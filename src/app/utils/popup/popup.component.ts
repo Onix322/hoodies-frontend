@@ -18,6 +18,7 @@ export class PopupComponent {
 
   @ViewChild('popup', {read: ViewContainerRef})
   private dialog: ViewContainerRef | undefined;
+  @Input() public modalTitle = "";
 
   public open(){
     if(!this.dialog) throw new Error("Dialog element does not exists!");

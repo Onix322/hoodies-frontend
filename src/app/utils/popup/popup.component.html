@@ -1,6 +1,9 @@
 <section class="popup-container">
   <dialog #popup class="popup">
-    <button class="action-button" (click)="close()">X</button>
-    <p>popup works!</p>
+    <div class="title">
+      <h2>{{modalTitle}}</h2>
+      <button class="action-button" (click)="close()">&#x2715;</button>
+    </div>
+    <ng-content />
   </dialog>
 </section>

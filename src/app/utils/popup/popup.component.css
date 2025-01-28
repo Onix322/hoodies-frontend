@@ -10,18 +10,39 @@
   transition: 0.2s;
 }
 .popup{
+  border: none;
+  border-radius: 10px;
   position: absolute;
-  width: fit-content;
+  width: 100% !important;
+  max-width: 400px;
   height: fit-content;
   padding: 20px;
   top: 50%;
   transform: translate(0, -50%);
   margin: 0 auto;
+  background-color: #383838;
+  opacity: 1;
+  color:  white;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  outline: none;
+}
+
+.popup > div.title > h2 {
+  /*padding: 0;*/
+  margin: 0;
+}
+
+.popup > div.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .action-button{
   height: fit-content;
   width: fit-content;
   padding: 15px;
-  float: right;
+  align-self: end;
 }
