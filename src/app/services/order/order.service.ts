@@ -13,6 +13,13 @@ export class OrderService {
 
   public createOrder(body: any) {
     return this.http.post(this.url + "post", body)
+  }
 
+  public getAllOrders(){
+    return this.http.get(this.url + 'get')
+  }
+
+  public deleteOrder(userId: number, orderId: number){
+    return this.http.delete(this.url + `delete/${userId}/${orderId}`)
   }
 }

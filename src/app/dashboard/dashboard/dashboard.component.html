@@ -2,15 +2,20 @@
   <app-nav></app-nav>
   <aside>
     <h1>Dashboard</h1>
+
     <article>
-      <h2>Product CRUD:</h2>
+      <h3>Orders:</h3>
+      <button (click)="renderCrudContent(AllOrdersComponent)">See all orders</button>
+    </article>
+
+    <article>
+      <h3>Products:</h3>
       <button (click)="renderCrudContent(ProductCrudComponent)">CRUD product</button>
       <button (click)="renderCrudContent(SeeAllProductsComponent)">See all products</button>
     </article>
 
     <article>
-      <h2>User CRUD:</h2>
-<!--      <button (click)="renderCrudContent(CreateUserComponent)">Create user</button>-->
+      <h3>Users:</h3>
       <button (click)="renderCrudContent(UserCrudComponent)">CRUD user</button>
     </article>
   </aside>

@@ -6,6 +6,7 @@ import {SeeAllProductsComponent} from '../product-crud/see-all-products/see-all-
 import {NavComponent} from '../../nav/nav.component';
 import {Redirect} from '../../utils/redirect/redirect';
 import {RenderView} from '../../utils/render-view/render-view';
+import {AllOrdersComponent} from '../all-orders/all-orders.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -38,4 +39,6 @@ export class DashboardComponent {
   public getCurrentView(){
     return this.render.activeView
   }
+
+  protected readonly AllOrdersComponent = AllOrdersComponent;
 }

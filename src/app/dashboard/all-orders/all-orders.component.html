@@ -1,0 +1,35 @@
+<section class="orders">
+
+  @for (order of orders; track order){
+
+    <div class="order">
+      <div class="user-details">
+        <h2>Order number: <br/> {{order.id}}</h2>
+        <p>Name : {{order.user.name}}</p>
+        <p>Phone: {{order.user.phone}}</p>
+        <p>email: {{order.user.email}}</p>
+        <p>Total price: {{order.totalPrice}}</p>
+        <p>Status: {{order.status}}</p>
+        <div class="order-buttons">
+          <button class="action-button" (click)="deleteOrder(order)">Delete order</button>
+          <button class="action-button">Modify status</button>
+        </div>
+      </div>
+
+      <div class="products-details">
+        @for (product of order.products; track product){
+          <div class="product">
+            <img src="{{product.productImages[0].image}}">
+            <h3>Title : {{product.title}}</h3>
+            <p>Product number: {{product.id}}</p>
+            <p>Size: {{product.size}}</p>
+            <p>Price: {{product.price}}</p>
+            <div class ="productColor" style="background: {{product.productColor}}"></div>
+          </div>
+        }
+      </div>
+    </div>
+
+  }
+
+</section>

@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {UserService} from '../user/user.service';
-import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Redirect} from '../../utils/redirect/redirect';
 import {Notification} from '../../utils/notifications/notification/notification';
 
 @Injectable({
@@ -37,20 +35,20 @@ export class AuthService {
     })
   }
 
-  public isAuth(): Observable<boolean>{
+  public isAuth(): Observable<boolean> {
     this.isAuthenticated.next(!!sessionStorage.getItem("userId"))
     return this.isAuthenticated.asObservable();
   }
 
-  public getCurrentLoggedUser(): number{
+  public getCurrentLoggedUser(): number {
 
     let user = sessionStorage.getItem("userId");
 
-    if(!user) return 0;
+    if (!user) return 0;
     return Number.parseInt(user)
   }
 
-  public logout(){
+  public logout() {
     sessionStorage.removeItem("userId")
   }
 }
