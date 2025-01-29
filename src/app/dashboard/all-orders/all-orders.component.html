@@ -1,19 +1,24 @@
 <section class="orders">
 
+  <h3 *ngIf="orders.length < 1">No orders have been made yet!</h3>
+
   @for (order of orders; track order){
 
     <div class="order">
-      <div class="user-details">
-        <h2>Order number: <br/> {{order.id}}</h2>
-        <p>Name : {{order.user.name}}</p>
-        <p>Phone: {{order.user.phone}}</p>
-        <p>email: {{order.user.email}}</p>
-        <p>Total price: {{order.totalPrice}}</p>
-        <p>Status: {{order.status}}</p>
-        <div class="order-buttons">
-          <button class="action-button" (click)="deleteOrder(order)">Delete order</button>
-          <button class="action-button">Modify status</button>
+      <div class="details">
+        <div class="user-details">
+          <h2>Order number: <br/> {{order.id}}</h2>
+          <p>Name : {{order.user.name}}</p>
+          <p>Phone: {{order.user.phone}}</p>
+          <p>email: {{order.user.email}}</p>
+          <p>Total price: {{order.totalPrice}}</p>
+          <p>Status: {{order.status}}</p>
+          <div class="order-buttons">
+            <button class="action-button" (click)="deleteOrder(order)">Delete order</button>
+            <button class="action-button" (click)="openPopup()">Modify status</button>
+          </div>
         </div>
+
       </div>
 
       <div class="products-details">
@@ -32,4 +37,17 @@
 
   }
 
+  <app-popup [modalTitle]="title">
+    <div class="order-status-popup">
+      <label for="order-status">Activation status:</label>
+      <select id="order-status" [(ngModel)]="newStatus" name="order-status" data-invalid-message="Order Status mandatory" required>
+        <option value="CONFIRMED">Confirmed</option>
+        <option value="PREPARING">Preparing</option>
+        <option value="READY">Ready</option>
+        <option value="IN_TRANSIT">In transit</option>
+        <option value="DELIVERED">Delivered</option>
+      </select>
+      <button class="action-button">Save</button>
+    </div>
+  </app-popup>
 </section>

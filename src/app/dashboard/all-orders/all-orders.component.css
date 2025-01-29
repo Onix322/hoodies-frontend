@@ -13,10 +13,6 @@
   border-radius: 10px;
 }
 
-.user-details{
-
-}
-
 .products-details div + div{
   margin-top: 20px;
 }
@@ -44,6 +40,11 @@
   border-radius: 100%;
 }
 
+.user-details{
+  position: sticky !important;
+  top: calc(var(--nav-heigth) + var(--general-padding));
+}
+
 .order-buttons{
   display: flex;
   flex-direction: column;
@@ -56,3 +57,21 @@
   padding: 20px;
 }
 
+select{
+  background-color: transparent;
+  border: solid 1px white;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+option{
+  color: black;
+  cursor: pointer;
+}
+
+.order-status-popup{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

@@ -1,17 +1,29 @@
-import {Component, Output} from '@angular/core';
+import {Component, Output, ViewChild} from '@angular/core';
 import {OrderService} from '../../services/order/order.service';
 import {Notification} from '../../utils/notifications/notification/notification';
+import {NgIf} from '@angular/common';
+import {PopupComponent} from '../../utils/popup/popup.component';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-all-orders',
-  imports: [],
+  imports: [
+    NgIf,
+    PopupComponent,
+    FormsModule
+  ],
   standalone: true,
   templateUrl: './all-orders.component.html',
   styleUrl: './all-orders.component.css'
 })
 export class AllOrdersComponent {
 
+  @ViewChild(PopupComponent, {read: PopupComponent})
+  private popup: PopupComponent | undefined;
+
   @Output() orders: Array<any> = new Array<any>();
+  protected title = "Change order status:"
+  protected newStatus = "Change order status:"
 
   constructor(private orderService: OrderService) {
     this.getAll()
@@ -38,5 +50,9 @@ export class AllOrdersComponent {
         console.log(err)
       }
     })
+  }
+
+  public openPopup(){
+    this.popup?.open()
   }
 }
