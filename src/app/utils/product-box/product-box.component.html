@@ -1,14 +1,13 @@
-
-  <article class="product-box">
-    <a href="/product/{{id}}">
-      <figure>
-        <img src="{{productImage}}" alt="{{productImage}}"/>
-      </figure>
-      <h3> {{ title }}</h3>
-      <p>Size: <strong>{{ size }}</strong></p>
-      <p>Price: <strong>{{ price }} $</strong></p>
-      <p>Rating: <strong>{{ rating }}</strong></p>
-    </a>
-    <button class="action-button" (click)="addToCart()">Add to cart</button>
-  </article>
+<article class="product-box">
+  <a href="/product/{{id}}">
+    <figure>
+      <img src="{{productImage}}" alt="{{productImage}}"/>
+    </figure>
+    <h3> {{ title }}</h3>
+    <p>Size: <strong>{{ size }}</strong></p>
+    <p>Price: <strong>{{ price }} $</strong></p>
+    <p>Rating: <strong>{{ rating }}</strong></p>
+  </a>
+  <button class="action-button" (click)="addToCart()" *ngIf="page != 'dashboard'">Add to cart</button>
+</article>
 

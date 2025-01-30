@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../../../services/product/product.service';
 import {ProductBoxComponent} from '../../../utils/product-box/product-box.component';
 import {NgIf} from '@angular/common';
+import {dateTimestampProvider} from 'rxjs/internal/scheduler/dateTimestampProvider';
 
 @Component({
   selector: 'app-see-all-products',
@@ -44,4 +45,5 @@ export class SeeAllProductsComponent implements OnInit{
 
   }
 
+  protected readonly dateTimestampProvider = dateTimestampProvider;
 }
