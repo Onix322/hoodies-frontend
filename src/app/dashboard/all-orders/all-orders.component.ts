@@ -23,13 +23,14 @@ export class AllOrdersComponent {
 
   @Output() orders: Array<any> = new Array<any>();
   protected title = "Change order status:"
-  protected newStatus = "Change order status:"
+  protected orderId: number = 0;
+  protected status = "";
 
   constructor(private orderService: OrderService) {
     this.getAll()
   }
 
-  public getAll(){
+  public getAll() {
     this.orderService.getAllOrders().subscribe({
       next: (value: any) => {
         this.orders = Array.from(value.result)
@@ -39,7 +40,7 @@ export class AllOrdersComponent {
     })
   }
 
-  public deleteOrder(order: any){
+  public deleteOrder(order: any) {
     this.orderService.deleteOrder(order.user.id, order.id).subscribe({
       next: () => {
         Notification.notifyValid("Order has been deleted!")
@@ -52,7 +53,34 @@ export class AllOrdersComponent {
     })
   }
 
-  public openPopup(){
+  public openPopup(order: any) {
     this.popup?.open()
+    this.orderId = order.id;
+    this.status = order.status;
+  }
+
+  public closePopup(){
+    this.popup?.close()
+  }
+
+  public saveStatus() {
+
+    const body = {
+      orderId: this.orderId,
+      status: this.status,
+    }
+
+    console.log(body)
+    this.orderService.changeStatus(body).subscribe({
+      next: () => {
+        Notification.notifyValid("Order's status has been changed")
+        this.status = "";
+        this.getAll()
+        this.closePopup()
+      },
+      error: () => {
+        Notification.notifyInvalid("Something went wrong!")
+      }
+    })
   }
 }

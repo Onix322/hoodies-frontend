@@ -22,4 +22,8 @@ export class OrderService {
   public deleteOrder(userId: number, orderId: number){
     return this.http.delete(this.url + `delete/${userId}/${orderId}`)
   }
+
+  public changeStatus(body: any){
+    return this.http.put(this.url + 'change-order-status', body)
+  }
 }

@@ -25,6 +25,7 @@ export class PopupComponent {
 
     this.dialog.element.nativeElement.parentElement.style.display = "block";
     this.dialog.element.nativeElement.open = true
+    document.body.style.overflow = "hidden";
   }
 
   public close(){
@@ -32,6 +33,7 @@ export class PopupComponent {
 
     this.dialog.element.nativeElement.parentElement.style.display = "none";
     this.dialog.element.nativeElement.open = false
+    document.body.style.overflow = "auto";
   }
 
   public isOpen(){

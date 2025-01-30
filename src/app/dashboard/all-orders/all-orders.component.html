@@ -15,7 +15,7 @@
           <p>Status: {{order.status}}</p>
           <div class="order-buttons">
             <button class="action-button" (click)="deleteOrder(order)">Delete order</button>
-            <button class="action-button" (click)="openPopup()">Modify status</button>
+            <button class="action-button" (click)="openPopup(order)">Modify status</button>
           </div>
         </div>
 
@@ -34,20 +34,19 @@
         }
       </div>
     </div>
-
   }
 
   <app-popup [modalTitle]="title">
     <div class="order-status-popup">
       <label for="order-status">Activation status:</label>
-      <select id="order-status" [(ngModel)]="newStatus" name="order-status" data-invalid-message="Order Status mandatory" required>
+      <select id="order-status" [(ngModel)]="status" name="order-status">
         <option value="CONFIRMED">Confirmed</option>
         <option value="PREPARING">Preparing</option>
         <option value="READY">Ready</option>
         <option value="IN_TRANSIT">In transit</option>
         <option value="DELIVERED">Delivered</option>
       </select>
-      <button class="action-button">Save</button>
+      <button class="action-button" (click)="saveStatus()">Save</button>
     </div>
   </app-popup>
 </section>
