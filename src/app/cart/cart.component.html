@@ -6,7 +6,7 @@
     @if(products.length > 0){
       @for (product of products;track product){
         <div class="product-box">
-          <img src="{{product.productImages[0].image}}">
+          <img src="{{product.productImage.image}}">
 
           <div class="details">
             <h3>{{product.title}}</h3>

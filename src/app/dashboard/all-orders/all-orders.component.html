@@ -18,13 +18,12 @@
             <button class="action-button" (click)="openPopup(order)">Modify status</button>
           </div>
         </div>
-
       </div>
 
       <div class="products-details">
         @for (product of order.products; track product){
           <div class="product">
-            <img src="{{product.productImages[0].image}}">
+            <img src="{{product.productImage.image}}">
             <h3>{{product.title}}</h3>
             <p>Product number: {{product.id}}</p>
             <p>Size: {{product.size}}</p>

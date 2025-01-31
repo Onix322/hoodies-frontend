@@ -7,15 +7,12 @@
 
 .order{
   display: flex;
+  justify-content: start;
   gap: 20px;
   background-color: #383838;
   padding: var(--general-padding);
   border-radius: 10px;
   width: fit-content;
-}
-
-.order > * {
-  /*border: 1px solid red;*/
 }
 
 .product{
@@ -39,6 +36,7 @@
 
 .products-details{
   display: flex;
+  align-items: start;
   flex-wrap: wrap;
   gap: 20px;
 }
@@ -50,6 +48,9 @@
   border-radius: 100%;
 }
 
+.details{
+  width: fit-content !important;
+}
 .user-details{
   position: sticky !important;
   top: calc(var(--nav-heigth) + var(--general-padding));
