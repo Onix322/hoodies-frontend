@@ -59,7 +59,7 @@ export class AllOrdersComponent {
     this.status = order.status;
   }
 
-  public closePopup(){
+  public closePopup() {
     this.popup?.close()
   }
 

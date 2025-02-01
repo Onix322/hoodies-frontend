@@ -29,6 +29,7 @@
             <p>Size: {{product.size}}</p>
             <p>Price: {{product.price}}</p>
             <div class ="productColor" style="background: {{product.productColor}}"></div>
+            <a class="action-button" [href]="'/product/' + product.id">See product details</a>
           </div>
         }
       </div>

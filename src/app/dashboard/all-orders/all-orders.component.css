@@ -24,20 +24,20 @@
 
 .product > img{
   grid-row-start: 1;
-  grid-row-end: 6;
+  grid-row-end: 7;
   width: 100%;
   min-width: 250px;
   height: 100%;
   border-radius: 10px;
   background-color: white;
   outline: none;
+  object-fit: contain;
 }
 
 
 .products-details{
-  display: flex;
-  align-items: start;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .action-button{
-  width: 100%;
+  width: fit-content;
   height: fit-content;
   padding: 20px;
 }
