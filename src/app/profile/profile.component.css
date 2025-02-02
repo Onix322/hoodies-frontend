@@ -60,5 +60,38 @@ section{
 
 .profile-buttons{
   display: flex;
+  flex-wrap: wrap;
+  max-width: 500px;
   gap: 10px
+}
+
+input, textarea, select{
+  background-color: transparent;
+  border: solid 1px white;
+  padding: 10px;
+  color: white;
+}
+
+.form-box{
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  max-width: 500px;
+}
+
+.form-box div{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-buttons{
+  display: flex;
+  flex-direction: row !important;
+  justify-content: end;
+  align-items: end;
+}
+
+option{
+  color:black
 }

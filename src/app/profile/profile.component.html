@@ -1,5 +1,35 @@
 <app-nav></app-nav>
-<app-change-password [userId]="id"></app-change-password>
+<app-change-password [userId]="id" #changePasswordC></app-change-password>
+<app-popup modalTitle="Change user Infos: " #changeInfos>
+  <form method="POST" name="edit-user" class="form-box">
+    <div>
+      <label for="username">Name:</label>
+      <input id="username" type="text" name="title" [(ngModel)]="name" data-invalid-message="Name is mandatory. Minimum length is 4 letters" minlength="4" required>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input id="email" type="email" name="email" [(ngModel)]="email" data-invalid-message="Must contain a valid email. E.g. you@you.com" required>
+    </div>
+    <div>
+      <label for="phone">Phone:</label>
+      <input id="phone" type="tel" name="phone" [(ngModel)]="phone" data-invalid-message="Enter a phone number. Minimum 4 numbers long" minlength="4" required>
+    </div>
+    <div>
+      <label for="role">Role:</label>
+      <select id="role"  name="role" [(ngModel)]="role" data-invalid-message="Role mandatory." required>
+        <option value="CUSTOMER">Customer</option>
+        <option value="ADMIN">Admin</option>
+      </select>
+    </div>
+    <div>
+      <label for="user-image">Add an image link:</label>
+      <input id="user-image" type="url" name="user-image" [(ngModel)]="userImage" data-invalid-message="Optional but if you add it must be an url.">
+    </div>
+    <div class="form-buttons">
+      <button class="action-button bg-green" (click)="editUser()">Save</button>
+    </div>
+  </form>
+</app-popup>
 <main>
   <section>
     <div class="big-image">
@@ -16,7 +46,11 @@
       <p><strong>Role:</strong> {{role}}</p>
       <div class="profile-buttons">
         <button class="action-button" (click)="logOut()">Log out</button>
-        <button class="action-button" (click)="changePassword()">Change password</button>
+        <button class="action-button" (click)="openChangePassword()">Change password</button>
+        <button class="action-button" (click)="openChangeInfos()">Edit infos</button>
+        <button class="action-button" (click)="deleteAccount()">Delete account</button>
+        <button class="action-button" *ngIf="role == 'ADMIN'" (click)="toDashboard()">Dashboard</button>
+
       </div>
     </div>
   </section>
