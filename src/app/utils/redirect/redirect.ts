@@ -12,7 +12,7 @@ export class Redirect {
   }
 
   public to(url: string){
-    this.router.navigateByUrl(url, {skipLocationChange: false, replaceUrl: true}).then(r => {
+    this.router.navigateByUrl(url, {skipLocationChange: true, replaceUrl: false}).then(r => {
       return r
     })
   }
@@ -34,8 +34,6 @@ export class Redirect {
   }
 
   public roleTo(url: string, role: string){
-
-
 
     this.userService.getUser(this.authService.getCurrentLoggedUser()).subscribe({
       next: value => {
