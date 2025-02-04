@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user/user.service';
 import {Redirect} from '../../redirect/redirect';
+import {AuthService} from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-profile-button',
@@ -13,17 +14,13 @@ export class ProfileButtonComponent implements OnInit {
   username: string = "Guest";
   userId: number = 0;
 
-  constructor(private userService: UserService, private redirect: Redirect) {
+  constructor(private userService: UserService, private auth: AuthService) {
 
   }
 
   ngOnInit(): void {
 
-    let userId = sessionStorage.getItem("userId")
-
-    if (userId == null) return
-
-    this.userService.getUser(Number.parseInt(userId)).subscribe({
+    this.userService.getUser(this.auth.getCurrentLoggedUser()).subscribe({
       next: value => {
         this.username = value.result.name
         this.userId = value.result.id;

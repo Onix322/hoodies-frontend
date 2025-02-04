@@ -36,16 +36,16 @@ export class AuthService {
   }
 
   public isAuth(): Observable<boolean> {
-    this.isAuthenticated.next(!!sessionStorage.getItem("userId"))
+
+    this.isAuthenticated.next(this.getCurrentLoggedUser() > 0);
     return this.isAuthenticated.asObservable();
   }
 
   public getCurrentLoggedUser(): number {
 
-    let user = sessionStorage.getItem("userId");
+    let userid = sessionStorage.getItem("userId")
 
-    if (!user) return 0;
-    return Number.parseInt(user)
+    return userid ? Number.parseInt(userid) : 0;
   }
 
   public logout() {

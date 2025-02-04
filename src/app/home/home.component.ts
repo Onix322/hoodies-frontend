@@ -14,10 +14,5 @@ import {FooterComponent} from '../utils/footer/footer.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
-
-  ngOnInit() {
-    console.log(sessionStorage)
-  }
-
+export class HomeComponent {
 }
