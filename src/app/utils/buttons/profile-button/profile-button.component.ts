@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user/user.service';
-import {Redirect} from '../../redirect/redirect';
 import {AuthService} from '../../../services/auth/auth.service';
+import {switchMap, tap} from 'rxjs';
 
 @Component({
   selector: 'app-profile-button',
@@ -10,22 +10,35 @@ import {AuthService} from '../../../services/auth/auth.service';
   standalone: true,
   styleUrl: './profile-button.component.css'
 })
-export class ProfileButtonComponent implements OnInit {
-  username: string = "Guest";
-  userId: number = 0;
+export class ProfileButtonComponent {
+  @Input() username: string = "Guest";
+  @Input() userId = 0;
 
-  constructor(private userService: UserService, private auth: AuthService) {
-
+  constructor(private userService: UserService, private authService: AuthService) {
+    this.getDetails();
   }
 
-  ngOnInit(): void {
+  public toProfilePage(){
+    window.location.replace("/profile/" + this.userId)
+  }
 
-    this.userService.getUser(this.auth.getCurrentLoggedUser()).subscribe({
-      next: value => {
+  public getDetails() {
+
+    this.authService.getCurrentLoggedUser().pipe(
+      tap(userId => console.log(userId)),
+      switchMap(user => this.userService.getUser(user)),
+    ).subscribe({
+      next: (value) => {
+        console.log(value.result)
         this.username = value.result.name
-        this.userId = value.result.id;
+        this.userId = value.result.id
+      },
+      error: (err) => {
+        this.username = "Guest";
+        this.userId = 0;
+        console.log(err)
       }
     })
-
   }
+
 }

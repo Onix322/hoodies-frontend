@@ -8,6 +8,7 @@ import {RegisterComponent} from './register/register.component';
 import {ProfileComponent} from './profile/profile.component';
 import {CartComponent} from './cart/cart.component';
 import {NotFoundPageComponent} from './not-found-page/not-found-page.component';
+import {authGuard} from './guard/auth-guard.guard';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [authGuard],
     pathMatch: "full"
   },
   {
@@ -28,22 +30,24 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    pathMatch: "full"
+    pathMatch: "full",
   },
   {
     path: 'register',
     component: RegisterComponent,
-    pathMatch: "full"
+    pathMatch: "full",
   },
   {
     path: 'profile/:id',
     component: ProfileComponent,
-    pathMatch: "full"
+    pathMatch: "full",
+    canActivate: [authGuard]
   },
   {
     path: 'cart',
     component: CartComponent,
-    pathMatch: "full"
+    pathMatch: "full",
+    canActivate: [authGuard]
   },
   {
     path: 'home',

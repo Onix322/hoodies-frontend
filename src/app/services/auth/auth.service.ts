@@ -1,20 +1,52 @@
 import {Injectable} from '@angular/core';
 import {UserService} from '../user/user.service';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, catchError, filter, firstValueFrom, forkJoin, map, Observable, of, switchMap, tap} from 'rxjs';
 import {Notification} from '../../utils/notifications/notification/notification';
+import {TokenService} from '../token/token.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  constructor(private userService: UserService) {
+  public isAuthenticate = new BehaviorSubject(false)
+  private userId: BehaviorSubject<number> = new BehaviorSubject(0)
+  constructor(private userService: UserService, private token: TokenService) {
 
   }
 
-  public login(email: String, password: String) {
+  public authorize(email: string, password: string) {
+
+    let token = this.token.getToken()
+
+    if(!token) {
+      console.log("token ", token)
+      this.login({email: email, password: password})
+      return
+    }
+
+    console.log("token ", token)
+
+    this.token.validate(token).pipe(
+        filter((status) => status.result),
+        switchMap(() => this.token.getUserIdFromToken(token)),
+        tap(user => console.log(user))
+      ).subscribe({
+      next: value =>{
+        this.userId.next(value.result)
+        window.location.reload()
+      },
+      error: (err) => {
+        console.log(err)
+        if(err.error.status == 401){
+          this.login({email: email, password: password})
+          this.authorize(email, password)
+        }
+      }
+    })
+  }
+
+  public login({email = "", password = ""}){
 
     let loginBody: any = {
       email: email,
@@ -24,10 +56,9 @@ export class AuthService {
     this.userService.loginUser(loginBody).pipe().subscribe({
       next: (value) => {
 
-        sessionStorage.setItem("userId", value.result.id)
+        this.token.setToken(value.result)
 
-        window.location.reload()
-
+        // window.location.reload()
       },
       error: () => {
         Notification.notifyInvalid("This account does not exist!")
@@ -36,19 +67,42 @@ export class AuthService {
   }
 
   public isAuth(): Observable<boolean> {
+    const token = this.token.getToken();
 
-    this.isAuthenticated.next(this.getCurrentLoggedUser() > 0);
-    return this.isAuthenticated.asObservable();
+    if (!token) {
+      return of(false); // Dacă nu avem token, returnăm `false` imediat
+    }
+
+    return this.token.validate(token).pipe(
+      map(status => status.result),
+      tap(valid => this.isAuthenticate.next(valid)),
+      catchError(err => {
+        console.error(err);
+        this.isAuthenticate.next(false);
+        return of(false);
+      })
+    );
   }
 
-  public getCurrentLoggedUser(): number {
+  public getCurrentLoggedUser() {
+    let token = this.token.getToken()
 
-    let userid = sessionStorage.getItem("userId")
+    if (!token) {
+      this.userId.next(0)
+      return this.userId.asObservable()
+    }
 
-    return userid ? Number.parseInt(userid) : 0;
+    this.token.getUserIdFromToken(token).subscribe({
+      next: (value) => {
+        this.userId.next(value.result)
+      }
+    })
+
+    return this.userId.asObservable();
   }
 
   public logout() {
-    sessionStorage.removeItem("userId")
+    localStorage.removeItem("token")
   }
+
 }

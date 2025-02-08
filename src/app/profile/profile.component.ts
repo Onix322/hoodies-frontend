@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Redirect} from '../utils/redirect/redirect';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../services/auth/auth.service';
 import {UserService} from '../services/user/user.service';
 import {NavComponent} from '../nav/nav.component';
@@ -9,6 +8,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Notification} from '../utils/notifications/notification/notification';
 import {FormValidator} from '../utils/form-validator/form-validator';
 import {NgIf} from '@angular/common';
+import {ActivatedRoute} from '@angular/router';
+import {filter, switchMap, windowWhen} from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -40,15 +41,17 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   @Input() userImage: string = "";
   @Input() activationStatus: string = "";
 
-  constructor(private authService: AuthService, private userService: UserService, private redirect: Redirect, private validator: FormValidator) {
-    this.redirect.toIfNotAuth("/login")
+  constructor(private authService: AuthService, private userService: UserService, private validator: FormValidator) {
+
   }
 
   ngOnInit(): void {
-
-    this.userService.getUser(
-      this.authService.getCurrentLoggedUser()
-    ).subscribe({
+    this.authService.isAuth()
+      .pipe(
+        filter(status => status),
+        switchMap(() => this.authService.getCurrentLoggedUser()),
+        switchMap(userId => this.userService.getUser(userId))
+      ).subscribe({
       next: value => {
         this.id = value.result.id
         this.name = value.result.name
@@ -57,9 +60,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         this.role = value.result.role
         this.userImage = value.result.userImage
         this.activationStatus = value.result.activationStatus
-      },
-      error: err => {
-        console.log(err)
       }
     })
   }
@@ -70,14 +70,13 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   public logOut() {
     this.authService.logout()
-    window.location.replace("/")
   }
 
-  public openChangePassword(){
+  public openChangePassword() {
     this.changePasswordPopup?.open()
   }
 
-  public openChangeInfos(){
+  public openChangeInfos() {
     this.changeInfosPopup?.open()
   }
 
@@ -123,7 +122,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     })
   }
 
-  public toDashboard(){
-    this.redirect.toIfAuth("/dashboard")
+  public toDashboard() {
+    window.location.replace("/dashboard")
   }
 }

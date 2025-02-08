@@ -1,8 +1,9 @@
 import {AfterViewInit, Component, Input} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../services/auth/auth.service';
-import {Redirect} from '../utils/redirect/redirect';
 import {FormValidator} from '../utils/form-validator/form-validator';
+import {authGuard} from '../guard/auth-guard.guard';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +14,18 @@ import {FormValidator} from '../utils/form-validator/form-validator';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements AfterViewInit{
-  @Input() email: String = "";
-  @Input() password: String = "";
+export class LoginComponent implements AfterViewInit {
+  @Input() email: string = "";
+  @Input() password: string = "";
 
-  constructor(private authService: AuthService, private redirect: Redirect, private validator: FormValidator) {
-    this.redirect.toIfAuth("/")
+  constructor(private authService: AuthService, private validator: FormValidator) {
+    this.authService.isAuth().subscribe({
+      next: (value) => {
+        if(value){
+          window.location.replace("/")
+        }
+      }
+    })
   }
 
   ngAfterViewInit() {
@@ -26,7 +33,8 @@ export class LoginComponent implements AfterViewInit{
   }
 
   public login() {
-    if(!this.validator.validate("login-user")) return
-    this.authService.login(this.email, this.password)
+    if (!this.validator.validate("login-user")) return
+    this.authService.authorize(this.email, this.password)
+
   }
 }

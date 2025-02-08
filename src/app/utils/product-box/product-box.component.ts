@@ -2,6 +2,22 @@ import {Component, Input} from '@angular/core';
 import {CartService} from '../../services/cart/cart.service';
 import {AuthService} from '../../services/auth/auth.service';
 import {NgIf} from '@angular/common';
+import {
+  BehaviorSubject,
+  catchError,
+  every,
+  filter, firstValueFrom,
+  iif,
+  map,
+  Observable,
+  of, subscribeOn,
+  switchMap,
+  takeUntil,
+  takeWhile,
+  tap
+} from 'rxjs';
+import {Notification} from '../notifications/notification/notification';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-box',
@@ -21,17 +37,19 @@ export class ProductBoxComponent {
   @Input() productImage: any | undefined;
   @Input() page: string = "";
 
-  constructor(private cartService: CartService, private authService: AuthService) {
+  constructor(private cartService: CartService, private authService: AuthService, private router: Router) {
   }
 
   public addToCart(){
-    let userId = this.authService.getCurrentLoggedUser()
-
-    this.cartService.verifyExistenceOfProduct(userId, Number.parseInt(this.id.toString())).subscribe({
-      next: (value: any) => {
-        if(value.result) return
-        this.cartService.addToCart({userId: userId, productId: this.id})
-      }
-    })
+    this.authService.isAuth().pipe(
+      tap(status => {
+        if(!status){
+          Notification.notifyInvalid("You must login first!")
+          this.router.navigateByUrl("/login", {skipLocationChange: true, replaceUrl: false})
+        }
+      }),
+      switchMap(() => this.authService.getCurrentLoggedUser()),
+      switchMap((userId) => this.cartService.addToCart({userId: userId, productId: this.id}))
+    ).subscribe()
   }
 }
