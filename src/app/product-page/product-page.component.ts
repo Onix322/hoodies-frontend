@@ -1,9 +1,8 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NavComponent} from '../nav/nav.component';
 import {ProductService} from '../services/product/product.service';
 import {CartService} from '../services/cart/cart.service';
-import {Redirect} from '../utils/redirect/redirect';
 import {AuthService} from '../services/auth/auth.service';
 
 @Component({
@@ -27,13 +26,13 @@ export class ProductPageComponent implements OnInit {
   @Output() mainImage: String = "";
   @Output() productImages: Array<any> = [];
 
-  constructor(private authService: AuthService, private redirect: Redirect, private route: ActivatedRoute, private productService: ProductService, private cartService: CartService) {
+  constructor(private authService: AuthService, private route: ActivatedRoute, private productService: ProductService, private cartService: CartService) {
   }
 
   ngOnInit(): void {
     let productId = this.route.snapshot.paramMap.get("id")
 
-    if(!productId) return
+    if (!productId) return
     this.productService.get(Number.parseInt(productId)).subscribe({
       next: (value) => {
 
@@ -47,14 +46,14 @@ export class ProductPageComponent implements OnInit {
         this.productImages = value.result.productImages;
         this.mainImage = value.result.productImages[0].image
       },
-      error: (err) =>{
+      error: (err) => {
         console.log(err)
       }
     })
 
   }
 
-  public addToCart(){
+  public addToCart() {
 
     this.cartService.addToCart({userId: this.authService.getCurrentLoggedUser(), productId: this.id})
 

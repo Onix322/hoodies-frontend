@@ -4,7 +4,6 @@ import {NgIf} from '@angular/common';
 import {UserCrudComponent} from '../user-crud/user-crud.component';
 import {SeeAllProductsComponent} from '../product-crud/see-all-products/see-all-products.component';
 import {NavComponent} from '../../nav/nav.component';
-import {Redirect} from '../../utils/redirect/redirect';
 import {RenderView} from '../../utils/render-view/render-view';
 import {AllOrdersComponent} from '../all-orders/all-orders.component';
 
@@ -24,9 +23,8 @@ export class DashboardComponent {
   protected readonly UserCrudComponent = UserCrudComponent;
   protected readonly SeeAllProductsComponent = SeeAllProductsComponent;
 
-  constructor(private redirect: Redirect, private render: RenderView) {
-    this.redirect.toIfNotAuth("/login")
-    this.redirect.roleTo("/", "CUSTOMER")
+  constructor(private render: RenderView) {
+
   }
 
   public renderCrudContent(component: any) {

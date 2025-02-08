@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {NavComponent} from '../nav/nav.component';
 import {AuthService} from '../services/auth/auth.service';
 import {CartService} from '../services/cart/cart.service';
-import {Redirect} from '../utils/redirect/redirect';
 import {OrderService} from '../services/order/order.service';
 import {FooterComponent} from '../utils/footer/footer.component';
 import {Notification} from '../utils/notifications/notification/notification';
+import {switchMap, tap} from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -24,8 +24,8 @@ export class CartComponent implements OnInit {
   public totalPrice: Number = 0;
   private cart: any;
 
-  constructor(private cartService: CartService, private authService: AuthService, private redirect: Redirect, private orderService: OrderService) {
-    this.redirect.toIfNotAuth("/login")
+  constructor(private cartService: CartService, private authService: AuthService, private orderService: OrderService) {
+
   }
 
   ngOnInit() {
@@ -33,57 +33,61 @@ export class CartComponent implements OnInit {
   }
 
   public removeFromCart(productId: number) {
-    let userId = this.authService.getCurrentLoggedUser()
-    this.cartService.removeFromCart({userId: userId, productId: productId})
-      .subscribe({
-        next: () => {
-          Notification.notifyValid("Product removed successfully")
-          this.refresh()
-        },
-        error: () => {
-          Notification.notifyInvalid("Product has not been removed.")
-          this.refresh()
-        }
-      })
+    this.authService.getCurrentLoggedUser()
+      .pipe(
+        switchMap(user => this.cartService.removeFromCart({userId: user, productId: productId}))
+      ).subscribe({
+      next: () => {
+        Notification.notifyValid("Product removed successfully")
+        this.refresh()
+      },
+      error: () => {
+        Notification.notifyInvalid("Product has not been removed.")
+      }
+    })
+    this.updateProducts()
   }
 
   public updateProducts() {
-    this.cartService.getUserCart(this.authService.getCurrentLoggedUser())
-      .subscribe({
-          next: (value: any) => {
-            value.result.products.forEach((prod: any) => {
-              this.products.push(prod)
-              this.totalPrice += prod.price
-            })
-            this.cartService.setCartLength(value.result.products.length)
-            this.cart = value.result
-            this.lengthOfProducts = this.products.length
-          },
-          error: (err) => {
-            console.log(err)
-          }
+    this.authService.getCurrentLoggedUser()
+      .pipe(
+        switchMap(userId => this.cartService.getUserCart(userId)),
+        tap(value => console.log("Tap tap:", value))
+      ).subscribe({
+        next: (value: any) => {
+          value.result.products.forEach((prod: any) => {
+            this.products.push(prod)
+            this.totalPrice += prod.price
+          })
+          this.cartService.setCartLength(value.result.products.length)
+          this.cart = value.result
+          this.lengthOfProducts = this.products.length
+        },
+        error: (err) => {
+          console.log(err)
         }
-      )
+    })
   }
 
   public deleteAllProductFromCart() {
-    this.cartService.getUserCart(this.authService.getCurrentLoggedUser()).subscribe({
-      next: (value: any) => {
-        value.result.products = []
-        this.cartService.removeAllProducts(value.result.user.id).subscribe({
-          next: () => {
-            this.refresh()
-            this.cartService.setCartLength(value.result.products.length)
-          }
-        })
-      }
+    this.authService.getCurrentLoggedUser()
+      .pipe(
+        switchMap(userId => this.cartService.getUserCart(userId)),
+        switchMap((cart: any)=> {
+          cart.result.products = []
+          return this.cartService.removeAllProducts(cart.result.user.id)
+        }),
+      ).subscribe({
+        next: () => {
+          this.refresh()
+          this.cartService.setCartLength(0)
+        }
     })
   }
 
   public refresh() {
     this.products.length = 0
     this.totalPrice = 0;
-    this.updateProducts();
   }
 
   public placeOrder() {

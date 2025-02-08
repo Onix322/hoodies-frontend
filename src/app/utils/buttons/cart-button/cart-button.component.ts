@@ -1,6 +1,7 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component} from '@angular/core';
 import {CartService} from '../../../services/cart/cart.service';
 import {AuthService} from '../../../services/auth/auth.service';
+import {filter, switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-cart-button',
@@ -15,7 +16,13 @@ export class CartButtonComponent implements AfterViewInit {
   cartLength: number = 0;
 
   constructor(private cartService: CartService, private authService: AuthService) {
-    this.cartService.getUserCart(this.authService.getCurrentLoggedUser()).subscribe({
+
+    this.authService.isAuth()
+      .pipe(
+        filter(status => status),
+        switchMap(() => this.authService.getCurrentLoggedUser()),
+        switchMap(userId => this.cartService.getUserCart(userId))
+      ).subscribe({
       next: (value: any) => {
         this.cartService.setCartLength(value.result.products.length)
       }

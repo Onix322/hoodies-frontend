@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, catchError, filter, map, Observable, switchMap, tap} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
-import {Redirect} from '../../utils/redirect/redirect';
 import {Notification} from '../../utils/notifications/notification/notification';
 
 @Injectable({
@@ -14,7 +13,7 @@ export class CartService {
 
   private url: string = "http://localhost:8080/cart"
 
-  constructor(private http: HttpClient, private authService: AuthService, private redirect: Redirect) {
+  constructor(private http: HttpClient) {
   }
 
   public getUserCart(id: number) {
@@ -39,18 +38,7 @@ export class CartService {
   }
 
   public addToCart(body: any) {
-    this.redirect.toIfNotAuth("/login")
-    this.http.put(this.url + "/add-to-cart", body).subscribe(() => {
-      this.getUserCart(this.authService.getCurrentLoggedUser()).subscribe({
-        next: (value: any) => {
-          this.setCartLength(value.result.products.length)
-          Notification.notifyValid("Product added to your cart!")
-        },
-        error: () => {
-          Notification.notifyInvalid("Something went wrong!")
-        }
-      })
-    })
+    return this.http.put(this.url + "/add-to-cart", body)
   }
 
   public removeFromCart(body: any) {
