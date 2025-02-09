@@ -9,7 +9,7 @@ import {TokenService} from '../token/token.service';
 })
 export class AuthService {
 
-  public isAuthenticate = new BehaviorSubject(false)
+  private isAuthenticate = new BehaviorSubject(false)
   private userId: BehaviorSubject<number> = new BehaviorSubject(0)
   constructor(private userService: UserService, private token: TokenService) {
 
@@ -40,7 +40,6 @@ export class AuthService {
         console.log(err)
         if(err.error.status == 401){
           this.login({email: email, password: password})
-          this.authorize(email, password)
         }
       }
     })

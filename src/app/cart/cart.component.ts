@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {NavComponent} from '../nav/nav.component';
 import {AuthService} from '../services/auth/auth.service';
 import {CartService} from '../services/cart/cart.service';
@@ -29,27 +29,17 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userIdInitializer()
     this.displayProducts()
-
-    this.authService.getCurrentLoggedUser()
-      .subscribe({
-        next: (id) => {
-          this.userId.next(id)
-        },
-      })
   }
 
   public removeFromCart(productId: number) {
-    let userId = new BehaviorSubject(0)
-
-    this.authService.getCurrentLoggedUser()
+    this.cartService.verifyExistenceOfProduct(this.userId.getValue(), Number.parseInt(productId.toString()))
       .pipe(
-        tap(id => userId.next(id)),
-        switchMap(() => this.cartService.verifyExistenceOfProduct(userId.getValue(), Number.parseInt(productId.toString()))),
         switchMap((status: any) => status.result ?
-          this.cartService.removeFromCart({userId: userId.getValue(), productId: productId})
-          : new Observable()
-        ),).subscribe({
+          this.cartService.removeFromCart({userId: this.userId.getValue(), productId: productId})
+          : new Observable())
+      ).subscribe({
       next: (value: any) => {
         this.products.next(value.result.products)
         this.cartService.setCartLength(value.result.products.length)
@@ -62,23 +52,24 @@ export class CartComponent implements OnInit {
   }
 
   public displayProducts() {
-
-    this.authService.getCurrentLoggedUser()
-      .pipe(
-        switchMap(userId => this.cartService.getUserCart(userId)),
-        tap((cart: any) => this.products.next(cart.result.products)),
-        switchMap(() => this.products)
-      ).subscribe({
-      next: (value: any) => {
-        this.totalPrice = 0
-        value.forEach((product: any) => {
-          this.totalPrice += product.price;
-        })
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
+    setTimeout(() => {
+      this.cartService.getUserCart(this.userId.getValue())
+        .pipe(
+          tap((cart: any) => console.log(cart)),
+          tap((cart: any) => this.products.next(cart.result.products)),
+          switchMap(() => this.products)
+        ).subscribe({
+        next: (value: any) => {
+          this.totalPrice = 0
+          value.forEach((product: any) => {
+            this.totalPrice += product.price;
+          })
+        },
+        error: (err) => {
+          console.log(err)
+        }
+      })
+    }, 200)
   }
 
   public deleteAllProductFromCart() {
@@ -117,5 +108,14 @@ export class CartComponent implements OnInit {
         Notification.notifyInvalid("Order not placed")
       }
     })
+  }
+
+  private userIdInitializer(): void {
+    this.authService.getCurrentLoggedUser()
+      .subscribe({
+        next: (id) => {
+          this.userId.next(id)
+        },
+      })
   }
 }

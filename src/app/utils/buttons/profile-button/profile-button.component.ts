@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user/user.service';
 import {AuthService} from '../../../services/auth/auth.service';
-import {switchMap, tap} from 'rxjs';
+import {switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-profile-button',
@@ -10,20 +10,22 @@ import {switchMap, tap} from 'rxjs';
   standalone: true,
   styleUrl: './profile-button.component.css'
 })
-export class ProfileButtonComponent {
+export class ProfileButtonComponent implements OnInit {
   @Input() username: string = "Guest";
   @Input() userId = 0;
 
   constructor(private userService: UserService, private authService: AuthService) {
+  }
+
+  ngOnInit(): void {
     this.getDetails();
   }
 
-  public toProfilePage(){
+  public toProfilePage() {
     window.location.replace("/profile/" + this.userId)
   }
 
   public getDetails() {
-
     this.authService.getCurrentLoggedUser().pipe(
       switchMap(user => this.userService.getUser(user)),
     ).subscribe({
@@ -38,5 +40,4 @@ export class ProfileButtonComponent {
       }
     })
   }
-
 }
