@@ -55,10 +55,8 @@ export class AuthService {
 
     this.userService.loginUser(loginBody).pipe().subscribe({
       next: (value) => {
-
         this.token.setToken(value.result)
-
-        // window.location.reload()
+        this.authorize(loginBody.email, loginBody.password)
       },
       error: () => {
         Notification.notifyInvalid("This account does not exist!")
@@ -77,7 +75,6 @@ export class AuthService {
       map(status => status.result),
       tap(valid => this.isAuthenticate.next(valid)),
       catchError(err => {
-        console.error(err);
         this.isAuthenticate.next(false);
         return of(false);
       })
@@ -92,10 +89,15 @@ export class AuthService {
       return this.userId.asObservable()
     }
 
-    this.token.getUserIdFromToken(token).subscribe({
-      next: (value) => {
-        this.userId.next(value.result)
-      }
+    this.token.getUserIdFromToken(token).pipe(
+        map(value => value.result)
+      )
+      .subscribe({
+        next: (value) => {
+          this.userId.next(value)
+        }, error: (err) =>{
+          console.log("Login please!")
+        }
     })
 
     return this.userId.asObservable();

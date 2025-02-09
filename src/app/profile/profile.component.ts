@@ -70,6 +70,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   public logOut() {
     this.authService.logout()
+    window.location.reload()
   }
 
   public openChangePassword() {

@@ -3,8 +3,8 @@
 <main class="cart-content">
   <div class="products-container">
 
-    @if(products.length > 0){
-      @for (product of products;track product){
+    @if(products.getValue().length > 0){
+      @for (product of products.getValue();track product.id){
         <div class="product-box">
           <img src="{{product.productImage.image}}">
 

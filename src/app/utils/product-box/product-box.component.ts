@@ -2,20 +2,7 @@ import {Component, Input} from '@angular/core';
 import {CartService} from '../../services/cart/cart.service';
 import {AuthService} from '../../services/auth/auth.service';
 import {NgIf} from '@angular/common';
-import {
-  BehaviorSubject,
-  catchError,
-  every,
-  filter, firstValueFrom,
-  iif,
-  map,
-  Observable,
-  of, subscribeOn,
-  switchMap,
-  takeUntil,
-  takeWhile,
-  tap
-} from 'rxjs';
+import {BehaviorSubject, catchError, map, Observable, switchMap, tap, throwError} from 'rxjs';
 import {Notification} from '../notifications/notification/notification';
 import {Router} from '@angular/router';
 
@@ -39,17 +26,37 @@ export class ProductBoxComponent {
 
   constructor(private cartService: CartService, private authService: AuthService, private router: Router) {
   }
+  public addToCart() {
 
-  public addToCart(){
+    let userId = new BehaviorSubject(0)
+
     this.authService.isAuth().pipe(
-      tap(status => {
-        if(!status){
+      tap(value => {
+        if (!value) {
           Notification.notifyInvalid("You must login first!")
           this.router.navigateByUrl("/login", {skipLocationChange: true, replaceUrl: false})
+          throwError(() => "Not login")
         }
       }),
       switchMap(() => this.authService.getCurrentLoggedUser()),
-      switchMap((userId) => this.cartService.addToCart({userId: userId, productId: this.id}))
-    ).subscribe()
+      tap(id => userId.next(id)),
+      switchMap(() => this.cartService.verifyExistenceOfProduct(userId.getValue(), Number.parseInt(this.id.toString()))),
+      switchMap((status: any) => {
+        if(!status.result){
+          Notification.notifyValid("Product added to cart!")
+          return this.cartService.addToCart({userId: userId.getValue(), productId: this.id})
+        }
+        Notification.notifyInvalid("Product already in cart!")
+        return new Observable()
+      }),
+      tap((value: any) => this.cartService.setCartLength(value.result.products.length)),
+      catchError((err) => {
+        return err
+      })
+    ).subscribe({
+      error: (err) =>{
+        console.log("Not logged in")
+      }
+    })
   }
 }

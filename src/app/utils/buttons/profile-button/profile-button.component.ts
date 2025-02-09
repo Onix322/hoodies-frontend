@@ -25,11 +25,9 @@ export class ProfileButtonComponent {
   public getDetails() {
 
     this.authService.getCurrentLoggedUser().pipe(
-      tap(userId => console.log(userId)),
       switchMap(user => this.userService.getUser(user)),
     ).subscribe({
       next: (value) => {
-        console.log(value.result)
         this.username = value.result.name
         this.userId = value.result.id
       },
