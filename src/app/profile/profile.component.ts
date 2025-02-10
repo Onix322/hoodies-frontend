@@ -33,6 +33,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   @ViewChild("changeInfos", {read: PopupComponent})
   private changeInfosPopup: PopupComponent | undefined;
 
+  @ViewChild("deleteConfirmation", {read: PopupComponent})
+  private deleteConfirmation: PopupComponent | undefined;
+
   @Input() id: number = 0;
   @Input() name: string = "";
   @Input() email: string = "";
@@ -79,6 +82,14 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   public openChangeInfos() {
     this.changeInfosPopup?.open()
+  }
+
+  public openDeleteConfirmation() {
+    this.deleteConfirmation?.open()
+  }
+
+  public closeDeleteConfirmation() {
+    this.deleteConfirmation?.close()
   }
 
   public editUser() {

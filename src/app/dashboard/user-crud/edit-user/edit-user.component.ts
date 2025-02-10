@@ -68,7 +68,10 @@ export class EditUserComponent implements AfterViewInit {
   }
 
   public getUser(id: number) {
-    if (id < 0) return
+    if (id <= 0) {
+      Notification.notifyInvalid("Id must be greater then 0")
+      return
+    }
     this.clear()
     this.userService.getUser(id).subscribe({
       next: (value: any) => {
@@ -82,7 +85,7 @@ export class EditUserComponent implements AfterViewInit {
       },
       error: (err) => {
         console.log(err)
-        Notification.notifyInvalid("Id must be greater than 0")
+        Notification.notifyInvalid("User nonexistent!")
       }
     })
   }

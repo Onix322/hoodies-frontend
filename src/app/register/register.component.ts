@@ -3,6 +3,8 @@ import {FormsModule} from '@angular/forms';
 import {UserService} from '../services/user/user.service';
 import {FormValidator} from '../utils/form-validator/form-validator';
 import {AuthService} from '../services/auth/auth.service';
+import {Notification} from '../utils/notifications/notification/notification';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -24,7 +26,7 @@ export class RegisterComponent implements AfterViewInit {
   @Input() role: string = "";
   @Input() userImage: string = "";
 
-  constructor(private userService: UserService, private validator: FormValidator, private authService: AuthService) {
+  constructor(private userService: UserService, private validator: FormValidator, private authService: AuthService, private router: Router) {
     this.authService.isAuth().subscribe({
       next: (value) => {
         if(value){
@@ -50,7 +52,8 @@ export class RegisterComponent implements AfterViewInit {
       password: this.password,
       confirmPassword: this.confirmPassword,
       role: "CUSTOMER",
-      userImage: this.userImage
+      userImage: this.userImage,
+      activationStatus: "ACTIVATED",
     }
 
     if (user.userImage == "") {
@@ -59,11 +62,11 @@ export class RegisterComponent implements AfterViewInit {
 
     this.userService.createUser(user).subscribe({
       next: (value: any) => {
-        console.log(value)
-
+        Notification.notifyInvalid("Welcome!")
+        this.router.navigateByUrl("/login", {skipLocationChange: false, replaceUrl: true})
       },
       error: (err) => {
-        console.log(err)
+        Notification.notifyInvalid(err.error.message)
       }
     })
   }

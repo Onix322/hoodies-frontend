@@ -30,6 +30,13 @@
     </div>
   </form>
 </app-popup>
+<app-popup modalTitle="Confirmation" #deleteConfirmation class="confirmation-popup">
+  <h1>Are you sure you want to delete your account ?</h1>
+  <div class="confirmation-buttons">
+    <button class="action-button" (click)="deleteAccount()">Delete account</button>
+    <button class="action-button" (click)="closeDeleteConfirmation()">Close</button>
+  </div>
+</app-popup>
 <main>
   <section>
     <div class="big-image">
@@ -49,7 +56,7 @@
         <button class="action-button" (click)="logOut()">Log out</button>
         <button class="action-button" (click)="openChangePassword()">Change password</button>
         <button class="action-button" (click)="openChangeInfos()">Edit infos</button>
-        <button class="action-button" (click)="deleteAccount()">Delete account</button>
+        <button class="action-button" (click)="openDeleteConfirmation()">Delete account</button>
         <button class="action-button" *ngIf="role == 'ADMIN'" (click)="toDashboard()">Dashboard</button>
       </div>
     </div>

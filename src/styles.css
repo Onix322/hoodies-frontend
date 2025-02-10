@@ -184,4 +184,15 @@ button, input[type="button"]{
   top: 100px;
 }
 
+.confirmation-popup{
+  display: flex;
+  flex-direction: row;
+}
+
+.confirmation-buttons{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
 
