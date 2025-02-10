@@ -85,11 +85,11 @@ export class FormValidator {
   public checkElement(element: HTMLInputElement | HTMLFormElement | HTMLSelectElement | HTMLTextAreaElement): boolean{
 
     element.addEventListener('input', () => {
-      this.elementChangeStyle(element)
+      this.elementChangeStyleAuto(element)
     })
 
     element.addEventListener("focus", () =>{
-      this.elementChangeStyle(element)
+      this.elementChangeStyleAuto(element)
     })
 
     return element.checkValidity();
@@ -97,25 +97,11 @@ export class FormValidator {
 
   public validateElementIf(elementName: string, callback: Predicate<boolean>): boolean{
 
-    const element: HTMLElement | null = document.getElementById(elementName)
-    let valid = false;
-    if(!element){
-      throw Error("Invalid element id")
-    }
+    const elements: NodeListOf<HTMLElement> | null = document.getElementsByName(elementName);
+    let valid = callback(true);
 
-
-    let message: HTMLParagraphElement = this.getMessageFromElement(element)
-    element.addEventListener("focus", () =>{
-      if (callback(true)) {
-        this.deleteAllInvalidMessages(element)
-        element.style.border = this.validBorderValue;
-        valid = true
-      } else {
-        if(!this.invalidMessageExist(element)){
-          element.parentElement?.appendChild(message)
-        }
-        element.style.border = this.invalidBorderValue;
-      }
+    elements.forEach((e) =>{
+      this.elementChangeStyleByValue(<HTMLFormElement>e, valid)
     })
 
     return valid
@@ -131,11 +117,16 @@ export class FormValidator {
     return message
   }
 
-  private elementChangeStyle(element: HTMLInputElement | HTMLFormElement | HTMLSelectElement | HTMLTextAreaElement){
+  private elementChangeStyleAuto(element: HTMLInputElement | HTMLFormElement | HTMLSelectElement | HTMLTextAreaElement){
+
+    this.elementChangeStyleByValue(element, element.checkValidity())
+  }
+
+  private elementChangeStyleByValue(element: HTMLInputElement | HTMLFormElement | HTMLSelectElement | HTMLTextAreaElement, value: boolean){
 
     let message: HTMLParagraphElement = this.getMessageFromElement(element)
 
-    if (element.checkValidity()) {
+    if (value) {
       this.deleteAllInvalidMessages(element)
       element.style.border = this.validBorderValue;
     } else {

@@ -1,17 +1,16 @@
 <section class="form-box">
 
   <div class="get-delete-box">
-    <h2>Get or delete a product:</h2>
+    <h2>Get product's infos:</h2>
     <label for="product-id">Enter product id:</label>
     <input id="product-id" type="number" name="productIdEntered" [(ngModel)]="productIdEntered">
     <div class="get-delete-box-buttons">
       <button class="action-button" (click)="getProduct()">Get</button>
-      <button class="action-button" (click)="deleteProduct()">Delete</button>
     </div>
   </div>
 
   <div class="create-box">
-    <h2>Create new product or edit an existent one:</h2>
+    <h2>Create,delete or edit a product:</h2>
     <form method="POST" name="register-product">
       <div>
         <label for="title">Title:</label>
@@ -35,20 +34,20 @@
       </div>
       <div>
         <label for="description">Description:</label>
-    <!--      <input id="description" type="text">-->
         <textarea id="description" [(ngModel)]="description" name="description" data-invalid-message="Description more then 2 letters" required minlength="2"></textarea>
       </div>
       <div>
         <label for="productColor">Product color:</label>
         <select id="productColor" [(ngModel)]="productColor" name="product-color" data-invalid-message="Product color mandatory" required>
-          <option value="Red">Red</option>
-          <option value="Blue">Blue</option>
-          <option value="Yellow">Yellow</option>
-          <option value="White">White</option>
-          <option value="Pink">Pink</option>
-          <option value="Green">Green</option>
-          <option value="Purple">Purple</option>
-          <option value="Lightblue">Lightblue</option>
+          <option value="RED">Red</option>
+          <option value="BLUE">Blue</option>
+          <option value="YELLOW">Yellow</option>
+          <option value="WHITE">White</option>
+          <option value="PINK">Pink</option>
+          <option value="GREEN">Green</option>
+          <option value="PURPLE">Purple</option>
+          <option value="LIGHTBLUE">Lightblue</option>
+          <option value="BLACK">Black</option>
         </select></div>
       <div>
         <label for="price">Price:</label>
@@ -58,7 +57,7 @@
         <label for="productImageField">Product image:</label>
         <div class="filed-horizontal">
           <input id="productImageField" type="url" [(ngModel)]="image" name="product-images" data-invalid-message="You must add at least 1 image link" required>
-          <button class="action-button bg-green" (click)="addToArray(productImages, {image: image})">Add</button>
+          <button class="action-button bg-green" (click)="addToArray(productImages, image)">Add</button>
         </div>
         <div class="product-images">
           @for (imageF of productImages; track imageF){
@@ -71,8 +70,9 @@
 
       </div>
       <div class="form-buttons">
-        <button class="action-button bg-green" (click)="createProduct()">Save</button>
+        <button class="action-button bg-green" (click)="saveProduct()">Save</button>
         <button class="action-button" (click)="clear()">Clean</button>
+        <button class="action-button" (click)="deleteProduct()">Delete product</button>
       </div>
     </form>
 

@@ -15,11 +15,11 @@ export class ProductService {
   }
 
   public post(body: any) {
-    this.http.post(this.url + "post", body).subscribe()
+    return this.http.post(this.url + "post", body)
   }
 
   public delete(id: number) {
-    this.http.delete(this.url + "delete/" + id).subscribe()
+    return this.http.delete(this.url + "delete/" + id)
   }
 
   public get(id: number): Observable<ResponseWrapper> {
@@ -36,8 +36,7 @@ export class ProductService {
   }
 
   public edit(body: any) {
-    this.http.put(this.url + "put", body).subscribe()
-    console.log(body)
+    return this.http.put(this.url + "put", body)
   }
 
 }

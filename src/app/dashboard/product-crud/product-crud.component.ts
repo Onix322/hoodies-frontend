@@ -2,6 +2,8 @@ import {AfterViewInit, Component, Input, ViewChild} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {ProductService} from '../../services/product/product.service';
 import {FormValidator} from '../../utils/form-validator/form-validator';
+import {Notification} from '../../utils/notifications/notification/notification';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-create-product',
@@ -31,13 +33,20 @@ export class ProductCrudComponent implements AfterViewInit{
 
   ngAfterViewInit() {
     this.validator.validate("register-product", Array.of("product-images"))
-    this.validator.validateElementIf("productImageField", () => this.productImages.length > 0)
+    this.validator.validateElementIf("product-images", () => this.productImages.length > 0)
   }
 
-  public createProduct() {
+  public saveProduct() {
+    console.log(this.productImages)
+    if(!this.validator.validate("register-product", Array.of("product-images"))) {
+      Notification.notifyInvalid("Please complete all fields before saving!")
+      return
+    }
 
-    if(!this.validator.validateElementIf("productImageField", () => this.productImages.length > 0)) return;
-    if(!this.validator.validate("register-product", Array.of("product-images"))) return
+    if(!this.validator.validateElementIf("product-images", () => this.productImages.length > 0)) {
+      Notification.notifyInvalid("Please add at least 1 image!")
+      return
+    }
 
     const product = {
       id: 0,
@@ -51,20 +60,57 @@ export class ProductCrudComponent implements AfterViewInit{
     }
 
     if (this.id < 1) {
-      this.productService.post(product)
+      this.createProduct(product)
     } else {
-      product.id = this.id
-      this.productService.edit(product)
+      this.editProduct(product)
     }
     this.clear()
   }
 
+  private createProduct(body: any){
+    this.productService.post(body).subscribe({
+      next: () =>{
+        Notification.notifyValid("Product created!")
+      },
+      error: () =>{
+        Notification.notifyInvalid("Product not created!")
+      }
+    })
+  }
+
+  private editProduct(body: any){
+    body.id = this.id
+    this.productService.edit(body).subscribe({
+      next: () => {
+        console.log(this.productImages)
+        Notification.notifyValid("Product edited!")
+      },
+      error: () =>{
+        Notification.notifyInvalid("Product not edited!")
+      }
+    })
+  }
+
   public deleteProduct() {
-    this.productService.delete(this.productIdEntered)
+
+    if(this.id <=0 ){
+      Notification.notifyInvalid("Get product's information first!")
+      return
+    }
+
+    this.productService.delete(this.id)
+      .subscribe({
+        next: () =>{
+          Notification.notifyValid("Product has been deleted!")
+        },
+        error: () =>{
+          Notification.notifyInvalid("Product has not been deleted!")
+        },
+      })
     this.clear()
   }
 
-  public async getProduct() {
+  public getProduct() {
 
     this.productService.get(this.productIdEntered).subscribe({
       next: (value) => {
@@ -74,7 +120,7 @@ export class ProductCrudComponent implements AfterViewInit{
         this.id = value.result.id;
         this.title = value.result.title;
         this.size = value.result.size;
-        this.productColor = value.result.productColor.toString().substring(0, 1) + value.result.productColor.toString().substring(1).toLowerCase();
+        this.productColor = value.result.productColor;
         this.description = value.result.description;
         this.price = value.result.price;
         this.rating = value.result.rating;
@@ -82,23 +128,33 @@ export class ProductCrudComponent implements AfterViewInit{
         value.result.productImages.forEach((image: any) => {
           this.productImages.push(JSON.parse(JSON.stringify(image)))
         })
+
+        Notification.notifyValid("Product found!")
       },
 
       error: (err) => {
         console.log(err.error.message)
+        Notification.notifyInvalid("Product with id " + this.productIdEntered + " not found! Id: ")
+        this.clear()
       }
     })
   }
 
-  public addToArray(array: Array<any>, object: any) {
+  public addToArray(array: Array<any>, link: String) {
 
-    array.push(object)
-    if(!this.validator.validateElementIf("productImageField", () => this.productImages.length > 0)) return;
+    if(link.trim().length == 0){
+      Notification.notifyInvalid("Product image filed should not be empty!")
+      return
+    }
+    array.push({image: link})
+    this.validator.validateElementIf("product-images", () => this.productImages.length > 0);
+
   }
 
   public deleteFromArray(array: Array<any>, index: any) {
     if (index > -1) { // only splice array when item is found
       array.splice(index, index + 1); // 2nd parameter means remove one item only
+      this.validator.validateElementIf("product-images", () => this.productImages.length > 0)
     }
   }
 
