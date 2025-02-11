@@ -2,8 +2,7 @@ import {AfterViewInit, Component, Input} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../services/auth/auth.service';
 import {FormValidator} from '../utils/form-validator/form-validator';
-import {authGuard} from '../guard/auth-guard.guard';
-import { tap } from 'rxjs';
+import {ActivatedRoute, RouterStateSnapshot} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,14 +17,15 @@ export class LoginComponent implements AfterViewInit {
   @Input() email: string = "";
   @Input() password: string = "";
 
-  constructor(private authService: AuthService, private validator: FormValidator) {
+  constructor(private authService: AuthService, private validator: FormValidator, private activatedRoute: ActivatedRoute) {
     this.authService.isAuth().subscribe({
       next: (value) => {
-        if(value){
+        if (value) {
           window.location.replace("/")
         }
       }
     })
+
   }
 
   ngAfterViewInit() {

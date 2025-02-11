@@ -129,6 +129,8 @@ export class ProductCrudComponent implements AfterViewInit{
           this.productImages.push(JSON.parse(JSON.stringify(image)))
         })
 
+        this.validator.validateElementIf("product-images", () => this.productImages.length > 0)
+
         Notification.notifyValid("Product found!")
       },
 
@@ -168,7 +170,6 @@ export class ProductCrudComponent implements AfterViewInit{
     this.rating = 0;
     this.image = "";
     this.productImages = [];
-    this.productIdEntered = 0;
   }
 }
 

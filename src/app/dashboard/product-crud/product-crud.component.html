@@ -6,6 +6,7 @@
     <input id="product-id" type="number" name="productIdEntered" [(ngModel)]="productIdEntered">
     <div class="get-delete-box-buttons">
       <button class="action-button" (click)="getProduct()">Get</button>
+      <button class="action-button" (click)="deleteProduct()" [disabled]="id <= 0">Delete</button>
     </div>
   </div>
 
@@ -72,7 +73,6 @@
       <div class="form-buttons">
         <button class="action-button bg-green" (click)="saveProduct()">Save</button>
         <button class="action-button" (click)="clear()">Clean</button>
-        <button class="action-button" (click)="deleteProduct()">Delete product</button>
       </div>
     </form>
 

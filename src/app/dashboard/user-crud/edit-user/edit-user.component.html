@@ -2,12 +2,12 @@
   <app-change-password [userId]="id"></app-change-password>
   <div class="get-delete-box">
     <label for="product-id">Enter user id:</label>
-    <input id="product-id" type="number" name="title" [(ngModel)]="id">
+    <input id="product-id" type="number" name="title" [(ngModel)]="readId">
     <div class="get-delete-box-buttons">
-      <button class="action-button" (click)="getUser(id)">Get user details</button>
-      <button class="action-button" (click)="deactivateUser(id)">Deactivate user</button>
-      <button class="action-button" (click)="activateUser(id)">Activate user</button>
-      <button class="action-button" (click)="changePasswordPopup()">Change password</button>
+      <button class="action-button" (click)="getUser(readId)">Get user details</button>
+      <button class="action-button" (click)="deactivateUser(id)" [disabled]="id<=0">Deactivate user</button>
+      <button class="action-button" (click)="activateUser(id)" [disabled]="id<=0">Activate user</button>
+      <button class="action-button" (click)="changePasswordPopup()" [disabled]="id<=0">Change password</button>
     </div>
   </div>
 

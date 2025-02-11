@@ -3,6 +3,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserService} from '../../../services/user/user.service';
 import {FormValidator} from '../../../utils/form-validator/form-validator';
 import {RenderView} from '../../../utils/render-view/render-view';
+import {Notification} from '../../../utils/notifications/notification/notification';
 
 
 @Component({
@@ -60,15 +61,39 @@ export class CreateUserComponent implements AfterViewInit{
     if (this.id < 1 || this.id == null) {
       //id is set null in backend
       //if id == null return object created in db
-      this.userService.createUser(user).subscribe()
+      this.createFunc(user)
     } else {
-      this.userService.updateUser(user)
+      this.updateFunc(user)
     }
 
     this.clear()
   }
 
-  public clear() {
+  private createFunc(body: any){
+    this.userService.createUser(body)
+      .subscribe({
+        next: () => {
+          Notification.notifyValid("User has been created!")
+        },
+        error: () => {
+          Notification.notifyInvalid("User has not been created!")
+        }
+      })
+  }
+
+  private updateFunc(body: any){
+    this.userService.updateUser(body)
+      .subscribe({
+        next: () => {
+          Notification.notifyValid("User has been updated!")
+        },
+        error: () => {
+          Notification.notifyInvalid("User has not been updated!")
+        }
+      })
+  }
+
+  private clear() {
     this.id = 0;
     this.name = "";
     this.email = "";

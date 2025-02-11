@@ -157,6 +157,11 @@ button, input[type="button"]{
   background-color: #c40000;
 }
 
+.action-button:disabled{
+  background-color: #cc3434;
+  cursor: not-allowed;
+}
+
 .notification{
   background-color: #171717;
   color: white;

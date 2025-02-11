@@ -25,6 +25,8 @@ export class EditUserComponent implements AfterViewInit {
   @Input() role: string = "";
   @Input() userImage: string = "";
   @Input() activationStatus: string = ""
+  @Input() readId: number = 0;
+  @Input() idValid: boolean = this.id > 0;
 
   @ViewChild(ChangePasswordComponent, {read: ChangePasswordComponent})
   private popup: ChangePasswordComponent | undefined;
@@ -72,6 +74,7 @@ export class EditUserComponent implements AfterViewInit {
       Notification.notifyInvalid("Id must be greater then 0")
       return
     }
+
     this.clear()
     this.userService.getUser(id).subscribe({
       next: (value: any) => {

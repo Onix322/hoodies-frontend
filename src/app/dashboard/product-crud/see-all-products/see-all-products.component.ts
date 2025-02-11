@@ -15,7 +15,6 @@ import {dateTimestampProvider} from 'rxjs/internal/scheduler/dateTimestampProvid
   styleUrl: './see-all-products.component.css'
 })
 export class SeeAllProductsComponent implements OnInit{
-  protected readonly JSON = JSON;
   protected products: Array<any> = new Array<any>();
 
   constructor(private productService: ProductService) {

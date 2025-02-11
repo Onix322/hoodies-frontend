@@ -30,7 +30,7 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    pathMatch: "full",
+    pathMatch: "full"
   },
   {
     path: 'register',
@@ -64,5 +64,5 @@ export const routes: Routes = [
     pathMatch: "full",
     component: NotFoundPageComponent
   },
-  { path: '404', component: NotFoundPageComponent },
+  {path: '404', component: NotFoundPageComponent},
 ];
