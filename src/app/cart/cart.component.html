@@ -4,19 +4,21 @@
   <div class="products-container">
 
     @if(products.getValue().length > 0){
-      @for (product of products.getValue();track product.id){
+      @for (product of products.getValue();track product.productDto.id){
         <div class="product-box">
-          <img src="{{product.productImage.image}}">
+          <img src="{{product.productDto.productImage.image}}">
 
           <div class="details">
-            <h3>{{product.title}}</h3>
-            <p>Size: {{product.size}}</p>
-            <p>Rating: {{product.rating}}</p>
-            <p>Price: {{product.price}} $</p>
+            <h3>{{product.productDto.title}}</h3>
+            <p>Size: {{product.productDto.size}}</p>
+            <p>Rating: {{product.productDto.rating}}</p>
+            <p>Price: {{product.productDto.price}} $</p>
+            <p>Color: {{product.productDto.productColor}} $</p>
+            <p>Quantity: {{product.quantity}}</p>
 
             <div class="buttons">
-              <a href="/product/{{product.id}}"><button class="action-button">See product</button></a>
-              <button class="action-button" (click)="removeFromCart(product.id)">Remove from basket</button>
+              <a href="/product/{{product.productDto.id}}"><button class="action-button">See product</button></a>
+              <button class="action-button" (click)="removeFromCart(product.productDto.id)">Remove from basket</button>
             </div>
           </div>
         </div>

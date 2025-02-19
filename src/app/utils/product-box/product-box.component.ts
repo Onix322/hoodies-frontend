@@ -40,22 +40,16 @@ export class ProductBoxComponent {
       }),
       switchMap(() => this.authService.getCurrentLoggedUser()),
       tap(id => userId.next(id)),
-      switchMap(() => this.cartService.verifyExistenceOfProduct(userId.getValue(), Number.parseInt(this.id.toString()))),
-      switchMap((status: any) => {
-        if(!status.result){
-          Notification.notifyValid("Product added to cart!")
-          return this.cartService.addToCart({userId: userId.getValue(), productId: this.id})
-        }
-        Notification.notifyInvalid("Product already in cart!")
-        return new Observable()
-      }),
+      switchMap(() => this.cartService.addToCart({userId: userId.getValue(), productId: this.id})),
       tap((value: any) => this.cartService.setCartLength(value.result.products.length)),
-      catchError((err) => {
-        return err
-      })
     ).subscribe({
+      next: (cart) => {
+        Notification.notifyValid("Product added to cart!")
+        this.cartService.setCartLength(cart.result.products.length)
+      },
       error: (err) =>{
         console.log("Not logged in")
+        console.log(err)
       }
     })
   }

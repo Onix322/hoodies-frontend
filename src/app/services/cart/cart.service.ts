@@ -12,7 +12,7 @@ export class CartService {
 
   private url: string = "http://localhost:8080/cart"
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient) {
   }
 
   public getUserCart(id: number) {
@@ -21,15 +21,6 @@ export class CartService {
 
   public getCartLength() {
     return this.cartLengthBS.asObservable()
-  }
-
-  public verifyExistenceOfProduct(userId: number, productId: number) {
-    const body = {
-      userId: userId,
-      productId: productId
-    }
-
-    return this.http.put(this.url + '/exist', body)
   }
 
   public setCartLength(number: number) {

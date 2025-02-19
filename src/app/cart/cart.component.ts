@@ -34,12 +34,8 @@ export class CartComponent implements OnInit {
   }
 
   public removeFromCart(productId: number) {
-    this.cartService.verifyExistenceOfProduct(this.userId.getValue(), Number.parseInt(productId.toString()))
-      .pipe(
-        switchMap((status: any) => status.result ?
-          this.cartService.removeFromCart({userId: this.userId.getValue(), productId: productId})
-          : new Observable())
-      ).subscribe({
+    this.cartService.removeFromCart({userId: this.userId.getValue(), productId: productId})
+      .subscribe({
       next: (value: any) => {
         this.products.next(value.result.products)
         this.cartService.setCartLength(value.result.products.length)
@@ -62,7 +58,7 @@ export class CartComponent implements OnInit {
         next: (value: any) => {
           this.totalPrice = 0
           value.forEach((product: any) => {
-            this.totalPrice += product.price;
+            this.totalPrice += product.productDto.price;
           })
         },
         error: (err) => {
