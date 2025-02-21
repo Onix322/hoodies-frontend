@@ -24,33 +24,10 @@ export class ProductBoxComponent {
   @Input() productImage: any | undefined;
   @Input() page: string = "";
 
-  constructor(private cartService: CartService, private authService: AuthService, private router: Router) {
+  constructor(private cartService: CartService) {
   }
   public addToCart() {
-
-    let userId = new BehaviorSubject(0)
-
-    this.authService.isAuth().pipe(
-      tap(value => {
-        if (!value) {
-          Notification.notifyInvalid("You must login first!")
-          this.router.navigateByUrl("/login", {skipLocationChange: true, replaceUrl: false})
-          throwError(() => "Not login")
-        }
-      }),
-      switchMap(() => this.authService.getCurrentLoggedUser()),
-      tap(id => userId.next(id)),
-      switchMap(() => this.cartService.addToCart({userId: userId.getValue(), productId: this.id})),
-      tap((value: any) => this.cartService.setCartLength(value.result.products.length)),
-    ).subscribe({
-      next: (cart) => {
-        Notification.notifyValid("Product added to cart!")
-        this.cartService.setCartLength(cart.result.products.length)
-      },
-      error: (err) =>{
-        console.log("Not logged in")
-        console.log(err)
-      }
-    })
+    let idNumber = Number.parseInt(this.id.toString())
+    this.cartService.addToCartImpl(idNumber)
   }
 }

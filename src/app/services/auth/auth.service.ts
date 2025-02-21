@@ -1,6 +1,18 @@
 import {Injectable} from '@angular/core';
 import {UserService} from '../user/user.service';
-import {BehaviorSubject, catchError, filter, firstValueFrom, forkJoin, map, Observable, of, switchMap, tap} from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  filter, first,
+  firstValueFrom,
+  forkJoin,
+  map,
+  mergeMap,
+  Observable,
+  of,
+  switchMap,
+  tap
+} from 'rxjs';
 import {Notification} from '../../utils/notifications/notification/notification';
 import {TokenService} from '../token/token.service';
 
@@ -71,8 +83,11 @@ export class AuthService {
     }
 
     return this.token.validate(token).pipe(
-      map(status => status.result),
-      tap(valid => this.isAuthenticate.next(valid)),
+      first(),
+      mergeMap(status => {
+        this.isAuthenticate.next(status.result)
+        return this.isAuthenticate.asObservable()
+      }),
       catchError(err => {
         this.isAuthenticate.next(false);
         return of(false);

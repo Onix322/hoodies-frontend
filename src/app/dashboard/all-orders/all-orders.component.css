@@ -17,14 +17,14 @@
 
 .product{
   display: grid;
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   grid-template-columns: 1fr minmax(250px,100%);
   column-gap: 20px;
 }
 
 .product > img{
   grid-row-start: 1;
-  grid-row-end: 7;
+  grid-row-end: 8;
   width: 100%;
   min-width: 250px;
   height: 100%;

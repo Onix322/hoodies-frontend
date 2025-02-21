@@ -52,6 +52,7 @@ export class CartComponent implements OnInit {
       this.cartService.getUserCart(this.userId.getValue())
         .pipe(
           tap((cart: any) => console.log(cart)),
+          tap((cart: any) => console.log(cart.result)),
           tap((cart: any) => this.products.next(cart.result.products)),
           switchMap(() => this.products)
         ).subscribe({
@@ -86,6 +87,7 @@ export class CartComponent implements OnInit {
   public placeOrder() {
 
     console.log(this.cart)
+    console.log(this.products.getValue())
 
     const body = {
       status: "CONFIRMED",

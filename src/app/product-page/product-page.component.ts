@@ -54,8 +54,6 @@ export class ProductPageComponent implements OnInit {
   }
 
   public addToCart() {
-
-    this.cartService.addToCart({userId: this.authService.getCurrentLoggedUser(), productId: this.id})
-
+    this.cartService.addToCartImpl(this.id)
   }
 }

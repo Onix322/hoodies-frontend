@@ -23,13 +23,14 @@
       <div class="products-details">
         @for (product of order.products; track product){
           <div class="product">
-            <img src="{{product.productImage.image}}">
-            <h3>{{product.title}}</h3>
-            <p>Product number: {{product.id}}</p>
-            <p>Size: {{product.size}}</p>
-            <p>Price: {{product.price}}</p>
-            <div class ="productColor" style="background: {{product.productColor}}"></div>
-            <a class="action-button" [href]="'/product/' + product.id">See product details</a>
+            <img src="{{product.productDto.productImage.image}}">
+            <h3>{{product.productDto.title}}</h3>
+            <p>Product number: {{product.productDto.id}}</p>
+            <p>Size: {{product.productDto.size}}</p>
+            <p>Price: {{product.productDto.price}}</p>
+            <p>Quantity: {{product.quantity}}</p>
+            <div class ="productColor" style="background: {{product.productDto.productColor}}"></div>
+            <a class="action-button" [href]="'/product/' + product.productDto.id">See product details</a>
           </div>
         }
       </div>
