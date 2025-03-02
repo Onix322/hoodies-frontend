@@ -1,7 +1,5 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Output} from '@angular/core';
 import {CartService} from '../../../services/cart/cart.service';
-import {AuthService} from '../../../services/auth/auth.service';
-import {filter, switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-cart-button',
@@ -11,30 +9,17 @@ import {filter, switchMap} from 'rxjs';
   styleUrl: './cart-button.component.css',
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class CartButtonComponent implements AfterViewInit {
+export class CartButtonComponent {
 
-  cartLength: number = 0;
+  @Output()
+  protected cartLength: number = 0;
 
-  constructor(private cartService: CartService, private authService: AuthService) {
-
-    this.authService.isAuth()
-      .pipe(
-        filter(status => status),
-        switchMap(() => this.authService.getCurrentLoggedUser()),
-        switchMap(userId => this.cartService.getUserCart(userId))
-      ).subscribe({
-      next: (value: any) => {
-        this.cartService.setCartLength(value.result.products.length)
+  constructor(private cartService: CartService) {
+    this.cartService.getCartLength().subscribe({
+      next: (value) => {
+        this.cartLength = value
       }
     })
   }
 
-  ngAfterViewInit(): void {
-    this.cartService.getCartLength().subscribe({
-      next: (value: number) => {
-        this.cartLength = value
-      }
-    });
-    console.log((this.cartLength))
-  }
 }

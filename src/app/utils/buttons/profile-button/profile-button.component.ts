@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user/user.service';
 import {AuthService} from '../../../services/auth/auth.service';
-import {switchMap} from 'rxjs';
+import {skipLast, switchMap, takeLast} from 'rxjs';
 
 @Component({
   selector: 'app-profile-button',
@@ -27,6 +27,7 @@ export class ProfileButtonComponent implements OnInit {
 
   public getDetails() {
     this.authService.getCurrentLoggedUser().pipe(
+      skipLast(1),
       switchMap(user => this.userService.getUser(user)),
     ).subscribe({
       next: (value) => {

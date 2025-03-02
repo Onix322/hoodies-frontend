@@ -103,6 +103,8 @@ export class AuthService {
       return this.userId.asObservable()
     }
 
+
+
     this.token.getUserIdFromToken(token).pipe(
         map(value => value.result)
       )
@@ -120,5 +122,4 @@ export class AuthService {
   public logout() {
     localStorage.removeItem("token")
   }
-
 }

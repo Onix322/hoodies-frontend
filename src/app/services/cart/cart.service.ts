@@ -1,16 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, delay, first, mergeMap, switchMap, take, tap, throwError} from 'rxjs';
+import {BehaviorSubject, first, map, mergeMap, skipLast, switchMap, take, takeLast, tap} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
 import {Notification} from '../../utils/notifications/notification/notification';
 import {Router} from '@angular/router';
+import {waitForAsync} from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-
-  private cartLengthBS: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   private url: string = "http://localhost:8080/cart"
 
@@ -18,23 +17,30 @@ export class CartService {
   }
 
   public getUserCart(id: number) {
-    return this.http.get(this.url + "/get/cart/for/" + id)
+    return this.http.get(this.url + "/get/" + id)
   }
 
   public getCartLength() {
-    return this.cartLengthBS.asObservable()
-  }
+    let cartLengthBS: BehaviorSubject<number> = new BehaviorSubject(0);
 
-  public setCartLength(number: number) {
-    this.cartLengthBS.next(number)
+    this.authService.getCurrentLoggedUser().pipe(
+      skipLast(1),
+      switchMap((userId) => this.http.get(this.url + `/get-length/by-userid/${userId}`)),
+    ).subscribe({
+        next: (value: any) =>{
+          cartLengthBS.next(value.result)
+        }
+      })
+
+    return cartLengthBS.asObservable()
   }
 
   private addToCart(body: any) {
     return this.http.put(this.url + "/add-to-cart", body)
   }
 
-  public removeFromCart(body: any) {
-    return this.http.put(this.url + "/remove-from-cart", body)
+  private removeFromCart(body: any) {
+    return this.http.delete(this.url + `/delete/item/${body.cartId}/${body.productId}`)
   }
 
   public removeAllProducts(userId: number) {
@@ -42,24 +48,35 @@ export class CartService {
   }
 
   public addToCartImpl(productId: number) {
-    this.authService.isAuth().pipe(
-      mergeMap((isAuth) => {
-        if (!isAuth) {
-          Notification.notifyInvalid("You must login first!");
-          this.router.navigateByUrl("/login", { skipLocationChange: true, replaceUrl: false });
-          return throwError(() => new Error("User not logged in"));
+    return this.authService.isAuth().pipe(
+      take(1),
+      mergeMap((status) => {
+        if (!status) {
+          this.router.navigateByUrl("/login", {skipLocationChange: true, replaceUrl: false})
         }
-        return this.authService.getCurrentLoggedUser();
+        return this.authService.getCurrentLoggedUser()
       }),
-      switchMap((userId) => this.addToCart({ userId, productId })),
-      tap((cart: any) => this.setCartLength(cart.result.products.length))
-    ).subscribe({
-      next: () => {
-        Notification.notifyValid("Product added to cart!");
-      },
-      error: (err) => {
-        console.error("Error:", err.message);
-      }
-    });
+      first(),
+      mergeMap((userId) => this.getUserCart(userId)),
+      mergeMap((cartId: any) => this.addToCart(
+        {
+          id: null,
+          quantity: 1,
+          cart: {id: cartId.result.id},
+          product: {id: productId}
+        }
+      )),
+      tap(() => this.getCartLength())
+    )
+  }
+
+  public removeFromCartImpl(productId: number) {
+    return this.authService.getCurrentLoggedUser()
+      .pipe(
+        switchMap((userId) => this.getUserCart(userId)),
+        take(1),
+        mergeMap((cart: any) => this.removeFromCart({cartId: cart.result.id, productId: productId})),
+        tap(() => this.getCartLength()),
+      )
   }
 }

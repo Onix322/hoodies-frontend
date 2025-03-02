@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NavComponent} from '../nav/nav.component';
 import {AuthService} from '../services/auth/auth.service';
 import {CartService} from '../services/cart/cart.service';
 import {OrderService} from '../services/order/order.service';
 import {FooterComponent} from '../utils/footer/footer.component';
 import {Notification} from '../utils/notifications/notification/notification';
-import {BehaviorSubject, Observable, switchMap, tap} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -20,8 +20,7 @@ import {BehaviorSubject, Observable, switchMap, tap} from 'rxjs';
 export class CartComponent implements OnInit {
 
   public products = new BehaviorSubject(new Array<any>());
-  public totalPrice: Number = 0;
-  private cart: any;
+  public totalPrice: number = 0;
   private userId = new BehaviorSubject(0)
 
   constructor(private cartService: CartService, private authService: AuthService, private orderService: OrderService) {
@@ -34,78 +33,42 @@ export class CartComponent implements OnInit {
   }
 
   public removeFromCart(productId: number) {
-    this.cartService.removeFromCart({userId: this.userId.getValue(), productId: productId})
+    this.cartService.removeFromCartImpl(productId)
       .subscribe({
-      next: (value: any) => {
-        this.products.next(value.result.products)
-        this.cartService.setCartLength(value.result.products.length)
-        Notification.notifyValid("Product removed successfully")
-      },
-      error: (err) => {
-        Notification.notifyInvalid("Product has not been removed.")
-      }
-    })
+        next: (length: any) => {
+          this.displayProducts()
+          Notification.notifyValid("Product removed successfully")
+        },
+        error: (err) => {
+          this.displayProducts()
+          Notification.notifyInvalid("Product has not been removed.")
+          console.log(err)
+        }
+      })
+
   }
 
   public displayProducts() {
     setTimeout(() => {
       this.cartService.getUserCart(this.userId.getValue())
-        .pipe(
-          tap((cart: any) => console.log(cart)),
-          tap((cart: any) => console.log(cart.result)),
-          tap((cart: any) => this.products.next(cart.result.products)),
-          switchMap(() => this.products)
-        ).subscribe({
-        next: (value: any) => {
-          this.totalPrice = 0
-          value.forEach((product: any) => {
-            this.totalPrice += product.productDto.price;
-          })
-        },
-        error: (err) => {
-          console.log(err)
-        }
-      })
+        .subscribe({
+          next: (value: any) => {
+            this.products.next(value.result.products)
+            this.totalPrice = value.result.totalPrice
+          },
+          error: (err) => {
+            console.log(err)
+          }
+        })
     }, 200)
   }
 
   public deleteAllProductFromCart() {
-    this.authService.getCurrentLoggedUser()
-      .pipe(
-        switchMap(userId => this.cartService.getUserCart(userId)),
-        switchMap((cart: any) => {
-          this.products.next(new Array<any>())
-          return this.cartService.removeAllProducts(cart.result.user.id)
-        }),
-      ).subscribe({
-      next: () => {
-        this.cartService.setCartLength(0)
-      }
-    })
+
   }
 
   public placeOrder() {
 
-    console.log(this.cart)
-    console.log(this.products.getValue())
-
-    const body = {
-      status: "CONFIRMED",
-      totalPrice: this.totalPrice,
-      user: {
-        id: this.userId.getValue()
-      },
-      products: this.products.getValue()
-    }
-
-    this.orderService.createOrder(body).subscribe({
-      next: () => {
-        this.deleteAllProductFromCart()
-        Notification.notifyValid("Order placed!")
-      }, error: () => {
-        Notification.notifyInvalid("Order not placed")
-      }
-    })
   }
 
   private userIdInitializer(): void {

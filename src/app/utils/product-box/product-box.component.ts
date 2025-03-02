@@ -28,6 +28,13 @@ export class ProductBoxComponent {
   }
   public addToCart() {
     let idNumber = Number.parseInt(this.id.toString())
-    this.cartService.addToCartImpl(idNumber)
+    this.cartService.addToCartImpl(idNumber).subscribe({
+      next: () => {
+        Notification.notifyValid("Product added to cart!")
+      },
+      error: () => {
+        Notification.notifyInvalid("Product could not be added to cart!")
+      }
+    })
   }
 }
