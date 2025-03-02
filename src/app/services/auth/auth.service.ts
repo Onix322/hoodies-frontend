@@ -1,18 +1,6 @@
 import {Injectable} from '@angular/core';
 import {UserService} from '../user/user.service';
-import {
-  BehaviorSubject,
-  catchError,
-  filter, first,
-  firstValueFrom,
-  forkJoin,
-  map,
-  mergeMap,
-  Observable,
-  of,
-  switchMap,
-  tap
-} from 'rxjs';
+import {BehaviorSubject, catchError, filter, first, map, mergeMap, Observable, of, switchMap, tap} from 'rxjs';
 import {Notification} from '../../utils/notifications/notification/notification';
 import {TokenService} from '../token/token.service';
 
@@ -23,6 +11,7 @@ export class AuthService {
 
   private isAuthenticate = new BehaviorSubject(false)
   private userId: BehaviorSubject<number> = new BehaviorSubject(0)
+
   constructor(private userService: UserService, private token: TokenService) {
 
   }
@@ -31,7 +20,7 @@ export class AuthService {
 
     let token = this.token.getToken()
 
-    if(!token) {
+    if (!token) {
       console.log("token ", token)
       this.login({email: email, password: password})
       return
@@ -40,24 +29,24 @@ export class AuthService {
     console.log("token ", token)
 
     this.token.validate(token).pipe(
-        filter((status) => status.result),
-        switchMap(() => this.token.getUserIdFromToken(token)),
-        tap(user => console.log(user))
-      ).subscribe({
-      next: value =>{
+      filter((status) => status.result),
+      switchMap(() => this.token.getUserIdFromToken(token)),
+      tap(user => console.log(user))
+    ).subscribe({
+      next: value => {
         this.userId.next(value.result)
         window.location.reload()
       },
       error: (err) => {
         console.log(err)
-        if(err.error.status == 401){
+        if (err.error.status == 401) {
           this.login({email: email, password: password})
         }
       }
     })
   }
 
-  public login({email = "", password = ""}){
+  public login({email = "", password = ""}) {
 
     let loginBody: any = {
       email: email,
@@ -79,7 +68,7 @@ export class AuthService {
     const token = this.token.getToken();
 
     if (!token) {
-      return of(false); // Dacă nu avem token, returnăm `false` imediat
+      return of(false);
     }
 
     return this.token.validate(token).pipe(
@@ -104,17 +93,16 @@ export class AuthService {
     }
 
 
-
     this.token.getUserIdFromToken(token).pipe(
-        map(value => value.result)
-      )
+      map(value => value.result)
+    )
       .subscribe({
         next: (value) => {
           this.userId.next(value)
-        }, error: (err) =>{
+        }, error: (err) => {
           console.log("Login please!")
         }
-    })
+      })
 
     return this.userId.asObservable();
   }

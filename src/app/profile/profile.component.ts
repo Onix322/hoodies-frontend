@@ -9,7 +9,8 @@ import {Notification} from '../utils/notifications/notification/notification';
 import {FormValidator} from '../utils/form-validator/form-validator';
 import {NgIf} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
-import {filter, switchMap, windowWhen} from 'rxjs';
+import {filter, skipLast, switchMap, windowWhen} from 'rxjs';
+import {AddressService} from '../services/user/address.service';
 
 @Component({
   selector: 'app-profile',
@@ -43,28 +44,14 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   @Input() role: string = "";
   @Input() userImage: string = "";
   @Input() activationStatus: string = "";
+  @Input() addresses: Array<any> = [];
 
-  constructor(private authService: AuthService, private userService: UserService, private validator: FormValidator) {
-
+  constructor(private addressService: AddressService, private authService: AuthService, private userService: UserService, private validator: FormValidator) {
   }
 
   ngOnInit(): void {
-    this.authService.isAuth()
-      .pipe(
-        filter(status => status),
-        switchMap(() => this.authService.getCurrentLoggedUser()),
-        switchMap(userId => this.userService.getUser(userId))
-      ).subscribe({
-      next: value => {
-        this.id = value.result.id
-        this.name = value.result.name
-        this.email = value.result.email
-        this.phone = value.result.phone
-        this.role = value.result.role
-        this.userImage = value.result.userImage
-        this.activationStatus = value.result.activationStatus
-      }
-    })
+   this.userInitializer()
+    this.addressesInitializer()
   }
 
   ngAfterViewInit() {
@@ -136,5 +123,37 @@ export class ProfileComponent implements OnInit, AfterViewInit {
 
   public toDashboard() {
     window.location.replace("/dashboard")
+  }
+
+  public userInitializer(){
+    this.authService.isAuth()
+      .pipe(
+        filter(status => status),
+        switchMap(() => this.authService.getCurrentLoggedUser()),
+        switchMap(userId => this.userService.getUser(userId))
+      ).subscribe({
+      next: value => {
+        this.id = value.result.id
+        this.name = value.result.name
+        this.email = value.result.email
+        this.phone = value.result.phone
+        this.role = value.result.role
+        this.userImage = value.result.userImage
+        this.activationStatus = value.result.activationStatus
+      }
+    })
+  }
+
+  public addressesInitializer(){
+    this.authService.getCurrentLoggedUser()
+      .pipe(
+        skipLast(1),
+        switchMap((userId) => this.addressService.getAllFor(userId))
+      ).subscribe({
+      next: value => {
+        console.log(value.result)
+        this.addresses = value.result
+      }
+    })
   }
 }

@@ -38,7 +38,7 @@
   </div>
 </app-popup>
 <main>
-  <section>
+  <section class="user-infos">
     <div class="big-image">
       <img src="{{userImage}}" alt="{{name}}'s profile">
     </div>
@@ -58,7 +58,39 @@
         <button class="action-button" (click)="openChangeInfos()">Edit infos</button>
         <button class="action-button" (click)="openDeleteConfirmation()">Delete account</button>
         <button class="action-button" *ngIf="role == 'ADMIN'" (click)="toDashboard()">Dashboard</button>
+        <button class="action-button" *ngIf="role == 'ADMIN'" >Add new address</button>
       </div>
     </div>
+  </section>
+
+  <section class="addresses">
+    <h2>Addresses: </h2>
+
+      <table class="address">
+        <thead>
+          <tr>
+            <th>City: </th>
+            <th>Country: </th>
+            <th>State: </th>
+            <th>Address: </th>
+            <th>Zipcode: </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (address of addresses; track address.id){
+            <tr>
+              <td>{{address.city}}</td>
+              <td>{{address.country}}</td>
+              <td>{{address.state}}</td>
+              <td>{{address.street + "," + address.number}}</td>
+              <td>{{address.zip}}</td>
+              <td class="address-buttons">
+                <button class="action-button">Delete</button>
+                <button class="action-button">Edit</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
   </section>
 </main>

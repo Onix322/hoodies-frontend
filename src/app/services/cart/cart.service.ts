@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, first, map, mergeMap, skipLast, switchMap, take, takeLast, tap} from 'rxjs';
+import {BehaviorSubject, first, mergeMap, skipLast, switchMap, take, tap} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
-import {Notification} from '../../utils/notifications/notification/notification';
 import {Router} from '@angular/router';
-import {waitForAsync} from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +25,10 @@ export class CartService {
       skipLast(1),
       switchMap((userId) => this.http.get(this.url + `/get-length/by-userid/${userId}`)),
     ).subscribe({
-        next: (value: any) =>{
-          cartLengthBS.next(value.result)
-        }
-      })
+      next: (value: any) => {
+        cartLengthBS.next(value.result)
+      }
+    })
 
     return cartLengthBS.asObservable()
   }

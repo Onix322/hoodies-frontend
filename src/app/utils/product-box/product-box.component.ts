@@ -1,10 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {CartService} from '../../services/cart/cart.service';
-import {AuthService} from '../../services/auth/auth.service';
 import {NgIf} from '@angular/common';
-import {BehaviorSubject, catchError, map, Observable, switchMap, tap, throwError} from 'rxjs';
 import {Notification} from '../notifications/notification/notification';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-box',
@@ -26,6 +23,7 @@ export class ProductBoxComponent {
 
   constructor(private cartService: CartService) {
   }
+
   public addToCart() {
     let idNumber = Number.parseInt(this.id.toString())
     this.cartService.addToCartImpl(idNumber).subscribe({

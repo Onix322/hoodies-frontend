@@ -35,7 +35,7 @@ export class CartComponent implements OnInit {
   public removeFromCart(productId: number) {
     this.cartService.removeFromCartImpl(productId)
       .subscribe({
-        next: (length: any) => {
+        next: () => {
           this.displayProducts()
           Notification.notifyValid("Product removed successfully")
         },
@@ -68,6 +68,8 @@ export class CartComponent implements OnInit {
   }
 
   public placeOrder() {
+
+    console.log("creating body...")
 
   }
 

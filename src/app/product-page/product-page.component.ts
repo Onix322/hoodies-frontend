@@ -4,6 +4,7 @@ import {NavComponent} from '../nav/nav.component';
 import {ProductService} from '../services/product/product.service';
 import {CartService} from '../services/cart/cart.service';
 import {AuthService} from '../services/auth/auth.service';
+import {Notification} from '../utils/notifications/notification/notification';
 
 @Component({
   selector: 'app-product-page',
@@ -54,6 +55,13 @@ export class ProductPageComponent implements OnInit {
   }
 
   public addToCart() {
-    this.cartService.addToCartImpl(this.id)
+    this.cartService.addToCartImpl(this.id).subscribe({
+      next: () => {
+        Notification.notifyValid("Product added to cart!")
+      },
+      error: () => {
+        Notification.notifyInvalid("Product could not be added to cart!")
+      }
+    })
   }
 }
