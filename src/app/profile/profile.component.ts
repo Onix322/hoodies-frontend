@@ -9,7 +9,7 @@ import {Notification} from '../utils/notifications/notification/notification';
 import {FormValidator} from '../utils/form-validator/form-validator';
 import {NgIf} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
-import {filter, skipLast, switchMap, windowWhen} from 'rxjs';
+import {filter, skipLast, switchMap, take, tap, windowWhen} from 'rxjs';
 import {AddressService} from '../services/user/address.service';
 
 @Component({
@@ -37,6 +37,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   @ViewChild("deleteConfirmation", {read: PopupComponent})
   private deleteConfirmation: PopupComponent | undefined;
 
+  @ViewChild("addressForm", {read: PopupComponent})
+  private addressForm: PopupComponent | undefined;
+
   @Input() id: number = 0;
   @Input() name: string = "";
   @Input() email: string = "";
@@ -46,11 +49,21 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   @Input() activationStatus: string = "";
   @Input() addresses: Array<any> = [];
 
+  @Input() country: string = "";
+  @Input() city: string = "";
+  @Input() state: string = "";
+  @Input() street: string = "";
+  @Input() number: string = "";
+  @Input() zipcode: string = "";
+  @Input() mainAddress: string = "";
+  addressId: number = 0;
+  addressUserId: number = 0;
+
   constructor(private addressService: AddressService, private authService: AuthService, private userService: UserService, private validator: FormValidator) {
   }
 
   ngOnInit(): void {
-   this.userInitializer()
+    this.userInitializer()
     this.addressesInitializer()
   }
 
@@ -71,12 +84,140 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.changeInfosPopup?.open()
   }
 
+  public openAddressForm(){
+    this.validator.validate("address-form")
+    this.clearAddressForm()
+    this.addressForm?.open()
+  }
+
+  public closeAddressForm(){
+    this.clearAddressForm()
+    this.addressForm?.close()
+  }
+
   public openDeleteConfirmation() {
     this.deleteConfirmation?.open()
   }
 
   public closeDeleteConfirmation() {
     this.deleteConfirmation?.close()
+  }
+
+  public createAddress(){
+
+    if(!this.validator.validate("address-form")) return
+
+    const body = {
+      id: null,
+      user: {
+        id: 0
+      },
+      country: this.country,
+      city: this.city,
+      street: this.street,
+      number: this.number,
+      state: this.state,
+      zip: this.zipcode,
+      mainAddress: this.mainAddress,
+      activeAddress: true
+    }
+
+    this.authService.getCurrentLoggedUser()
+      .pipe(
+        skipLast(1),
+        switchMap((userId) => {
+          body.user.id = userId
+          return this.addressService.create(body)
+        }),
+      ) .subscribe({
+      next: () => {
+        Notification.notifyValid("Address added!")
+        this.closeAddressForm()
+      },
+      error: (err) => {
+        Notification.notifyInvalid("Address not added!")
+        console.log(err)
+      }
+    })
+  }
+
+  public deactivateAddress(){
+    this.addressService.deleteAddress(this.addressId)
+      .subscribe({
+        next: () => {
+          Notification.notifyValid("Address deleted!")
+          this.closeAddressForm()
+        },
+        error: () => {
+          Notification.notifyValid("Address not deleted!")
+        }
+      })
+  }
+
+  public editAddress(addressId: number){
+    this.addressService.getAddress(addressId)
+      .subscribe({
+        next: value => {
+          this.openAddressForm()
+
+          this.addressId = value.result.id
+          this.country = value.result.country
+          this.city = value.result.city
+          this.street = value.result.street
+          this.number = value.result.number
+          this.state = value.result.state
+          this.zipcode = value.result.zip
+          this.mainAddress = value.result.mainAddress
+        }
+      })
+  }
+
+  public saveEdit(){
+
+    const body = {
+      id: this.addressId,
+      user: {
+        id: this.addressUserId
+      },
+      country: this.country,
+      city: this.city,
+      street: this.street,
+      number: this.number,
+      state: this.state,
+      zip: this.zipcode,
+      mainAddress: this.mainAddress,
+      activeAddress: true
+    }
+
+    this.authService.getCurrentLoggedUser()
+      .pipe(
+        skipLast(1),
+        switchMap((userId) => {
+          body.user.id = userId
+          console.log(body)
+          return this.addressService.update(body)
+        }),
+      ).subscribe({
+      next: () =>{
+        Notification.notifyValid("Address has been updated!")
+        this.closeAddressForm()
+      },
+      error: () =>{
+        Notification.notifyInvalid("Address has not been updated!")
+      }
+    })
+  }
+
+  public clearAddressForm(){
+    this.addressUserId = 0;
+    this.addressId = 0
+    this.country = ""
+    this.city = ""
+    this.street = ""
+    this.number = ""
+    this.state = ""
+    this.zipcode = ""
+    this.mainAddress = ""
   }
 
   public editUser() {
@@ -148,7 +289,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.authService.getCurrentLoggedUser()
       .pipe(
         skipLast(1),
-        switchMap((userId) => this.addressService.getAllFor(userId))
+        switchMap((userId) => this.addressService.getAllFor(userId)),
+        take(1)
       ).subscribe({
       next: value => {
         console.log(value.result)

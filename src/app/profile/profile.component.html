@@ -30,6 +30,51 @@
     </div>
   </form>
 </app-popup>
+
+<app-popup modalTitle="Add new address: " #addressForm>
+  <form method="POST" name="address-form" class="form-box">
+    <div>
+      <label for="country">Country:</label>
+      <input id="country" type="text" name="country" [(ngModel)]="country" data-invalid-message="Country is mandatory" minlength="4" required>
+    </div>
+    <div>
+      <label for="city">City:</label>
+      <input id="city" type="text" name="city" [(ngModel)]="city" data-invalid-message="city is mandatory" minlength="2" required>
+    </div>
+    <div>
+      <label for="state">State:</label>
+      <input id="state" type="text" name="state" [(ngModel)]="state" data-invalid-message="State is mandatory" minlength="2" required>
+    </div>
+    <div>
+      <label for="street">Street:</label>
+      <input id="street" type="text" name="street" [(ngModel)]="street" data-invalid-message="Street is mandatory" minlength="2" required>
+    </div>
+
+    <div>
+      <label for="number">Number:</label>
+      <input id="number" type="text" name="number" [(ngModel)]="number" data-invalid-message="Number is mandatory" minlength="2" required>
+    </div>
+    <div>
+      <label for="mainAddress">Main address:</label>
+      <select id="mainAddress" type="text" name="mainAddress" [(ngModel)]="mainAddress" data-invalid-message="Main address is mandatory" minlength="2" required>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+    <div>
+      <label for="zip">Zipcode:</label>
+      <input id="zip" type="text" name="zip" [(ngModel)]="zipcode" data-invalid-message="Zip is mandatory" minlength="2" required>
+    </div>
+    <div class="form-buttons" *ngIf="addressId == 0" >
+      <button class="action-button bg-green" (click)="createAddress()">Save</button>
+    </div>
+    <div class="form-buttons" *ngIf="addressId != 0" >
+      <button class="action-button bg-green" (click)="saveEdit()">Save edit</button>
+      <button class="action-button" (click)="deactivateAddress()">Deactivate</button>
+    </div>
+  </form>
+</app-popup>
+
 <app-popup modalTitle="Confirmation" #deleteConfirmation class="confirmation-popup">
   <h1>Are you sure you want to delete your account ?</h1>
   <div class="confirmation-buttons">
@@ -58,7 +103,7 @@
         <button class="action-button" (click)="openChangeInfos()">Edit infos</button>
         <button class="action-button" (click)="openDeleteConfirmation()">Delete account</button>
         <button class="action-button" *ngIf="role == 'ADMIN'" (click)="toDashboard()">Dashboard</button>
-        <button class="action-button" *ngIf="role == 'ADMIN'" >Add new address</button>
+        <button class="action-button" (click)="openAddressForm()">Add new address</button>
       </div>
     </div>
   </section>
@@ -74,6 +119,7 @@
             <th>State: </th>
             <th>Address: </th>
             <th>Zipcode: </th>
+            <th>Main address: </th>
           </tr>
         </thead>
         <tbody>
@@ -84,9 +130,13 @@
               <td>{{address.state}}</td>
               <td>{{address.street + "," + address.number}}</td>
               <td>{{address.zip}}</td>
-              <td class="address-buttons">
-                <button class="action-button">Delete</button>
-                <button class="action-button">Edit</button>
+              <td>
+                @if(address.mainAddress === true){
+                  Yes
+                } @else {}
+              </td>
+              <td class="address-button-box">
+                <button class="action-button address-button" (click)="editAddress(address.id)">Edit</button>
               </td>
             </tr>
           }

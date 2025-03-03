@@ -110,19 +110,26 @@ table{
   border-bottom: 1px solid red;
 }
 
-.address td:last-child{
-  border: 0;
+.address-button-box{
+  padding: 0;
+  border: none !important;
 }
-.address-buttons{
+
+.address-button{
   opacity: 0;
-  transition: 0.2s;
 }
 
-.address tr:hover .address-buttons{
-  opacity: 1;
+.address tr:hover .address-button{
+  animation: addressButtonFadeIn;
+  animation-fill-mode: forwards;
+  animation-duration: 0.2s;
 }
 
-.address-buttons button + button{
-  margin-left: var(--general-padding);
+@keyframes addressButtonFadeIn {
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
 }
-
