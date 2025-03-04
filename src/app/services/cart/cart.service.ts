@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, first, mergeMap, skipLast, switchMap, take, tap} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
+import {ResponseWrapper} from '../../utils/response/response-wrapper';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,10 @@ export class CartService {
 
   public removeAllProducts(userId: number) {
     return this.http.delete(this.url + "/remove-all/" + userId)
+  }
+
+  public getItem(cartItemId: number){
+    return this.http.get<ResponseWrapper>(this.url + `/get-item/${cartItemId}`)
   }
 
   public addToCartImpl(productId: number) {

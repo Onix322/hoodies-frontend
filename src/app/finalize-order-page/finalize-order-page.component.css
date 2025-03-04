@@ -1,0 +1,7 @@
+main{
+  position: relative;
+  top: var(--nav-heigth);
+  width: var(--general-container-max-width);
+  margin: 0 auto;
+}
+

@@ -9,7 +9,7 @@ import {Notification} from '../utils/notifications/notification/notification';
 import {FormValidator} from '../utils/form-validator/form-validator';
 import {NgIf} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
-import {filter, skipLast, switchMap, take, tap, windowWhen} from 'rxjs';
+import {BehaviorSubject, filter, skipLast, switchMap, take, tap, windowWhen} from 'rxjs';
 import {AddressService} from '../services/user/address.service';
 
 @Component({
@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   @Input() role: string = "";
   @Input() userImage: string = "";
   @Input() activationStatus: string = "";
-  @Input() addresses: Array<any> = [];
+  @Input() addresses: BehaviorSubject<Array<any>> = new BehaviorSubject(new Array<any>());
 
   @Input() country: string = "";
   @Input() city: string = "";
@@ -133,6 +133,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       next: () => {
         Notification.notifyValid("Address added!")
         this.closeAddressForm()
+        location.reload()
       },
       error: (err) => {
         Notification.notifyInvalid("Address not added!")
@@ -147,6 +148,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         next: () => {
           Notification.notifyValid("Address deleted!")
           this.closeAddressForm()
+          location.reload()
         },
         error: () => {
           Notification.notifyValid("Address not deleted!")
@@ -201,6 +203,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       next: () =>{
         Notification.notifyValid("Address has been updated!")
         this.closeAddressForm()
+        location.reload()
       },
       error: () =>{
         Notification.notifyInvalid("Address has not been updated!")
@@ -293,8 +296,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         take(1)
       ).subscribe({
       next: value => {
-        console.log(value.result)
-        this.addresses = value.result
+        this.addresses.next(value.result)
       }
     })
   }

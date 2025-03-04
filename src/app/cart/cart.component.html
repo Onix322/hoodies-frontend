@@ -13,7 +13,10 @@
             <p>Size: {{p.product.size}}</p>
             <p>Rating: {{p.product.rating}}</p>
             <p>Price: {{p.product.price}} $</p>
-            <p>Color: {{p.product.productColor}} $</p>
+            <div style="width: fit-content;">
+              <p>Color:</p>
+              <div style="border-radius: 100%;width: 30px; height: 30px; background-color: {{p.product.productColor}}"></div>
+            </div>
             <p>Quantity: {{p.quantity}}</p>
 
             <div class="buttons">
@@ -32,7 +35,7 @@
     <h1>Summary:</h1>
     <p>Delivery price: <strong>FREE</strong></p>
     <h3>Total: {{totalPrice.toFixed(2)}} $</h3>
-    <button class="action-button" (click)="placeOrder()"> Send order</button>
+    <button class="action-button" (click)="finalizeOrder()">Finalize order</button>
   </div>
 </main>
 

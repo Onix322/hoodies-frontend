@@ -123,7 +123,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (address of addresses; track address.id){
+          @for (address of addresses.getValue(); track address.id){
             <tr>
               <td>{{address.city}}</td>
               <td>{{address.country}}</td>

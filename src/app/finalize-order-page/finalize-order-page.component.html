@@ -1,0 +1,41 @@
+<app-nav></app-nav>
+<main>
+  <section class="products">
+    <h1>Products: </h1>
+    <table>
+      <thead>
+      <th>Title</th>
+      <th>Price x Quantity</th>
+      <th>Image</th>
+      </thead>
+      @for (product of products; track product.id){
+        <tbody>
+        <td>{{ product.product.title}}</td>
+        <td>{{ product.product.price}} x {{ product.quantity}}</td>
+        <td><img src="{{ product.product.productImage.image}}"></td>
+        </tbody>
+      }
+    </table>
+  </section>
+
+  <section class="addresses">
+    <h1>Choose an address:</h1>
+  </section>
+
+  <section class="payment-method">
+    <h1>Choose a payment method: </h1>
+  </section>
+
+  <section class="comments">
+    <h1>Leave us a message:</h1>
+  </section>
+
+  <h3>Delivery fee: <strong>FREE</strong></h3>
+  <h1 class ="total-price">Total price: {{this.totalPrice}}</h1>
+  <button class="action-button"> <span style="font-size: 20px;">Order now!</span></button>
+</main>
+
+<div class="footer">
+  <app-footer ></app-footer>
+</div>
+

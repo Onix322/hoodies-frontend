@@ -6,6 +6,8 @@ import {OrderService} from '../services/order/order.service';
 import {FooterComponent} from '../utils/footer/footer.component';
 import {Notification} from '../utils/notifications/notification/notification';
 import {BehaviorSubject} from 'rxjs';
+import {TransferFromCartService} from '../services/order/transfer-from-cart.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -23,7 +25,7 @@ export class CartComponent implements OnInit {
   public totalPrice: number = 0;
   private userId = new BehaviorSubject(0)
 
-  constructor(private cartService: CartService, private authService: AuthService, private orderService: OrderService) {
+  constructor(private cartService: CartService, private authService: AuthService, private transfer: TransferFromCartService, private router: Router) {
 
   }
 
@@ -67,10 +69,16 @@ export class CartComponent implements OnInit {
 
   }
 
-  public placeOrder() {
+  public finalizeOrder() {
 
-    console.log("creating body...")
+    let productsIds = new Array<any>()
+    this.products.getValue().forEach(product => {
+      //cartItem entity id
+      productsIds.push(product.id)
+    })
+    this.transfer.productsIds = productsIds;
 
+    this.router.navigateByUrl('/finalize-order', {skipLocationChange: false, replaceUrl: true})
   }
 
   private userIdInitializer(): void {

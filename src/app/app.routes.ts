@@ -9,6 +9,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {CartComponent} from './cart/cart.component';
 import {NotFoundPageComponent} from './not-found-page/not-found-page.component';
 import {authGuard} from './guard/auth-guard.guard';
+import {FinalizeOrderPageComponent} from './finalize-order-page/finalize-order-page.component';
 
 export const routes: Routes = [
   {
@@ -46,6 +47,12 @@ export const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+    pathMatch: "full",
+    canActivate: [authGuard]
+  },
+  {
+    path: 'finalize-order',
+    component: FinalizeOrderPageComponent,
     pathMatch: "full",
     canActivate: [authGuard]
   },
