@@ -18,21 +18,77 @@
     </table>
   </section>
 
-  <section class="addresses">
-    <h1>Choose an address:</h1>
+  <app-popup #addressPopup>
+    <section class="addresses">
+      <h1>Choose an address:</h1>
+      @for (address of addresses; track address.id){
+        <article>
+          <h3>{{address.city}}</h3>
+          <p>{{address.country}}</p>
+          <p>{{address.state}}</p>
+          <p>{{address.street + "," + address.number}}</p>
+          <p>{{address.zip}}</p>
+          <p>
+            @if(address.mainAddress === true){
+              Main address
+            } @else {}
+          </p>
+          <p><button class="action-button address-button" (click)="chooseAddress(address.id)">Choose</button></p>
+        </article>
+      }
+
+    </section>
+  </app-popup>
+
+  <section>
+    <h3>Your chosen address:</h3>
+    <button class="action-button address-button" (click)="openAddressPopup()">See addresses</button>
+    @if (chosenAddress.getValue() != null){
+      <table style="margin-top: 10px;">
+        <thead>
+        <tr>
+          <th>City: </th>
+          <th>Country: </th>
+          <th>State: </th>
+          <th>Address: </th>
+          <th>Zipcode: </th>
+          <th>Main address: </th>
+        </tr>
+        </thead>
+        <tbody>
+          <td>{{chosenAddress.getValue().city}}</td>
+          <td>{{chosenAddress.getValue().country}}</td>
+          <td>{{chosenAddress.getValue().state}}</td>
+          <td>{{chosenAddress.getValue().street + "," + chosenAddress.getValue().number}}</td>
+          <td>{{chosenAddress.getValue().zip}}</td>
+          <td>
+            @if(chosenAddress.getValue().mainAddress === true){
+              Yes
+            } @else {}
+          </td>
+        </tbody>
+      </table>
+    } @else {
+      <p> Choose an address first!</p>
+    }
+
   </section>
 
   <section class="payment-method">
     <h1>Choose a payment method: </h1>
+    <p>--- WORKING ON ---</p>
   </section>
 
-  <section class="comments">
+  <section class="comments-box">
     <h1>Leave us a message:</h1>
+    <textarea class="comments" [(ngModel)]="comments">
+
+    </textarea>
   </section>
 
   <h3>Delivery fee: <strong>FREE</strong></h3>
   <h1 class ="total-price">Total price: {{this.totalPrice}}</h1>
-  <button class="action-button"> <span style="font-size: 20px;">Order now!</span></button>
+  <button class="action-button" [disabled]="addressId < 1"> <span style="font-size: 20px;" (click)="orderCreator()">Order now!</span></button>
 </main>
 
 <div class="footer">

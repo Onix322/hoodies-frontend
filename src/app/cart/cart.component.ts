@@ -71,6 +71,11 @@ export class CartComponent implements OnInit {
 
   public finalizeOrder() {
 
+    if(this.products.getValue().length < 1){
+      Notification.notifyInvalid("You must have at least 1 product in cart!")
+      return
+    }
+
     let productsIds = new Array<any>()
     this.products.getValue().forEach(product => {
       //cartItem entity id
