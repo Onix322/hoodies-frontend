@@ -25,6 +25,8 @@ export class AllOrdersComponent {
   protected title = "Change order status:"
   protected orderId: number = 0;
   protected status = "";
+  protected comments = "";
+  protected createdAt = "";
 
   constructor(private orderService: OrderService) {
     this.getAll()
@@ -34,6 +36,7 @@ export class AllOrdersComponent {
     this.orderService.getAllOrders().subscribe({
       next: (value: any) => {
         this.orders = Array.from(value.result)
+        console.log(value)
       }, error: err => {
         console.error(err)
       }

@@ -42,8 +42,8 @@ export class CartService {
     return this.http.delete(this.url + `/delete/item/${body.cartId}/${body.productId}`)
   }
 
-  public removeAllProducts(userId: number) {
-    return this.http.delete(this.url + "/remove-all/" + userId)
+  public removeAllProducts(body: {cartId: number, cartItemsIds: number[]}) {
+    return this.http.put(this.url + "/delete/items", body)
   }
 
   public getItem(cartItemId: number){

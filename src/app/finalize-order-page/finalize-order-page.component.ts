@@ -147,6 +147,13 @@ export class FinalizeOrderPageComponent {
         console.log(err)
       }
     })
+
+    this.cartService.removeAllProducts(
+      {
+        cartId: this.cartId.getValue(),
+        cartItemsIds: this.transfer.productsIds
+      }).subscribe()
+
   }
 
   private chosenAddressInitializer(addressId: number){

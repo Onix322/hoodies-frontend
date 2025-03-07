@@ -8,11 +8,21 @@
       <div class="details">
         <div class="user-details">
           <h2>Order number: <br/> {{order.id}}</h2>
-          <p>Name : {{order.user.name}}</p>
-          <p>Phone: {{order.user.phone}}</p>
-          <p>email: {{order.user.email}}</p>
+          <p>Created at: {{order.createdAt}}</p>
+          <p>Name : {{order.userDto.name}}</p>
+          <p>Phone: {{order.userDto.phone}}</p>
+          <p>email: {{order.userDto.email}}</p>
           <p>Total price: {{order.totalPrice}}</p>
-          <p>Status: {{order.status}}</p>
+          <p>Status: {{order.statusOrder}}</p>
+          <h4>
+            Address: <br />
+            {{order.addressDto.country}},
+            {{order.addressDto.city}},
+            {{order.addressDto.state}},
+            {{order.addressDto.zip}},
+            {{order.addressDto.street}} {{order.addressDto.number}},
+          </h4>
+          <p>Comments: <br />{{order.comments}}</p>
           <div class="order-buttons">
             <button class="action-button" (click)="deleteOrder(order)">Delete order</button>
             <button class="action-button" (click)="openPopup(order)">Modify status</button>
@@ -21,16 +31,16 @@
       </div>
 
       <div class="products-details">
-        @for (product of order.products; track product){
+        @for (product of order.orderItems; track product){
           <div class="product">
-            <img src="{{product.productDto.productImage.image}}">
-            <h3>{{product.productDto.title}}</h3>
-            <p>Product number: {{product.productDto.id}}</p>
-            <p>Size: {{product.productDto.size}}</p>
-            <p>Price: {{product.productDto.price}}</p>
+            <img src="{{product.product.productImage.image}}">
+            <h3>{{product.product.title}}</h3>
+            <p>Product number: {{product.product.id}}</p>
+            <p>Size: {{product.product.size}}</p>
+            <p>Price: {{product.product.price}}</p>
             <p>Quantity: {{product.quantity}}</p>
-            <div class ="productColor" style="background: {{product.productDto.productColor}}"></div>
-            <a class="action-button" [href]="'/product/' + product.productDto.id">See product details</a>
+            <div class ="productColor" style="background: {{product.product.productColor}}"></div>
+            <a class="action-button" [href]="'/product/' + product.product.id">See product details</a>
           </div>
         }
       </div>
