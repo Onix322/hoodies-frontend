@@ -110,17 +110,21 @@
 
   <section class="addresses">
     <h2>Addresses: </h2>
-
-      <table class="address">
+    <div *ngIf="addresses.getValue().length < 1">
+      <h3> You don't have any addresses yet!</h3>
+      <button class="action-button" (click)="openAddressForm()">Add new address</button>
+    </div>
+    <article *ngIf="addresses.getValue().length >= 1">
+      <table>
         <thead>
-          <tr>
-            <th>City: </th>
-            <th>Country: </th>
-            <th>State: </th>
-            <th>Address: </th>
-            <th>Zipcode: </th>
-            <th>Main address: </th>
-          </tr>
+        <tr>
+          <th>City: </th>
+          <th>Country: </th>
+          <th>State: </th>
+          <th>Address: </th>
+          <th>Zipcode: </th>
+          <th>Main address: </th>
+        </tr>
         </thead>
         <tbody>
           @for (address of addresses.getValue(); track address.id){
@@ -142,9 +146,37 @@
           }
         </tbody>
       </table>
+    </article>
   </section>
 
-  <section class="user-orders">
-    
+  <section class="user-orders" >
+
+    <h2>Orders:</h2>
+
+    <div *ngIf="orders.getValue().length < 1">
+      <h3> You don't have any orders yet!</h3>
+    </div>
+    <article *ngIf="orders.getValue().length >= 1">
+      <table>
+        <thead>
+        <tr>
+          <th>Id: </th>
+          <th>Status: </th>
+          <th>Total price: </th>
+        </tr>
+        </thead>
+        @for(order of orders.getValue(); track order.id){
+          <tbody>
+          <tr>
+            <td>{{order.id}}</td>
+            <td>{{order.statusOrder}}</td>
+            <td>{{order.totalPrice}}</td>
+          </tr>
+          </tbody>
+        }
+      </table>
+    </article>
   </section>
 </main>
+
+<app-footer></app-footer>

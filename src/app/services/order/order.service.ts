@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {ResponseWrapper} from '../../utils/response/response-wrapper';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class OrderService {
 
   public changeStatus(body: any){
     return this.http.put(this.url + 'change-order-status', body)
+  }
+
+  public getForUser(userId: number){
+    return this.http.get<ResponseWrapper>(this.url + `get/${userId}`)
   }
 }

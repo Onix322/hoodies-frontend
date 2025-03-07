@@ -1,9 +1,7 @@
 main{
   width: 100%;
   max-width: var(--general-container-max-width);
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
+  margin: 0 auto;
 }
 .user-infos > * {
   height: 100%;
@@ -98,16 +96,15 @@ table{
   overflow: hidden;
 }
 
-.address th, td{
+table th, td{
   padding: 20px;
 }
-.address th{
-  background: #5B5B5B;
-  border-bottom: 1px solid red;
+table th{
+  background: var(--color_1);
 }
 
-.address td{
-  border-bottom: 1px solid red;
+table td{
+  border-bottom: 1px solid #707070;
 }
 
 .address-button-box{
@@ -119,7 +116,7 @@ table{
   opacity: 0;
 }
 
-.address tr:hover .address-button{
+table tr:hover .address-button{
   animation: addressButtonFadeIn;
   animation-fill-mode: forwards;
   animation-duration: 0.2s;

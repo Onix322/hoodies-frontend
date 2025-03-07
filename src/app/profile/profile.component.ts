@@ -11,6 +11,8 @@ import {NgIf} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {BehaviorSubject, filter, skipLast, switchMap, take, tap, windowWhen} from 'rxjs';
 import {AddressService} from '../services/user/address.service';
+import {OrderService} from '../services/order/order.service';
+import {FooterComponent} from '../utils/footer/footer.component';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +22,8 @@ import {AddressService} from '../services/user/address.service';
     PopupComponent,
     FormsModule,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    FooterComponent
   ],
   standalone: true,
   templateUrl: './profile.component.html',
@@ -40,31 +43,33 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   @ViewChild("addressForm", {read: PopupComponent})
   private addressForm: PopupComponent | undefined;
 
-  @Input() id: number = 0;
-  @Input() name: string = "";
-  @Input() email: string = "";
-  @Input() phone: string = "";
-  @Input() role: string = "";
-  @Input() userImage: string = "";
-  @Input() activationStatus: string = "";
-  @Input() addresses: BehaviorSubject<Array<any>> = new BehaviorSubject(new Array<any>());
+  @Input() protected id: number = 0;
+  @Input() protected name: string = "";
+  @Input() protected email: string = "";
+  @Input() protected phone: string = "";
+  @Input() protected role: string = "";
+  @Input() protected userImage: string = "";
+  @Input() protected activationStatus: string = "";
+  @Input() protected addresses: BehaviorSubject<Array<any>> = new BehaviorSubject(new Array<any>());
 
-  @Input() country: string = "";
-  @Input() city: string = "";
-  @Input() state: string = "";
-  @Input() street: string = "";
-  @Input() number: string = "";
-  @Input() zipcode: string = "";
-  @Input() mainAddress: string = "";
-  addressId: number = 0;
-  addressUserId: number = 0;
+  @Input() protected country: string = "";
+  @Input() protected city: string = "";
+  @Input() protected state: string = "";
+  @Input() protected street: string = "";
+  @Input() protected number: string = "";
+  @Input() protected zipcode: string = "";
+  @Input() protected mainAddress: string = "";
+  protected addressId: number = 0;
+  protected addressUserId: number = 0;
+  protected orders: BehaviorSubject<Array<any>> = new BehaviorSubject(new Array<any>());
 
-  constructor(private addressService: AddressService, private authService: AuthService, private userService: UserService, private validator: FormValidator) {
+  constructor(private orderService: OrderService, private addressService: AddressService, private authService: AuthService, private userService: UserService, private validator: FormValidator) {
   }
 
   ngOnInit(): void {
     this.userInitializer()
     this.addressesInitializer()
+    this.ordersInitializer()
   }
 
   ngAfterViewInit() {
@@ -299,5 +304,19 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         this.addresses.next(value.result)
       }
     })
+  }
+
+  public ordersInitializer(){
+    this.authService.getCurrentLoggedUser()
+      .pipe(
+        skipLast(1),
+        switchMap((userId) => this.orderService.getForUser(userId))
+      )
+      .subscribe({
+        next: (result) => {
+          console.log(result)
+          this.orders.next(result.result)
+        }
+      })
   }
 }
