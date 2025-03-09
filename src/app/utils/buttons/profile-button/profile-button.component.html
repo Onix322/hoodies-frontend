@@ -1,4 +1,4 @@
-<button class="profile-button" (click)="toProfilePage()">
+<button class="profile-button" routerLink="/profile">
   <img src="/profile.svg" type="image/svg+xml">
-  <p>{{ username }}</p>
+  <p>{{ username.getValue() }}</p>
 </button>

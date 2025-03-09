@@ -11,14 +11,13 @@
           <div class="details">
             <h3>{{p.product.title}}</h3>
             <p>Size: {{p.product.size}}</p>
-            <p>Rating: {{p.product.rating}}</p>
             <p>Price: {{p.product.price}} $</p>
             <div style="width: fit-content;">
               <p>Color:</p>
-              <div style="border-radius: 100%;width: 30px; height: 30px; background-color: {{p.product.productColor}}"></div>
+              <div style="margin: 5px;border-radius: 100%;width: 30px; height: 30px; background-color: {{p.product.productColor}}"></div>
             </div>
             <p>Quantity: {{p.quantity}}</p>
-
+            <app-product-star-rating [rating]="p.product.rating" [numberReviews]="p.product.numberReviews"></app-product-star-rating>
             <div class="buttons">
               <a href="/product/{{p.product.id}}"><button class="action-button">See product</button></a>
               <button class="action-button" (click)="removeFromCart(p.id)">Remove from basket</button>

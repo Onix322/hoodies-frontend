@@ -8,30 +8,28 @@ import {Notification} from '../utils/notifications/notification/notification';
 import {BehaviorSubject} from 'rxjs';
 import {TransferFromCartService} from '../services/order/transfer-from-cart.service';
 import {Router} from '@angular/router';
+import {ProductStarRatingComponent} from "../utils/product-box/product-star-rating/product-star-rating.component";
 
 @Component({
   selector: 'app-cart',
-  imports: [
-    NavComponent,
-    FooterComponent
-  ],
+    imports: [
+        NavComponent,
+        FooterComponent,
+        ProductStarRatingComponent
+    ],
   standalone: true,
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
-export class CartComponent implements OnInit {
+export class CartComponent {
 
   public products = new BehaviorSubject(new Array<any>());
   public totalPrice: number = 0;
   private userId = new BehaviorSubject(0)
 
   constructor(private cartService: CartService, private authService: AuthService, private transfer: TransferFromCartService, private router: Router) {
-
-  }
-
-  ngOnInit() {
-    this.userIdInitializer()
-    this.displayProducts()
+    setTimeout(() => this.userIdInitializer(), 100)
+    setTimeout(() => this.displayProducts(), 100)
   }
 
   public removeFromCart(productId: number) {
@@ -63,10 +61,6 @@ export class CartComponent implements OnInit {
           }
         })
     }, 200)
-  }
-
-  public deleteAllProductFromCart() {
-
   }
 
   public finalizeOrder() {

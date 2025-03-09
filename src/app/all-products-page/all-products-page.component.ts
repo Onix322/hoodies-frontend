@@ -11,22 +11,14 @@ import {ProductService} from '../services/product/product.service';
   templateUrl: './all-products-page.component.html',
   styleUrl: './all-products-page.component.css'
 })
-export class AllProductsPageComponent implements OnInit{
+export class AllProductsPageComponent{
   protected products: Array<any> = new Array<any>();
 
   constructor(private productService: ProductService) {
+    setTimeout(() => this.productInitializer(), 200)
   }
 
-  ngOnInit(): void {
-    this.getAllProducts().then(e =>{
-      console.log("Products found!")
-    })
-      .catch(err =>{
-        console.log(err.error.message)
-      })
-  }
-
-  public async getAllProducts(){
+  public productInitializer(){
     this.productService.getAll().subscribe({
       next: (value: any) => {
         this.products = Array.from(value.result)
@@ -36,6 +28,5 @@ export class AllProductsPageComponent implements OnInit{
         console.log(err)
       }
     })
-
   }
 }

@@ -15,7 +15,15 @@ export class ReviewService {
     return this.http.post<ResponseWrapper>(this.url + "post", body)
   }
 
+  public update(body: any){
+    return this.http.put<ResponseWrapper>(this.url + "put", body)
+  }
+
   public getReviewsFor(productId: number){
     return this.http.get<ResponseWrapper>(this.url + "get/" + productId);
+  }
+
+  public getReview(reviewId: number){
+    return this.http.get<ResponseWrapper>(this.url + "get/review/" + reviewId);
   }
 }

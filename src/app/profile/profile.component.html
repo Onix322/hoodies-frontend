@@ -95,7 +95,7 @@
         <strong>Phone: </strong>
         {{ phone }}
       </p>
-      <p><strong>Role:</strong> {{role}}</p>
+      <p *ngIf="role == 'ADMIN'"><strong>Role:</strong> {{role}}</p>
 
       <div class="profile-buttons">
         <button class="action-button" (click)="logOut()">Log out</button>

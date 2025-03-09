@@ -20,12 +20,8 @@ export class OrderService {
     return this.http.get(this.url + 'get')
   }
 
-  public deleteOrder(userId: number, orderId: number){
-    return this.http.delete(this.url + `delete/${userId}/${orderId}`)
-  }
-
   public changeStatus(body: any){
-    return this.http.put(this.url + 'change-order-status', body)
+    return this.http.put(this.url + 'status', body)
   }
 
   public getForUser(userId: number){

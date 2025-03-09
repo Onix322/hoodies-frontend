@@ -2,12 +2,14 @@ import {Component, Input} from '@angular/core';
 import {CartService} from '../../services/cart/cart.service';
 import {NgIf} from '@angular/common';
 import {Notification} from '../notifications/notification/notification';
+import {ProductStarRatingComponent} from './product-star-rating/product-star-rating.component';
 
 @Component({
   selector: 'app-product-box',
   standalone: true,
   imports: [
-    NgIf
+    NgIf,
+    ProductStarRatingComponent
   ],
   templateUrl: './product-box.component.html',
   styleUrl: './product-box.component.css'
@@ -17,9 +19,11 @@ export class ProductBoxComponent {
   @Input() title: String = "";
   @Input() size: String = "";
   @Input() price: String = "";
-  @Input() rating: String = "";
+  @Input() rating: number = 0;
+  @Input() numberReviews: number = 0;
   @Input() productImage: any | undefined;
   @Input() page: string = "";
+  @Input() availableForPurchase: boolean = false;
 
   constructor(private cartService: CartService) {
   }

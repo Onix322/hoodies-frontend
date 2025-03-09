@@ -24,6 +24,8 @@ export class ProductCrudComponent implements AfterViewInit{
   @Input() price: Number = 0.0;
   @Input() rating: Number = 0;
   @Input() image: String = "";
+  @Input() availableForPurchase: boolean = false;
+  @Input() numberReviews: number = 0;
   @Input() productImages: Array<any> = [];
   @Input() productIdEntered: number = 0;
 
@@ -56,7 +58,9 @@ export class ProductCrudComponent implements AfterViewInit{
       description: this.description,
       price: this.price,
       rating: this.rating,
+      availableForPurchase: this.availableForPurchase,
       productImages: this.productImages,
+      numberReviews: this.numberReviews,
     }
 
     if (this.id < 1) {
@@ -124,6 +128,8 @@ export class ProductCrudComponent implements AfterViewInit{
         this.description = value.result.description;
         this.price = value.result.price;
         this.rating = value.result.rating;
+        this.numberReviews = value.result.numberReviews
+        this.availableForPurchase = value.result.availableForPurchase;
 
         value.result.productImages.forEach((image: any) => {
           this.productImages.push(JSON.parse(JSON.stringify(image)))
@@ -169,6 +175,8 @@ export class ProductCrudComponent implements AfterViewInit{
     this.price = 0.0;
     this.rating = 0;
     this.image = "";
+    this.availableForPurchase = false;
+    this.numberReviews = 0;
     this.productImages = [];
   }
 }

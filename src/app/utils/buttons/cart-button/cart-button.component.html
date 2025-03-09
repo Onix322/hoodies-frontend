@@ -1,7 +1,7 @@
 <a class="cart-button" href="/cart">
     <img src="/cart.svg" type="image/svg+xml">
   <p>Cart</p>
-    @if(cartLength > 0){
-      <p class="cart-info">{{ cartLength}}</p>
+    @if(cartLength.getValue() > 0){
+      <p class="cart-info">{{ cartLength.getValue()}}</p>
     }
 </a>

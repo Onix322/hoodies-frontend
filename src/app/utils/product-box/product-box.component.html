@@ -4,10 +4,12 @@
       <img src="{{productImage}}" alt="{{productImage}}"/>
     </figure>
     <h3> {{ title }}</h3>
+    <p>Product id: <strong>{{id}}</strong></p>
     <p>Size: <strong>{{ size }}</strong></p>
     <p>Price: <strong>{{ price }} $</strong></p>
-    <p>Rating: <strong>{{ rating }}</strong></p>
+    <app-product-star-rating [rating]="rating" [numberReviews]="numberReviews"></app-product-star-rating>
+    <p *ngIf="!availableForPurchase"><strong style="color: red">Not available for purchase</strong></p>
   </a>
-  <button class="action-button" (click)="addToCart()" *ngIf="page != 'dashboard'">Add to cart</button>
+  <button class="action-button" (click)="addToCart()" *ngIf="page != 'dashboard' && availableForPurchase" >Add to cart</button>
 </article>
 

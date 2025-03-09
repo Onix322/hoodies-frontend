@@ -1,6 +1,18 @@
 import {Injectable} from '@angular/core';
 import {UserService} from '../user/user.service';
-import {BehaviorSubject, catchError, filter, first, map, mergeMap, Observable, of, switchMap, tap} from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  filter,
+  first,
+  map,
+  mergeMap,
+  Observable,
+  of,
+  switchMap, take,
+  takeLast,
+  tap
+} from 'rxjs';
 import {Notification} from '../../utils/notifications/notification/notification';
 import {TokenService} from '../token/token.service';
 
@@ -91,18 +103,13 @@ export class AuthService {
       this.userId.next(0)
       return this.userId.asObservable()
     }
-
-
-    this.token.getUserIdFromToken(token).pipe(
-      map(value => value.result)
-    )
-      .subscribe({
-        next: (value) => {
-          this.userId.next(value)
-        }, error: (err) => {
-          console.log("Login please!")
-        }
-      })
+    this.token.getUserIdFromToken(token).subscribe({
+      next: (value) => {
+        this.userId.next(value.result)
+      }, error: (err) => {
+        console.log("Login please!")
+      }
+    })
 
     return this.userId.asObservable();
   }

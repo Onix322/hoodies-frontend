@@ -2,10 +2,11 @@
   @if (products.length > 0){
     @for (product of products; track product){
       <app-product-box title="{{product.title}}"
-                        id="{{product.id}}"
-                        rating="{{product.rating}}"
-                        size="{{product.size}}"
+                       id="{{product.id}}"
+                       [rating]="product.rating"
+                       size="{{product.size}}"
                        productImage="{{product.productImage.image}}"
+                       [availableForPurchase]="product.availableForPurchase"
                        page="dashboard"
       ></app-product-box>
     }

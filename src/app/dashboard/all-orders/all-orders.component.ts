@@ -21,37 +21,22 @@ export class AllOrdersComponent {
   @ViewChild(PopupComponent, {read: PopupComponent})
   private popup: PopupComponent | undefined;
 
-  @Output() orders: Array<any> = new Array<any>();
+  @Output() protected orders: Array<any> = new Array<any>();
   protected title = "Change order status:"
   protected orderId: number = 0;
   protected status = "";
-  protected comments = "";
-  protected createdAt = "";
 
   constructor(private orderService: OrderService) {
-    this.getAll()
+    setTimeout(() => this.ordersInitializer(), 200)
   }
 
-  public getAll() {
+  public ordersInitializer() {
     this.orderService.getAllOrders().subscribe({
       next: (value: any) => {
         this.orders = Array.from(value.result)
         console.log(value)
       }, error: err => {
         console.error(err)
-      }
-    })
-  }
-
-  public deleteOrder(order: any) {
-    this.orderService.deleteOrder(order.user.id, order.id).subscribe({
-      next: () => {
-        Notification.notifyValid("Order has been deleted!")
-        this.getAll()
-      },
-      error: (err) => {
-        Notification.notifyValid("Order has NOT been deleted!")
-        console.log(err)
       }
     })
   }
@@ -70,7 +55,7 @@ export class AllOrdersComponent {
 
     const body = {
       orderId: this.orderId,
-      status: this.status,
+      statusOrder: this.status,
     }
 
     console.log(body)
@@ -78,7 +63,7 @@ export class AllOrdersComponent {
       next: () => {
         Notification.notifyValid("Order's status has been changed")
         this.status = "";
-        this.getAll()
+        this.ordersInitializer()
         this.closePopup()
       },
       error: () => {

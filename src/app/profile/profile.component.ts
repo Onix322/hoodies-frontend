@@ -67,9 +67,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.userInitializer()
-    this.addressesInitializer()
-    this.ordersInitializer()
+    setTimeout(() => this.userInitializer(), 100)
+    setTimeout(() => this.addressesInitializer(), 100)
+    setTimeout(() => this.ordersInitializer(), 100)
   }
 
   ngAfterViewInit() {
@@ -314,7 +314,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       )
       .subscribe({
         next: (result) => {
-          console.log(result)
           this.orders.next(result.result)
         }
       })

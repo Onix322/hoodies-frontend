@@ -1,0 +1,5 @@
+<div class="rating-box">
+  <div class="star star-full" *ngFor="let res of counterFull(); let i = index"></div>
+  <div class="star star-empty" *ngFor="let res2 of counterEmpty(); let i = index"></div>
+  <p>({{numberReviews}})</p>
+</div>

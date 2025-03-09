@@ -2,13 +2,14 @@ main{
   width: 100%;
   max-width: var(--general-container-max-width);
   margin: 0 auto;
+  padding: var(--general-padding);
 }
 .user-infos > * {
   height: 100%;
   width: 100%;
 }
 
-.user-infos section p {
+.user-infos p {
   font-size: 20px;
 }
 .user-infos h1 {

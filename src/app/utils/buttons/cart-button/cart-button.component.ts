@@ -1,24 +1,29 @@
-import {ChangeDetectionStrategy, Component, Output} from '@angular/core';
+import {Component, Output} from '@angular/core';
 import {CartService} from '../../../services/cart/cart.service';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-cart-button',
   imports: [],
   templateUrl: './cart-button.component.html',
   standalone: true,
-  styleUrl: './cart-button.component.css',
-  changeDetection: ChangeDetectionStrategy.Default
+  styleUrl: './cart-button.component.css'
 })
 export class CartButtonComponent {
 
   @Output()
-  protected cartLength: number = 0;
+  protected cartLength: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(private cartService: CartService) {
-    this.cartService.getCartLength().subscribe({
-      next: (value) => {
-        this.cartLength = value
-      }
-    })
+    setTimeout(() => this.cartLengthInitializer(), 100)
+  }
+
+  public cartLengthInitializer() {
+    this.cartService.getCartLength()
+      .subscribe({
+        next: (value) => {
+          this.cartLength.next(value)
+        }
+      })
   }
 }

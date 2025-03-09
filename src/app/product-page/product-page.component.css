@@ -6,7 +6,7 @@ main{
 section > * {
 
   height: 100%;
-  width: 100%;
+  /*width: 100%;*/
   /*overflow: hidden;*/
 }
 
@@ -92,6 +92,13 @@ section{
   padding: 20px;
 }
 
+.review-button-edit{
+  width: 100%;
+  height: fit-content;
+  padding: 10px;
+}
+
+
 .review-box h3{
   margin: 0;
 }
@@ -99,7 +106,6 @@ section{
 .review-box{
   margin-top: 10px;
   border-radius: 10px;
-  width: fit-content;
   background: #383838;
   padding: 20px;
   gap: 30px;
@@ -110,11 +116,46 @@ section{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: 10px;
 }
 
 .review-user img{
-  width: 50px;
+  width: 80px;
   background: white;
   border-radius: 10px;
+}
+.reviews{
+  text-wrap: wrap;
+  word-wrap: break-word;
+}
+.review-details p{
+  max-width: 1200px;
+  text-wrap: wrap;
+  word-wrap: break-word;
+}
+
+.create-review-form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 400px;
+  align-self: center;
+  width: 100%;
+}
+
+.create-review-form > div{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+}
+
+.create-review-form textarea {
+  --padding: 10px;
+  border: 1px solid white;
+  background: transparent;
+  width: calc(100% - var(--padding) * 2);
+  height: 10em !important;
+  color: white;
+  padding: var(--padding);
 }

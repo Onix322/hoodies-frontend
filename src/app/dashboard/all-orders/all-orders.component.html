@@ -24,7 +24,6 @@
           </h4>
           <p>Comments: <br />{{order.comments}}</p>
           <div class="order-buttons">
-            <button class="action-button" (click)="deleteOrder(order)">Delete order</button>
             <button class="action-button" (click)="openPopup(order)">Modify status</button>
           </div>
         </div>
@@ -52,10 +51,10 @@
       <label for="order-status">Activation status:</label>
       <select id="order-status" [(ngModel)]="status" name="order-status">
         <option value="CONFIRMED">Confirmed</option>
-        <option value="PREPARING">Preparing</option>
-        <option value="READY">Ready</option>
-        <option value="IN_TRANSIT">In transit</option>
+        <option value="PREPARED">Prepared</option>
+        <option value="IN_TRANSITION">In transit</option>
         <option value="DELIVERED">Delivered</option>
+        <option value="CANCELED">Canceled</option>
       </select>
       <button class="action-button" (click)="saveStatus()">Save</button>
     </div>

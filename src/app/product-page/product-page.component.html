@@ -15,48 +15,58 @@
         <span class="color-circle" style="background: {{productColor.toLowerCase()}}"></span>
       </p>
       <p><strong>Price:</strong> {{price}} Euro</p>
-      <p><strong>Rating:</strong> {{rating}}</p>
+      <app-product-star-rating [rating]="rating" [numberReviews]="numberReviews"></app-product-star-rating>
       <div class="product-page-images">
         @for(image of productImages; track image){
           <img src="{{image.image}}" alt="{{title}}">
         }
       </div>
-      <button class="action-button" (click)="addToCart()">Add to cart</button>
-      <p><strong>Description:</strong>  <br/><br/> {{description}}</p>
+      <button *ngIf="availableForPurchase" class="action-button" (click)="addToCart()">Add to cart</button>
+      <p *ngIf="!availableForPurchase"><strong style="color: red">Not available for purchase anymore!</strong>  <br/><br/> {{description}}</p>
+
     </article>
+  </section>
+
+  <section>
+    <h2>Description:</h2>
+    <p>{{description}}</p>
   </section>
 
   <section class="reviews">
     <h2>Reviews ({{reviews.getValue().length}}):</h2>
-    <button class="action-button review-button" (click)="openCreateReviewPopup()">Add review</button>
+    <button class="action-button review-button" *ngIf="availableForPurchase" (click)="openCreateReviewPopup()">Add review</button>
 
     @for (review of reviews.getValue(); track review.id) {
       <article class="review-box">
         <div class="review-user">
           <img src="{{review.user.userImage}}"/>
-          <h3> {{review.user.name}}</h3>
+          <button class="action-button review-button-edit" (click)="editReview(review.id)" *ngIf="isReviewOwner(review.user.id) && availableForPurchase">Edit</button>
         </div>
-        <div>
-          <h3>Score: {{review.score}}</h3>
+        <div class="review-details">
+          <h3> {{review.user.name}}</h3>
+          <app-product-star-rating [rating]="review.score" [numberReviews]="review.score"></app-product-star-rating>
           <p>{{review.message}}</p>
         </div>
       </article>
     }
   </section>
-
-  <app-popup modalTitle="Add review" #createReviewPopup>
-    <form name="create-review">
-      <div>
-        <label for="review-score">Score: </label>
-        <input id="review-score" name="review-score" type="range" min="1" [(ngModel)]="reviewScore" max="5" required>
-      </div>
-      <div>
-        <label for="review-message">Message: </label>
-        <textarea id="review-message" name="review-message" type="text" [(ngModel)]="reviewMessage" minlength="10" required></textarea>
-      </div>
-      <div>
-        <button class="action-button" (click)="createReview()">Send review</button>
-      </div>
-    </form>
-  </app-popup>
 </main>
+
+<app-popup modalTitle="Add review" #createReviewPopup>
+  <form class="create-review-form" name="create-review">
+    <div>
+      <label for="review-score">Score: </label>
+      <input id="review-score" name="review-score" type="range" min="1" [(ngModel)]="reviewScore" max="5" required>
+    </div>
+    <div>
+      <label for="review-message">Message: </label>
+      <textarea id="review-message" name="review-message" type="text" [(ngModel)]="reviewMessage" minlength="10" required></textarea>
+    </div>
+    <div>
+      <button class="action-button" (click)="createReview()" *ngIf="reviewId < 1">Send review</button>
+      <button class="action-button" (click)="saveReview()" *ngIf="reviewId >= 1">Save</button>
+    </div>
+  </form>
+</app-popup>
+
+<app-footer></app-footer>

@@ -2,8 +2,8 @@
   display: flex;
   gap: var(--nav-buttons-gap);
   align-items: center;
+  transition: 0.2s;
 }
-
 .cart-button img{
   vertical-align: middle;
 }

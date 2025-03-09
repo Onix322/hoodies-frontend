@@ -1,42 +1,38 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user/user.service';
 import {AuthService} from '../../../services/auth/auth.service';
-import {skipLast, switchMap, takeLast} from 'rxjs';
+import {BehaviorSubject, delay, skipLast, switchMap, take, takeLast} from 'rxjs';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-profile-button',
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './profile-button.component.html',
   standalone: true,
   styleUrl: './profile-button.component.css'
 })
-export class ProfileButtonComponent implements OnInit {
-  @Input() username: string = "Guest";
-  @Input() userId = 0;
+export class ProfileButtonComponent implements AfterViewInit{
+  @Input() protected username: BehaviorSubject<string> = new BehaviorSubject("Guest");
 
   constructor(private userService: UserService, private authService: AuthService) {
+    setTimeout(() => this.getDetails(), 300)
   }
 
-  ngOnInit(): void {
-    this.getDetails();
-  }
+  ngAfterViewInit() {
 
-  public toProfilePage() {
-    window.location.replace("/profile/" + this.userId)
   }
 
   public getDetails() {
     this.authService.getCurrentLoggedUser().pipe(
-      skipLast(1),
-      switchMap(user => this.userService.getUser(user)),
+      switchMap((userId) => this.userService.getUser(userId)),
     ).subscribe({
       next: (value) => {
-        this.username = value.result.name
-        this.userId = value.result.id
+        this.username.next(value.result.name)
       },
       error: (err) => {
-        this.username = "Guest";
-        this.userId = 0;
+        this.username.next("Guest");
         console.log(err)
       }
     })

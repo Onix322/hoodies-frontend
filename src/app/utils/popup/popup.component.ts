@@ -22,7 +22,7 @@ export class PopupComponent {
 
   public open(){
     if(!this.dialog) throw new Error("Dialog element does not exists!");
-
+    console.trace()
     this.dialog.element.nativeElement.parentElement.style.display = "block";
     this.dialog.element.nativeElement.open = true
     document.body.style.overflow = "hidden";

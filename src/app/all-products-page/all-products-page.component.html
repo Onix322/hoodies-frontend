@@ -4,10 +4,12 @@
     @for (product of products; track product){
       <app-product-box title="{{product.title}}"
                        id="{{product.id}}"
-                       rating="{{product.rating}}"
+                       [rating]="product.rating"
                        size="{{product.size}}"
                        productImage="{{product.productImage.image}}"
                        price="{{product.price}}"
+                       [availableForPurchase]="product.availableForPurchase"
+                       [numberReviews]="product.numberReviews"
       ></app-product-box>
     }
   </div>
