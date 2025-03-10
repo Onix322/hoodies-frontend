@@ -15,15 +15,11 @@ export class CartButtonComponent {
   protected cartLength: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(private cartService: CartService) {
-    setTimeout(() => this.cartLengthInitializer(), 100)
+    setTimeout(async () => await this.cartLengthInitializer(), 100)
   }
 
-  public cartLengthInitializer() {
-    this.cartService.getCartLength()
-      .subscribe({
-        next: (value) => {
-          this.cartLength.next(value)
-        }
-      })
+  public async cartLengthInitializer() {
+    await this.cartService.getCartLength()
+      .forEach(value => this.cartLength.next(value))
   }
 }
