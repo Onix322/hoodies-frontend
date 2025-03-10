@@ -2,25 +2,21 @@
 <main>
   <section class="products">
     <h1>Products: </h1>
-    <table>
-      <thead>
-      <th>Title</th>
-      <th>Price x Quantity</th>
-      <th>Image</th>
-      </thead>
-      @for (product of products; track product.id){
-        <tbody>
-        <td>{{ product.product.title}}</td>
-        <td>{{ product.product.price}} x {{ product.quantity}}</td>
-        <td><img src="{{ product.product.productImage.image}}"></td>
-        </tbody>
-      }
-    </table>
+
+    @for (product of products; track product.id){
+
+      <article class="product-box">
+        <img src="{{ product.product.productImage.image}}">
+        <div class="product-details">
+          <h3>{{ product.product.title}}</h3>
+          <p>{{ product.product.price}} x {{ product.quantity}}</p>
+        </div>
+      </article>
+    }
   </section>
 
-  <app-popup #addressPopup>
+  <app-popup #addressPopup modalTitle="Choose an address:">
     <section class="addresses">
-      <h1>Choose an address:</h1>
       @for (address of addresses; track address.id){
         <article>
           <h3>{{address.city}}</h3>
@@ -41,33 +37,21 @@
   </app-popup>
 
   <section>
-    <h3>Your chosen address:</h3>
+    <h1>Your chosen address:</h1>
     <button class="action-button address-button" (click)="openAddressPopup()">See addresses</button>
     @if (chosenAddress.getValue() != null){
-      <table style="margin-top: 10px;">
-        <thead>
-        <tr>
-          <th>City: </th>
-          <th>Country: </th>
-          <th>State: </th>
-          <th>Address: </th>
-          <th>Zipcode: </th>
-          <th>Main address: </th>
-        </tr>
-        </thead>
-        <tbody>
-          <td>{{chosenAddress.getValue().city}}</td>
-          <td>{{chosenAddress.getValue().country}}</td>
-          <td>{{chosenAddress.getValue().state}}</td>
-          <td>{{chosenAddress.getValue().street + "," + chosenAddress.getValue().number}}</td>
-          <td>{{chosenAddress.getValue().zip}}</td>
-          <td>
-            @if(chosenAddress.getValue().mainAddress === true){
-              Yes
-            } @else {}
-          </td>
-        </tbody>
-      </table>
+      <article class="chosen-address">
+        <h3>{{chosenAddress.getValue().city}}</h3>
+        <p>{{chosenAddress.getValue().country}}</p>
+        <p>{{chosenAddress.getValue().state}}</p>
+        <p>{{chosenAddress.getValue().street + "," + chosenAddress.getValue().number}}</p>
+        <p>{{chosenAddress.getValue().zip}}</p>
+        <p>
+          @if(chosenAddress.getValue().mainAddress === true){
+            Main address
+          } @else {}
+        </p>
+      </article>
     } @else {
       <p> Choose an address first!</p>
     }
