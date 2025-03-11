@@ -91,6 +91,7 @@ export class AuthService {
       }),
       catchError(err => {
         this.isAuthenticate.next(false);
+        this.token.removeToken()
         return of(false);
       })
     );
@@ -103,13 +104,12 @@ export class AuthService {
       this.userId.next(0)
       return this.userId.asObservable()
     }
-    this.token.getUserIdFromToken(token).subscribe({
-      next: (value) => {
-        this.userId.next(value.result)
-      }, error: (err) => {
-        console.log("Login please!")
-      }
-    })
+
+    this.token.getUserIdFromToken(token)
+      .subscribe({
+        next: (value) => this.userId.next(value.result),
+        error: () => this.token.removeToken()
+     })
 
     return this.userId.asObservable();
   }

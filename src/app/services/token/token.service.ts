@@ -27,4 +27,12 @@ export class TokenService {
   public getUserIdFromToken(token: string): Observable<ResponseWrapper>{
     return this.http.post<ResponseWrapper>(this.URL + "get-user-id", token)
   }
+
+  public removeToken(){
+    let token = localStorage.getItem("token")
+
+    if(token){
+      localStorage.removeItem(token)
+    }
+  }
 }

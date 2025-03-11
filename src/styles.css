@@ -12,7 +12,7 @@
   --general-container-max-width: 1552px;
 
   /* COLOR SCHEMA */
-  --full-black: black;
+  --full-black: #151515;
   --bg-color: #222222;
   --full-white: white;
   --color_1: rgba(158, 158, 158, 0.17);
@@ -154,7 +154,7 @@ button, input[type="button"]{
 }
 
 .action-button:hover {
-  background-color: #c40000;
+  background-color: #851e1e;
 }
 
 .action-button:disabled{

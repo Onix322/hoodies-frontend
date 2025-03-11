@@ -144,8 +144,13 @@ table tr:hover .address-button{
 
 .review-box{
   border-radius: 10px;
-  background: #383838;
+  /*background: #383838;*/
   padding: var(--general-padding);
+  transition: 0.2s;
+}
+
+.review-box:hover {
+  box-shadow: 0 0 10px 0 var(--full-black);
 }
 
 .review-box * {

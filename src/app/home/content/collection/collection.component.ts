@@ -63,14 +63,8 @@ export class CollectionComponent implements AfterViewInit, OnInit {
 
   public async getAmount(amount: number, startFrom: number) {
     this.productService.getAmount(amount, startFrom).subscribe({
-      next: (value: any) => {
-        console.log(value.result)
-        this.products = value.result
-        console.log(this.products.length)
-      },
-      error: (err) => {
-        console.log(err)
-      }
+      next: (value: any) => this.products = value.result,
+      error: (err) => console.log(err)
     })
   }
 }

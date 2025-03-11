@@ -2,14 +2,14 @@
   width: calc(var(--general-container-max-width) / 4 - 70px - var(--general-padding));
   height: fit-content;
   z-index: 1;
-  background-color: #383838;
+  /*background-color: #383838;*/
   padding: 20px;
   border-radius: 10px;
   transition: .2s;
 }
 
 .product-box:hover{
-  box-shadow: 0 0 20px 0 black;
+  box-shadow: 0 0 20px 0 var(--full-black);
 }
 
 .product-box figure{
