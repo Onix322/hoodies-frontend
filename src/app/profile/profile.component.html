@@ -177,6 +177,39 @@
       </table>
     </article>
   </section>
+
+  <section class="reviews">
+    <h2>Your reviews: </h2>
+    <h3 *ngIf="reviews.getValue().length < 1">You don't have any reviews yet!</h3>
+
+    @for (review of reviews.getValue(); track review.id){
+      <article class="review-box">
+        <h3>{{review.product.title}}</h3>
+        <app-product-star-rating [rating]="review.score" [numberReviews]="review.score"></app-product-star-rating>
+        <p>{{review.message}}</p>
+        <div class="review-buttons">
+          <button class="action-button" (click)="openEditReviewPopup(review.id)">Edit</button>
+          <button class="action-button" [routerLink]="'/product/' + review.product.id">See product</button>
+        </div>
+      </article>
+    }
+  </section>
 </main>
+
+<app-popup modalTitle="Add review" #editReviewPopup>
+  <form class="edit-review-form" name="create-review">
+    <div>
+      <label for="review-score">Score: </label>
+      <input id="review-score" name="review-score" type="range" min="1" [(ngModel)]="reviewScore" max="5" required>
+    </div>
+    <div>
+      <label for="review-message">Message: </label>
+      <textarea id="review-message" name="review-message" type="text" [(ngModel)]="reviewMessage" minlength="10" required></textarea>
+    </div>
+    <div>
+      <button class="action-button" (click)="saveReview()" *ngIf="reviewId >= 1">Save</button>
+    </div>
+  </form>
+</app-popup>
 
 <app-footer></app-footer>

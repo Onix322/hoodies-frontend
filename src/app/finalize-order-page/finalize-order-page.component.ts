@@ -68,8 +68,9 @@ export class FinalizeOrderPageComponent {
   }
 
   private totalPriceInitializer(products: Array<any>) {
+    this.totalPrice = 0.0
     for (let i = 0; i < products.length; i++) {
-      this.totalPrice += products[i].product.price
+      this.totalPrice += products[i].product.price * products[i].quantity
     }
   }
 

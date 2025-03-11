@@ -1,6 +1,6 @@
 import {Component, Output} from '@angular/core';
 import {CartService} from '../../../services/cart/cart.service';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, first} from 'rxjs';
 
 @Component({
   selector: 'app-cart-button',
@@ -15,11 +15,17 @@ export class CartButtonComponent {
   protected cartLength: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(private cartService: CartService) {
-    setTimeout(async () => await this.cartLengthInitializer(), 100)
+    setTimeout(() => this.cartLengthInitializer(), 100)
   }
 
-  public async cartLengthInitializer() {
-    await this.cartService.getCartLength()
-      .forEach(value => this.cartLength.next(value))
+  public cartLengthInitializer() {
+    this.cartService.getCartLength()
+      .pipe(
+        first(value => value > 0)
+      )
+      .subscribe({
+        next: value => this.cartLength.next(value),
+        error: err => console.log(err)
+      })
   }
 }

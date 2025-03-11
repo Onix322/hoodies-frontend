@@ -15,7 +15,6 @@ export class ProductStarRatingComponent {
   @Input() numberReviews: number = 0;
 
   constructor() {
-    console.log(this.rating)
   }
 
   public counterFull(){

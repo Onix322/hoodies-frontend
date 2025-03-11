@@ -23,6 +23,7 @@ export class CartService {
     let cartLengthBS: BehaviorSubject<number> = new BehaviorSubject(0);
 
     this.authService.getCurrentLoggedUser().pipe(
+      first(value => value > 0),
       switchMap((userId) => this.http.get(this.url + `/get-length/by-userid/${userId}`))
     ).subscribe({
       next: (value: any) => {

@@ -8,11 +8,13 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Notification} from '../utils/notifications/notification/notification';
 import {FormValidator} from '../utils/form-validator/form-validator';
 import {NgIf} from '@angular/common';
-import {ActivatedRoute} from '@angular/router';
-import {BehaviorSubject, filter, skipLast, switchMap, take, tap, windowWhen} from 'rxjs';
+import {BehaviorSubject, first, skipLast, switchMap, tap} from 'rxjs';
 import {AddressService} from '../services/user/address.service';
 import {OrderService} from '../services/order/order.service';
 import {FooterComponent} from '../utils/footer/footer.component';
+import {ReviewService} from '../services/product/review.service';
+import {ProductStarRatingComponent} from '../utils/product-box/product-star-rating/product-star-rating.component';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +25,9 @@ import {FooterComponent} from '../utils/footer/footer.component';
     FormsModule,
     ReactiveFormsModule,
     NgIf,
-    FooterComponent
+    FooterComponent,
+    ProductStarRatingComponent,
+    RouterLink
   ],
   standalone: true,
   templateUrl: './profile.component.html',
@@ -61,15 +65,25 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   @Input() protected mainAddress: string = "";
   protected addressId: number = 0;
   protected addressUserId: number = 0;
-  protected orders: BehaviorSubject<Array<any>> = new BehaviorSubject(new Array<any>());
 
-  constructor(private orderService: OrderService, private addressService: AddressService, private authService: AuthService, private userService: UserService, private validator: FormValidator) {
+  protected orders: BehaviorSubject<Array<any>> = new BehaviorSubject(new Array<any>());
+  protected reviews: BehaviorSubject<Array<any>> = new BehaviorSubject(new Array<any>());
+
+  @Input() protected reviewMessage: string = "";
+  @Input() protected reviewScore: number = 1;
+  protected reviewId: number = 0;
+
+  @ViewChild("editReviewPopup", {read: PopupComponent})
+  private editReviewPopup: PopupComponent | undefined;
+
+  constructor(private reviewService: ReviewService, private orderService: OrderService, private addressService: AddressService, private authService: AuthService, private userService: UserService, private validator: FormValidator) {
   }
 
   ngOnInit(): void {
     setTimeout(() => this.userInitializer(), 100)
     setTimeout(() => this.addressesInitializer(), 100)
     setTimeout(() => this.ordersInitializer(), 100)
+    setTimeout(() => this.reviewsInitializer(), 100)
   }
 
   ngAfterViewInit() {
@@ -89,13 +103,13 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.changeInfosPopup?.open()
   }
 
-  public openAddressForm(){
+  public openAddressForm() {
     this.validator.validate("address-form")
     this.clearAddressForm()
     this.addressForm?.open()
   }
 
-  public closeAddressForm(){
+  public closeAddressForm() {
     this.clearAddressForm()
     this.addressForm?.close()
   }
@@ -108,9 +122,9 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     this.deleteConfirmation?.close()
   }
 
-  public createAddress(){
+  public createAddress() {
 
-    if(!this.validator.validate("address-form")) return
+    if (!this.validator.validate("address-form")) return
 
     const body = {
       id: null,
@@ -134,7 +148,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           body.user.id = userId
           return this.addressService.create(body)
         }),
-      ) .subscribe({
+      ).subscribe({
       next: () => {
         Notification.notifyValid("Address added!")
         this.closeAddressForm()
@@ -147,7 +161,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     })
   }
 
-  public deactivateAddress(){
+  public deactivateAddress() {
     this.addressService.deleteAddress(this.addressId)
       .subscribe({
         next: () => {
@@ -161,7 +175,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       })
   }
 
-  public editAddress(addressId: number){
+  public editAddress(addressId: number) {
     this.addressService.getAddress(addressId)
       .subscribe({
         next: value => {
@@ -179,7 +193,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       })
   }
 
-  public saveEdit(){
+  public saveEdit() {
 
     const body = {
       id: this.addressId,
@@ -205,18 +219,18 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           return this.addressService.update(body)
         }),
       ).subscribe({
-      next: () =>{
+      next: () => {
         Notification.notifyValid("Address has been updated!")
         this.closeAddressForm()
         location.reload()
       },
-      error: () =>{
+      error: () => {
         Notification.notifyInvalid("Address has not been updated!")
       }
     })
   }
 
-  public clearAddressForm(){
+  public clearAddressForm() {
     this.addressUserId = 0;
     this.addressId = 0
     this.country = ""
@@ -274,47 +288,96 @@ export class ProfileComponent implements OnInit, AfterViewInit {
     window.location.replace("/dashboard")
   }
 
-  public userInitializer(){
-    this.authService.isAuth()
+  public userInitializer() {
+    this.authService.getCurrentLoggedUser()
       .pipe(
-        filter(status => status),
-        switchMap(() => this.authService.getCurrentLoggedUser()),
+        first((userId) => userId != 0),
         switchMap(userId => this.userService.getUser(userId))
-      ).subscribe({
-      next: value => {
-        this.id = value.result.id
-        this.name = value.result.name
-        this.email = value.result.email
-        this.phone = value.result.phone
-        this.role = value.result.role
-        this.userImage = value.result.userImage
-        this.activationStatus = value.result.activationStatus
-      }
-    })
+      )
+      .subscribe({
+        next: value => {
+          this.id = value.result.id
+          this.name = value.result.name
+          this.email = value.result.email
+          this.phone = value.result.phone
+          this.role = value.result.role
+          this.userImage = value.result.userImage
+          this.activationStatus = value.result.activationStatus
+        }
+      })
   }
 
-  public addressesInitializer(){
+  public addressesInitializer() {
     this.authService.getCurrentLoggedUser()
       .pipe(
-        skipLast(1),
+        first((userId) => userId != 0),
         switchMap((userId) => this.addressService.getAllFor(userId)),
-        take(1)
-      ).subscribe({
-      next: value => {
-        this.addresses.next(value.result)
-      }
-    })
+      )
+      .subscribe({
+        next: value => this.addresses.next(value.result)
+      })
   }
 
-  public ordersInitializer(){
+  public ordersInitializer() {
     this.authService.getCurrentLoggedUser()
       .pipe(
-        skipLast(1),
+        first((userId) => userId != 0),
         switchMap((userId) => this.orderService.getForUser(userId))
       )
       .subscribe({
-        next: (result) => {
-          this.orders.next(result.result)
+        next: (result) => this.orders.next(result.result),
+        error: err => console.log(err)
+      })
+  }
+
+  public reviewsInitializer() {
+    this.authService.getCurrentLoggedUser()
+      .pipe(
+        first((userId) => userId != 0),
+        tap((userid) => console.log(userid)),
+        switchMap((userId) => this.reviewService.getUserReviews(userId))
+      )
+      .subscribe({
+        next: (value) => this.reviews.next(value.result),
+        error: (err) => console.log(err)
+      })
+
+    this.reviews.subscribe(value => console.log(value))
+  }
+
+  public openEditReviewPopup(reviewId: number){
+    this.reviewId = reviewId
+    this.editReviewPopup?.open()
+
+    this.reviewService.getReview(reviewId)
+      .pipe(
+        first(value => value != null)
+      )
+      .subscribe({
+        next: (value) =>{
+          this.reviewMessage = value.result.message
+          this.reviewScore = value.result.score
+        }
+      })
+  }
+
+  public saveReview() {
+    const body = {
+      reviewId: this.reviewId,
+      message: this.reviewMessage,
+      score: this.reviewScore
+    }
+
+    this.reviewService.update(body)
+      .subscribe({
+        next: () => {
+          Notification.notifyValid("Review updated!")
+          this.reviewsInitializer()
+          this.editReviewPopup?.close()
+        },
+        error: err => {
+          Notification.notifyInvalid("Review not updated!")
+          console.log(err)
         }
       })
   }

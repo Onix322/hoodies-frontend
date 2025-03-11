@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {UserService} from '../../../services/user/user.service';
 import {AuthService} from '../../../services/auth/auth.service';
-import {BehaviorSubject, firstValueFrom, mergeMap, skip, skipLast, switchMap, take, takeLast} from 'rxjs';
+import {BehaviorSubject, first, firstValueFrom, mergeMap, skip, skipLast, switchMap, take, takeLast} from 'rxjs';
 import {RouterLink} from '@angular/router';
 
 @Component({
@@ -22,7 +22,7 @@ export class ProfileButtonComponent {
 
   public usernameInitializer() {
     this.authService.getCurrentLoggedUser().pipe(
-      skip(1),
+      first(value => value > 0),
       switchMap((userId) => this.userService.getUser(userId))
     ).subscribe({
       next: (value) => {

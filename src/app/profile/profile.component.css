@@ -4,6 +4,10 @@ main{
   margin: 0 auto;
   padding: var(--general-padding);
 }
+
+section + section{
+  margin-top: 60px;
+}
 .user-infos > * {
   height: 100%;
   width: 100%;
@@ -130,4 +134,51 @@ table tr:hover .address-button{
   to{
     opacity: 1;
   }
+}
+
+.reviews{
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.review-box{
+  border-radius: 10px;
+  background: #383838;
+  padding: var(--general-padding);
+}
+
+.review-box * {
+  text-wrap: pretty;
+  word-break: break-word;
+}
+
+.review-buttons button + button{
+  margin-left: 10px;
+}
+
+.edit-review-form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 400px;
+  align-self: center;
+  width: 100%;
+}
+
+.edit-review-form > div{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+}
+
+.edit-review-form textarea {
+  --padding: 10px;
+  border: 1px solid white;
+  background: transparent;
+  width: calc(100% - var(--padding) * 2);
+  height: 10em !important;
+  color: white;
+  padding: var(--padding);
 }

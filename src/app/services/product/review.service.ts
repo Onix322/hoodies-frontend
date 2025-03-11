@@ -23,6 +23,10 @@ export class ReviewService {
     return this.http.get<ResponseWrapper>(this.url + "get/" + productId);
   }
 
+  public getUserReviews(userId: number){
+    return this.http.get<ResponseWrapper>(this.url + "get/user/" + userId);
+  }
+
   public getReview(reviewId: number){
     return this.http.get<ResponseWrapper>(this.url + "get/review/" + reviewId);
   }
