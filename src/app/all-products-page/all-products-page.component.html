@@ -1,6 +1,130 @@
 <app-nav></app-nav>
 <main class="container">
-  <div class="products-container">
+
+  <section class="filters">
+
+    <div class="filters-box">
+      <div>
+        <h3>Order by:</h3>
+        <select>
+          <option>Most popular</option>
+          <option>Lowest price</option>
+          <option>Highest price</option>
+        </select>
+      </div>
+
+      <div class="filter-by">
+        <h3>Filter by:</h3>
+        <div class="filter-color">
+          <h4>Color:</h4>
+          <div>
+            <input id="color-red" name="color-red" type="checkbox" value="RED">
+            <label for="color-red">Red</label>
+          </div>
+          <div>
+            <input id="color-blue" name="color-blue" type="checkbox" value="BLUE">
+            <label for="color-blue">Blue</label>
+          </div>
+          <div>
+            <input id="color-yellow" name="color-yellow" type="checkbox" value="YELLOW">
+            <label for="color-yellow">Yellow</label>
+          </div>
+          <div>
+            <input id="color-white" name="color-white" type="checkbox" value="WHITE">
+            <label for="color-white">White</label>
+          </div>
+          <div>
+            <input id="color-pink" name="color-pink" type="checkbox" value="PINK">
+            <label for="color-pink">Pink</label>
+          </div>
+          <div>
+            <input id="color-green" name="color-green" type="checkbox" value="GREEN">
+            <label for="color-green">GREEN</label>
+          </div>
+          <div>
+            <input id="color-lightblue" name="color-lightblue" type="checkbox" value="LIGHTBLUE">
+            <label for="color-lightblue">Lightblue</label>
+          </div>
+          <div>
+            <input id="color-purple" name="color-purple" type="checkbox" value="PURPLE">
+            <label for="color-purple">Purple</label>
+          </div>
+          <div>
+            <input id="color-black" name="color-black" type="checkbox" value="BLACK">
+            <label for="color-black">Black</label>
+          </div>
+        </div>
+
+        <div class="filter-reviews">
+          <h4>Reviews:</h4>
+          <div>
+            <div>
+              <input id="review-five" name="review-five" type="checkbox" value="5">
+              <app-product-star-rating [numberReviews]="5" [rating]="5"></app-product-star-rating>
+            </div>
+            <div>
+              <input id="review-four" name="review-four" type="checkbox" value="4">
+              <app-product-star-rating [numberReviews]="4" [rating]="4"></app-product-star-rating>
+            </div>
+
+            <div>
+              <input id="review-three" name="review-three" type="checkbox" value="3">
+              <app-product-star-rating [numberReviews]="3" [rating]="3"></app-product-star-rating>
+            </div>
+
+            <div>
+              <input id="review-two" name="review-two" type="checkbox" value="2">
+              <app-product-star-rating [numberReviews]="2" [rating]="2"></app-product-star-rating>
+            </div>
+
+            <div>
+              <input id="review-one" name="review-one" type="checkbox" value="1">
+              <app-product-star-rating [numberReviews]="1" [rating]="1"></app-product-star-rating>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-size">
+          <h4>Size:</h4>
+          <div>
+            <div>
+              <label for="size-xxl">XXL</label>
+              <input id="size-xxl" name="size-xxl" type="checkbox" value="XXL">
+            </div>
+
+            <div>
+              <label for="size-xl">XL</label>
+              <input id="size-xl" name="size-xl" type="checkbox" value="XL">
+            </div>
+
+            <div>
+              <label for="size-l">L</label>
+              <input id="size-l" name="size-l" type="checkbox" value="L">
+            </div>
+
+            <div>
+              <label for="size-m">M</label>
+              <input id="size-m" name="size-m" type="checkbox" value="M">
+            </div>
+
+            <div>
+              <label for="size-s">S</label>
+              <input id="size-s" name="size-s" type="checkbox" value="S">
+            </div>
+
+            <div>
+              <label for="size-xs">XS</label>
+              <input id="size-xs" name="size-xs" type="checkbox" value="XS">
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="products-container">
     @for (product of products.getValue(); track product){
       <app-product-box title="{{product.title}}"
                        id="{{product.id}}"
@@ -12,6 +136,6 @@
                        [numberReviews]="product.numberReviews"
       ></app-product-box>
     }
-  </div>
+  </section>
 </main>
 <app-footer></app-footer>
