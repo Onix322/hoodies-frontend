@@ -15,42 +15,48 @@
 
       <div class="filter-by">
         <h3>Filter by:</h3>
+
+        <div class="filter-title">
+          <input type="text" name="search-bar" placeholder="Search" [(ngModel)]="search">
+          <button class="action-button search-button" (click)="searchProducts()">Search</button>
+        </div>
+
         <div class="filter-color">
           <h4>Color:</h4>
           <div>
-            <input id="color-red" name="color-red" type="checkbox" value="RED">
+            <input id="color-red" name="color-red" class="color-input" type="checkbox" value="RED">
             <label for="color-red">Red</label>
           </div>
           <div>
-            <input id="color-blue" name="color-blue" type="checkbox" value="BLUE">
+            <input id="color-blue" name="color-blue" class="color-input" type="checkbox" value="BLUE">
             <label for="color-blue">Blue</label>
           </div>
           <div>
-            <input id="color-yellow" name="color-yellow" type="checkbox" value="YELLOW">
+            <input id="color-yellow" name="color-yellow" class="color-input" type="checkbox" value="YELLOW">
             <label for="color-yellow">Yellow</label>
           </div>
           <div>
-            <input id="color-white" name="color-white" type="checkbox" value="WHITE">
+            <input id="color-white" name="color-white" class="color-input" type="checkbox" value="WHITE">
             <label for="color-white">White</label>
           </div>
           <div>
-            <input id="color-pink" name="color-pink" type="checkbox" value="PINK">
+            <input id="color-pink" name="color-pink" class="color-input" type="checkbox" value="PINK">
             <label for="color-pink">Pink</label>
           </div>
           <div>
-            <input id="color-green" name="color-green" type="checkbox" value="GREEN">
+            <input id="color-green" name="color-green" class="color-input" type="checkbox" value="GREEN">
             <label for="color-green">GREEN</label>
           </div>
           <div>
-            <input id="color-lightblue" name="color-lightblue" type="checkbox" value="LIGHTBLUE">
+            <input id="color-lightblue" name="color-lightblue" class="color-input" type="checkbox" value="LIGHTBLUE">
             <label for="color-lightblue">Lightblue</label>
           </div>
           <div>
-            <input id="color-purple" name="color-purple" type="checkbox" value="PURPLE">
+            <input id="color-purple" name="color-purple" class="color-input" type="checkbox" value="PURPLE">
             <label for="color-purple">Purple</label>
           </div>
           <div>
-            <input id="color-black" name="color-black" type="checkbox" value="BLACK">
+            <input id="color-black" name="color-black" class="color-input" type="checkbox" value="BLACK">
             <label for="color-black">Black</label>
           </div>
         </div>
