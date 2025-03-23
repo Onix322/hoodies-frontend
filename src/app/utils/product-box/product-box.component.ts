@@ -3,6 +3,7 @@ import {CartService} from '../../services/cart/cart.service';
 import {NgIf} from '@angular/common';
 import {Notification} from '../notifications/notification/notification';
 import {ProductStarRatingComponent} from './product-star-rating/product-star-rating.component';
+import {CartButtonComponent} from '../buttons/cart-button/cart-button.component';
 
 @Component({
   selector: 'app-product-box',

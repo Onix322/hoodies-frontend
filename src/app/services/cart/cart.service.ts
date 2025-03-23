@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, catchError, first, mergeMap, switchMap, take, tap, throwError} from 'rxjs';
+import {BehaviorSubject, catchError, first, map, mergeMap, switchMap, take, tap, throwError} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
 import {ResponseWrapper} from '../../utils/response/response-wrapper';
 import {Notification} from '../../utils/notifications/notification/notification';
+import {CartButtonComponent} from '../../utils/buttons/cart-button/cart-button.component';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import {Notification} from '../../utils/notifications/notification/notification'
 export class CartService {
 
   private url: string = "http://localhost:8080/cart"
+  public cartLengthBS: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
   }
@@ -21,18 +23,16 @@ export class CartService {
   }
 
   public getCartLength() {
-    let cartLengthBS: BehaviorSubject<number> = new BehaviorSubject(0);
-
     this.authService.getCurrentLoggedUser().pipe(
       first(value => value > 0),
       switchMap((userId) => this.http.get(this.url + `/get-length/by-userid/${userId}`))
     ).subscribe({
       next: (value: any) => {
-        cartLengthBS.next(value.result)
+        this.cartLengthBS.next(value.result)
       }
     })
 
-    return cartLengthBS.asObservable()
+    return this.cartLengthBS.asObservable()
   }
 
   private addToCart(body: any) {
@@ -71,7 +71,7 @@ export class CartService {
           product: {id: productId}
         }
       )),
-      tap(() => this.getCartLength())
+      map(() => this.getCartLength())
     )
   }
 

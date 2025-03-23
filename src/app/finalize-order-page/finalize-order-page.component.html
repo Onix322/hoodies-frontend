@@ -72,7 +72,7 @@
 
   <h3>Delivery fee: <strong>FREE</strong></h3>
   <h1 class ="total-price">Total price: {{this.totalPrice}}</h1>
-  <button class="action-button" [disabled]="addressId < 1"> <span style="font-size: 20px;" (click)="orderCreator()">Order now!</span></button>
+  <button class="action-button order-button" [disabled]="addressId < 1" (click)="orderCreator()">Order now!</button>
 </main>
 
 <div class="footer">

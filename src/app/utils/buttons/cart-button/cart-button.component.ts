@@ -1,6 +1,6 @@
 import {Component, Output} from '@angular/core';
 import {CartService} from '../../../services/cart/cart.service';
-import {BehaviorSubject, first} from 'rxjs';
+import {BehaviorSubject, first, switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-cart-button',
@@ -12,7 +12,7 @@ import {BehaviorSubject, first} from 'rxjs';
 export class CartButtonComponent {
 
   @Output()
-  protected cartLength: BehaviorSubject<number> = new BehaviorSubject(0);
+  public cartLength: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(private cartService: CartService) {
     setTimeout(() => this.cartLengthInitializer(), 100)
@@ -21,7 +21,8 @@ export class CartButtonComponent {
   public cartLengthInitializer() {
     this.cartService.getCartLength()
       .pipe(
-        first(value => value > 0)
+        first(value => value > 0),
+        switchMap(() => this.cartService.cartLengthBS)
       )
       .subscribe({
         next: value => this.cartLength.next(value),

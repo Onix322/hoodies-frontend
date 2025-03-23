@@ -7,7 +7,6 @@ import {BehaviorSubject, first} from 'rxjs';
 import {ProductStarRatingComponent} from '../utils/product-box/product-star-rating/product-star-rating.component';
 import {FormsModule} from '@angular/forms';
 import {SearchService} from '../services/product/search.service';
-import {Notification} from '../utils/notifications/notification/notification';
 
 @Component({
   selector: 'app-all-products-page',
@@ -77,8 +76,8 @@ export class AllProductsPageComponent implements OnInit {
       })
   }
 
-  private orderByFunc(array: Array<any>, value: String): Array<any>{
-    switch (value){
+  private orderByFunc(array: Array<any>, value: String): Array<any> {
+    switch (value) {
       case "MOST POPULAR":
         return array.sort((a, b) => b.numberReviews - a.numberReviews)
       case "LOWEST PRICE":
@@ -124,7 +123,7 @@ export class AllProductsPageComponent implements OnInit {
     });
   }
 
-  private deactivateInputsOnPageChange(){
+  private deactivateInputsOnPageChange() {
     window.addEventListener("pageshow", this.deactivateInputs);
   }
 
@@ -146,7 +145,7 @@ export class AllProductsPageComponent implements OnInit {
     }
   }
 
-  protected reset(){
+  protected reset() {
     this.productInitializer()
     this.rating = [];
     this.size = [];
