@@ -7,11 +7,11 @@ import {ResponseWrapper} from '../../utils/response/response-wrapper';
 })
 export class SearchService {
 
-  private url = "http://localhost:8080/search?title="
+  private url = "http://localhost:8080/search"
 
   constructor(private http: HttpClient) { }
 
-  public search(title: string){
-    return this.http.get<ResponseWrapper>(this.url + title)
+  public search(body: any){
+    return this.http.put<ResponseWrapper>(this.url, body)
   }
 }

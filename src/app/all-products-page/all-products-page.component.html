@@ -4,12 +4,12 @@
   <section class="filters">
 
     <div class="filters-box">
-      <div>
+      <div class="order-by">
         <h3>Order by:</h3>
-        <select>
-          <option>Most popular</option>
-          <option>Lowest price</option>
-          <option>Highest price</option>
+        <select [(ngModel)]="orderBy">
+          <option value="MOST POPULAR">Most popular</option>
+          <option value="LOWEST PRICE">Lowest price</option>
+          <option value="HIGHEST PRICE">Highest price</option>
         </select>
       </div>
 
@@ -18,7 +18,6 @@
 
         <div class="filter-title">
           <input type="text" name="search-bar" placeholder="Search" [(ngModel)]="search">
-          <button class="action-button search-button" (click)="searchProducts()">Search</button>
         </div>
 
         <div class="filter-color">
@@ -45,7 +44,7 @@
           </div>
           <div>
             <input id="color-green" name="color-green" class="color-input" type="checkbox" value="GREEN">
-            <label for="color-green">GREEN</label>
+            <label for="color-green">Green</label>
           </div>
           <div>
             <input id="color-lightblue" name="color-lightblue" class="color-input" type="checkbox" value="LIGHTBLUE">
@@ -65,26 +64,26 @@
           <h4>Reviews:</h4>
           <div>
             <div>
-              <input id="review-five" name="review-five" type="checkbox" value="5">
+              <input id="review-five" name="review-five" class="review-input" type="checkbox" value="5">
               <app-product-star-rating [numberReviews]="5" [rating]="5"></app-product-star-rating>
             </div>
             <div>
-              <input id="review-four" name="review-four" type="checkbox" value="4">
+              <input id="review-four" name="review-four" class="review-input" type="checkbox" value="4">
               <app-product-star-rating [numberReviews]="4" [rating]="4"></app-product-star-rating>
             </div>
 
             <div>
-              <input id="review-three" name="review-three" type="checkbox" value="3">
+              <input id="review-three" name="review-three" class="review-input" type="checkbox" value="3">
               <app-product-star-rating [numberReviews]="3" [rating]="3"></app-product-star-rating>
             </div>
 
             <div>
-              <input id="review-two" name="review-two" type="checkbox" value="2">
+              <input id="review-two" name="review-two" class="review-input" type="checkbox" value="2">
               <app-product-star-rating [numberReviews]="2" [rating]="2"></app-product-star-rating>
             </div>
 
             <div>
-              <input id="review-one" name="review-one" type="checkbox" value="1">
+              <input id="review-one" name="review-one" class="review-input" type="checkbox" value="1">
               <app-product-star-rating [numberReviews]="1" [rating]="1"></app-product-star-rating>
             </div>
           </div>
@@ -95,27 +94,27 @@
           <div>
             <div>
               <label for="size-xxl">XXL</label>
-              <input id="size-xxl" name="size-xxl" type="checkbox" value="XXL">
+              <input id="size-xxl" name="size-xxl" class="size-input" type="checkbox" value="XXL">
             </div>
 
             <div>
               <label for="size-xl">XL</label>
-              <input id="size-xl" name="size-xl" type="checkbox" value="XL">
+              <input id="size-xl" name="size-xl" class="size-input" type="checkbox" value="XL">
             </div>
 
             <div>
               <label for="size-l">L</label>
-              <input id="size-l" name="size-l" type="checkbox" value="L">
+              <input id="size-l" name="size-l" class="size-input" type="checkbox" value="L">
             </div>
 
             <div>
               <label for="size-m">M</label>
-              <input id="size-m" name="size-m" type="checkbox" value="M">
+              <input id="size-m" name="size-m" class="size-input" type="checkbox" value="M">
             </div>
 
             <div>
               <label for="size-s">S</label>
-              <input id="size-s" name="size-s" type="checkbox" value="S">
+              <input id="size-s" name="size-s" class="size-input" type="checkbox" value="S">
             </div>
 
             <div>
@@ -123,6 +122,11 @@
               <input id="size-xs" name="size-xs" type="checkbox" value="XS">
             </div>
 
+          </div>
+
+          <div class="search-buttons">
+            <button class="action-button search-button" (click)="searchProducts()">Search</button>
+            <button class="action-button search-button" (click)="reset()">Reset</button>
           </div>
         </div>
       </div>

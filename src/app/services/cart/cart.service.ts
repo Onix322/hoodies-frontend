@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, first, mergeMap, skipLast, switchMap, take, tap} from 'rxjs';
+import {BehaviorSubject, catchError, first, mergeMap, switchMap, take, tap, throwError} from 'rxjs';
 import {AuthService} from '../auth/auth.service';
 import {Router} from '@angular/router';
 import {ResponseWrapper} from '../../utils/response/response-wrapper';
+import {Notification} from '../../utils/notifications/notification/notification';
 
 @Injectable({
   providedIn: 'root'
@@ -42,11 +43,11 @@ export class CartService {
     return this.http.delete(this.url + `/delete/item/${body.cartId}/${body.productId}`)
   }
 
-  public removeAllProducts(body: {cartId: number, cartItemsIds: number[]}) {
+  public removeAllProducts(body: { cartId: number, cartItemsIds: number[] }) {
     return this.http.put(this.url + "/delete/items", body)
   }
 
-  public getItem(cartItemId: number){
+  public getItem(cartItemId: number) {
     return this.http.get<ResponseWrapper>(this.url + `/get-item/${cartItemId}`)
   }
 
@@ -56,6 +57,7 @@ export class CartService {
       mergeMap((status) => {
         if (!status) {
           this.router.navigateByUrl("/login", {skipLocationChange: true, replaceUrl: false})
+          throw new Error("Login please!")
         }
         return this.authService.getCurrentLoggedUser()
       }),
