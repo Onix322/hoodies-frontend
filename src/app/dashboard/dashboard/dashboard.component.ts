@@ -6,6 +6,8 @@ import {SeeAllProductsComponent} from '../product-crud/see-all-products/see-all-
 import {NavComponent} from '../../nav/nav.component';
 import {RenderView} from '../../utils/render-view/render-view';
 import {AllOrdersComponent} from '../all-orders/all-orders.component';
+import {SeeActivatedUsersComponent} from '../user-crud/see-activated-users/see-activated-users.component';
+import {SeeDeactivatedUsersComponent} from '../user-crud/see-deactivated-users/see-deactivated-users.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,4 +41,6 @@ export class DashboardComponent {
   }
 
   protected readonly AllOrdersComponent = AllOrdersComponent;
+  protected readonly SeeActivatedUsersComponent = SeeActivatedUsersComponent;
+  protected readonly SeeDeactivatedUsersComponent = SeeDeactivatedUsersComponent;
 }

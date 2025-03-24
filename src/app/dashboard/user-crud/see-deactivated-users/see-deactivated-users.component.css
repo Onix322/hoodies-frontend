@@ -1,0 +1,26 @@
+.users-container{
+  display: flex;
+  flex-direction: column;
+  max-width: fit-content;
+  max-height: fit-content;
+  gap: 40px;
+}
+
+.user-img img{
+  object-fit: contain;
+  max-height: 400px;
+  background: white;
+  border-radius: 10px;
+}
+
+.users-content{
+  display: flex;
+  padding: var(--general-padding);
+  gap: 30px;
+}
+
+.action-button{
+  height: fit-content;
+  width: fit-content;
+  padding: 20px;
+}

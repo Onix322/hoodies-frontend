@@ -155,4 +155,11 @@ export class AllProductsPageComponent implements OnInit {
 
     this.deactivateInputs();
   }
+
+  protected countProductsByRating(rating: number): number{
+
+    return this.products.getValue()
+      .filter(product => product.rating == rating)
+      .length;
+  }
 }

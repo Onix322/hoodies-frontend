@@ -65,26 +65,26 @@
           <div>
             <div>
               <input id="review-five" name="review-five" class="review-input" type="checkbox" value="5">
-              <app-product-star-rating [numberReviews]="5" [rating]="5"></app-product-star-rating>
+              <app-product-star-rating [numberReviews]="countProductsByRating(5)" [rating]="5"></app-product-star-rating>
             </div>
             <div>
               <input id="review-four" name="review-four" class="review-input" type="checkbox" value="4">
-              <app-product-star-rating [numberReviews]="4" [rating]="4"></app-product-star-rating>
+              <app-product-star-rating [numberReviews]="countProductsByRating(4)" [rating]="4"></app-product-star-rating>
             </div>
 
             <div>
               <input id="review-three" name="review-three" class="review-input" type="checkbox" value="3">
-              <app-product-star-rating [numberReviews]="3" [rating]="3"></app-product-star-rating>
+              <app-product-star-rating [numberReviews]="countProductsByRating(3)" [rating]="3"></app-product-star-rating>
             </div>
 
             <div>
               <input id="review-two" name="review-two" class="review-input" type="checkbox" value="2">
-              <app-product-star-rating [numberReviews]="2" [rating]="2"></app-product-star-rating>
+              <app-product-star-rating [numberReviews]="countProductsByRating(2)" [rating]="2"></app-product-star-rating>
             </div>
 
             <div>
               <input id="review-one" name="review-one" class="review-input" type="checkbox" value="1">
-              <app-product-star-rating [numberReviews]="1" [rating]="1"></app-product-star-rating>
+              <app-product-star-rating [numberReviews]="countProductsByRating(1)" [rating]="1"></app-product-star-rating>
             </div>
           </div>
         </div>

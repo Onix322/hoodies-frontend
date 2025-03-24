@@ -24,6 +24,14 @@ export class UserService {
     return this.http.get<ResponseWrapper>(this.url + "get/" + id)
   }
 
+  public getActivated(){
+    return this.http.get<ResponseWrapper>(this.url + "get/activated")
+  }
+
+  public getDeactivated(){
+    return this.http.get<ResponseWrapper>(this.url + "get/deactivated")
+  }
+
   public loginUser(body: any) {
     return this.http.post<ResponseWrapper>(this.url + "login", body)
   }

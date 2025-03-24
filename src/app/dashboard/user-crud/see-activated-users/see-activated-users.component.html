@@ -1,0 +1,20 @@
+<section class="users-container">
+
+  @for (user of users.getValue(); track user.id){
+    <div class="users-content">
+      <article class="user-img">
+        <img src="{{user.userImage}}" alt="userImg">
+      </article>
+      <article class="user-box">
+        <h2>{{user.name}}</h2>
+        <p>id: {{user.id}}</p>
+        <p>Email: {{user.email}}</p>
+        <p>Phone: {{user.phone}}</p>
+        <p>Role: {{user.role}}</p>
+        <p>Status: {{user.activationStatus}}</p>
+        <button class="action-button" (click)="deactivateUser(user.id)">Deactivate</button>
+      </article>
+    </div>
+  }
+
+</section>
