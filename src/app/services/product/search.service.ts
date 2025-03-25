@@ -7,7 +7,7 @@ import {ResponseWrapper} from '../../utils/response/response-wrapper';
 })
 export class SearchService {
 
-  private url = "https://hoodies-frontend.vercel.app/search"
+  private url = "http://localhost:8080/search"
 
   constructor(private http: HttpClient) { }
 

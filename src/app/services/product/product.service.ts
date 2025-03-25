@@ -9,7 +9,7 @@ import {ResponseWrapper} from '../../utils/response/response-wrapper';
 
 export class ProductService {
 
-  private url: string = "https://hoodies-frontend.vercel.app/products/"
+  private url: string = "http://localhost:8080/products/"
 
   constructor(private http: HttpClient) {
   }

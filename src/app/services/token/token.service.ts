@@ -8,7 +8,7 @@ import {ResponseWrapper} from '../../utils/response/response-wrapper';
 })
 export class TokenService {
 
-  private readonly URL = "https://hoodies-frontend.vercel.app/token/"
+  private readonly URL = "http://localhost:8080/token/"
 
   constructor(private http: HttpClient) { }
 
