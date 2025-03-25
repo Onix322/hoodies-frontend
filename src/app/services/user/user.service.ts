@@ -7,7 +7,7 @@ import {ResponseWrapper} from '../../utils/response/response-wrapper';
 })
 export class UserService {
 
-  private url = "http://localhost:8080/users/"
+  private url = "https://hoodies-frontend.vercel.app/users/"
 
   constructor(private http: HttpClient) {
   }

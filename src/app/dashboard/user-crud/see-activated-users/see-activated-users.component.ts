@@ -1,14 +1,11 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {UserService} from '../../../services/user/user.service';
 import {BehaviorSubject, first} from 'rxjs';
-import {NgOptimizedImage} from '@angular/common';
 import {Notification} from '../../../utils/notifications/notification/notification';
 
 @Component({
   selector: 'app-see-activated-users',
-  imports: [
-    NgOptimizedImage
-  ],
+  imports: [],
   templateUrl: './see-activated-users.component.html',
   styleUrl: './see-activated-users.component.css'
 })
@@ -21,7 +18,7 @@ export class SeeActivatedUsersComponent {
 
   }
 
-  private usersInitializer(){
+  private usersInitializer() {
     this.userService.getActivated()
       .pipe(
         first()

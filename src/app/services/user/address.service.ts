@@ -7,7 +7,7 @@ import {ResponseWrapper} from '../../utils/response/response-wrapper';
 })
 export class AddressService {
 
-  private url: String = "http://localhost:8080/address"
+  private url: String = "https://hoodies-frontend.vercel.app/address"
 
   constructor(private http: HttpClient) {
   }

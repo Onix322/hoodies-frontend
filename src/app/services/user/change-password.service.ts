@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ChangePasswordService {
 
-  private url: string = "http://localhost:8080/change-password"
+  private url: string = "https://hoodies-frontend.vercel.app/change-password"
 
   constructor(private http: HttpClient) { }
 

@@ -12,7 +12,7 @@ import {CartButtonComponent} from '../../utils/buttons/cart-button/cart-button.c
 })
 export class CartService {
 
-  private url: string = "http://localhost:8080/cart"
+  private url: string = "https://hoodies-frontend.vercel.app/cart"
   public cartLengthBS: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {
